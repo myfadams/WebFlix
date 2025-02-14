@@ -11,6 +11,10 @@
 
 }
 .logo{
-    height: 3.5rem;
-
+    /* height: 3.5rem; */
+    /* height: 5%; */
+    width: 26%;
+    @media (max-width:510px) {
+        width: 3rem;
+    }
 }

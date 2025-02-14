@@ -42,7 +42,7 @@ function SecondSection() {
 						</p>
 					</div>
 				</div>
-				<div className={styles.div}>
+				<div className={`${styles.div} {styles.mob}`}>
 					<div>
 						<h2>Create profiles for kids</h2>
 						<p>
