@@ -1,0 +1,185 @@
+.mainDiv {
+    /* height: 300px; */
+    color: white;
+    position: relative;
+    /* Ensure it's above the overlay */
+    z-index: 2;
+    /* Higher than the overlay */
+}
+.margDiv{
+    margin-top: 8rem;
+}
+.main {
+    position: relative;
+    background-image: url("../../../public/Hero Image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Ensure it covers full screen */
+    padding-bottom: 6.875rem;
+}
+
+.mainOverlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    /* Ensure it covers from top */
+    left: 0;
+    z-index: 1;
+    /* Below the text but above the background */
+}
+.mainText{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    & h1{
+        color: white;
+        font-weight: 500;
+        font-size: 3rem;
+        margin: 1rem;
+        text-align: center;
+    }
+
+    & p{
+        margin: 1.5rem;
+    }
+}
+p{
+    font-size: 1.3rem;
+    margin: 0;
+}
+.signUp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    margin: 1.5rem;
+}
+.input{
+    width:23rem;
+    /* background-color: transparent; */
+    background: rgba(0, 0, 0, 0.45);
+    padding: 0.7rem 1rem;
+    outline: none;
+    border-radius: 4px;
+    border: 1px solid var(--border-light);
+    color: var(--input-text);
+    font-size: 1.2rem;
+}
+.signUpBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    width: 13rem;
+    padding: 0.7rem;
+    font-size: 1.2rem;
+
+    & img{
+        height: 0.9rem;
+    }
+}
+
+.footer{
+    padding: 0 4.5rem;
+
+    
+}
+
+.fMain {
+    /* background: linear-gradient(to right, var(--gradient-color-1), var(--gradient-color-2) 50%, var(--gradient-color-1)); */
+    background: linear-gradient(to right,
+                #000413 0%,
+                /* Far Left */
+                var(--gradient-color-1) 20%,
+                /* Transition to Main Color 1 */
+                var(--gradient-color-2) 45%,
+                /* Middle Start */
+                var(--gradient-color-2) 55%,
+                /* Middle End (Narrow Section) */
+                var(--gradient-color-1) 80%,
+                /* Transition Back */
+                #000413 100%
+                /* Far Right */
+            );
+
+
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & div{
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        flex-direction: column;
+        & h4{
+            font-size: 1.2rem;
+        }
+        & p{
+            font-size: 1rem;
+        }
+    }
+}
+h4{
+    margin: 0;
+}
+.lMore{
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 10px;
+
+      /* & img{
+        height: 10px;
+      } */
+}
+
+.fP{
+    gap: 0.4rem;
+}
+
+.signUpBtn:hover {
+    border-color: var(--primary-btn);
+    color: var(--primary-btn);
+
+    /* & img{
+        filter: sepia(0.5) saturate(3) hue-rotate(320deg) brightness(0.9);
+    } */
+
+    .i1 {
+        display: none;
+    }
+    .i2 {
+        display: inline;
+    }
+}
+
+.i2{
+    display: none;
+}
+
+
+@media (max-width:800px) {
+    .mainText  h1{
+        font-size: 2rem;
+    }
+    .mainText p{
+        font-size: 1rem;
+    }
+}

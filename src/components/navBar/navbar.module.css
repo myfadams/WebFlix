@@ -1,0 +1,16 @@
+.navBody{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:  1.5rem 8%;
+}
+
+.signIn{
+    background-color: var(--primary-btn);
+    color: white;
+
+}
+.logo{
+    height: 3.5rem;
+
+}
