@@ -156,7 +156,7 @@ h4{
       } */
 }
 
-.fP{
+.fp{
     gap: 0.4rem;
 }
 
@@ -191,4 +191,40 @@ h4{
     .signUp >p{
         font-size: 1rem;
     }
+}
+
+@media (max-width:500px) {
+    .main{
+        padding-bottom: 4.875rem;
+    }
+    .footer{
+        padding: 0 4%;
+    }
+    .fMain{
+        flex-direction: column;
+        & div > img{
+            width: 3.94rem;   
+        }
+    }
+
+    .fp{
+        align-items: center;
+        & h4{
+            text-align: center;
+        }
+        & p{
+            font-size: 0.8rem !important;
+        }
+        & a{
+            font-size: 0.8rem;
+            & img{
+                width: 7px;
+            }
+        }
+    }
+
+    .margDiv{
+        margin-top: 3rem;
+    }
+    
 }

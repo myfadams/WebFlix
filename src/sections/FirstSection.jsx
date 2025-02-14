@@ -38,7 +38,7 @@ function FirstSection() {
 					<div>
 						<img src="./popcorn.png" alt="image of popcorn" />
 					</div>
-					<div className={styles.fP}>
+					<div className={styles.fp}>
 						<h4>The MovieHaven you love for just free.</h4>
 						<p>Get the Standard with ads plan.</p>
 						<a href="#" className={styles.lMore}>

@@ -220,9 +220,22 @@ form {
 
         
     }
-    .mob > .div{
+    .mob > div{
         order: 1;
+    }
+
+    .div img{
+        width: 75%;
     }
     
    
+}
+
+@media (max-width:500px) {
+    .div{
+        padding: 2rem 4%;
+    }
+    .aboutUS{
+        padding: 0 4%;
+    }
 }
