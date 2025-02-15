@@ -11,7 +11,7 @@
 }
 .main {
     position: relative;
-    background-image: url("../../../public/Hero Image.png");
+    background-image: url("/Hero Image.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -62,7 +62,7 @@ p{
     }
 
 }
-form{
+.signUp form{
     display: flex;
     justify-content: center;
     align-items: center;

@@ -128,7 +128,7 @@
     margin: 2rem 0;
 }
 
-form {
+.signUp form {
     display: flex;
     justify-content: center;
     align-items: center;

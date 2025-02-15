@@ -1,14 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
-import App from "./app";
+import App from "./App";
 import "./index.css"
+import SignUp from "./screens/SignUp";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
-	<BrowserRouter>
+	<BrowserRouter basename="/">
 		<Routes>
-			<Route path="/" element={<App />} />
+			<Route index element={<App/>} />
+			<Route path="register" element={<SignUp />} />
 		</Routes>
 	</BrowserRouter>
 );

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styles from "./secondSection.module.css"
+import { useNavigate } from 'react-router';
 const MoreComponent=({title,text})=>{
+	
 	const [show,setShow]=useState(false)
     return (
 			<div
@@ -29,6 +31,8 @@ const MoreComponent=({title,text})=>{
 }
 
 function SecondSection() {
+	const navigate = useNavigate();
+	const [disable,setDisable]=useState(false);
   return (
 		<section className={styles.main}>
 			<div className={styles.mainDiv}>
@@ -96,7 +100,10 @@ function SecondSection() {
 								className={styles.input}
 								placeholder="Email address"
 							/>
-							<button className={styles.signUpBtn}>
+							<button className={styles.signUpBtn} onClick={()=>{
+								navigate("/register")
+								setDisable(true)
+							}} disabled={disable}>
 								Get Started{" "}
 								<img src="./rightArrow.png" alt="" className={styles.i1} />
 								<img src="./right.png" alt="" className={styles.i2} />

@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "./firstsection.module.css"
-import NavBar from '../components/navBar/NavBar';
+import NavBar from '../../components/navBar/NavBar';
+import { useNavigate } from "react-router";
+
 function FirstSection() {
+	let navigate = useNavigate();
+	const [disable,setDisable]=useState(false);
   return (
 		<>
 			<section className={styles.main}>
@@ -24,7 +28,10 @@ function FirstSection() {
 									className={styles.input}
 									placeholder="Email address"
 								/>
-								<button className={styles.signUpBtn}>
+								<button className={styles.signUpBtn} onClick={()=>{
+									navigate("register")
+									setDisable(true)
+								}} disabled={disable}>
 									Get Started <img src="./rightArrow.png" alt="" className={styles.i1} />
 									<img src="./right.png" alt="" className={styles.i2} />
 								</button>

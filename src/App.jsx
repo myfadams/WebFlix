@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import './App.css'
-import FirstSection from './sections/FirstSection';
-import SecondSection from './sections/SecondSection';
+import FirstSection from './sections/index/FirstSection';
+import SecondSection from './sections/index/SecondSection';
+
 function App() {
+
   return (
     <>
     <FirstSection/>
