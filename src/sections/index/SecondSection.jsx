@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 const MoreComponent=({title,text})=>{
 	
 	const [show,setShow]=useState(false)
+	
     return (
 			<div
 				style={{
@@ -33,6 +34,7 @@ const MoreComponent=({title,text})=>{
 function SecondSection() {
 	const navigate = useNavigate();
 	const [disable,setDisable]=useState(false);
+	const [email, setEmail] = useState("");
   return (
 		<section className={styles.main}>
 			<div className={styles.mainDiv}>
@@ -101,8 +103,10 @@ function SecondSection() {
 								placeholder="Email address"
 							/>
 							<button className={styles.signUpBtn} onClick={()=>{
-								navigate("/register")
-								setDisable(true)
+								if (email.trim() !== "") {
+									navigate("register", { state: { email } });
+									setDisable(true);
+								}
 							}} disabled={disable}>
 								Get Started{" "}
 								<img src="./rightArrow.png" alt="" className={styles.i1} />

@@ -135,6 +135,9 @@
     gap: 1rem;
 
     margin: 1.5rem;
+    @media (max-width:450px) {
+        margin: 1.5rem 0;
+    }
 }
 
 .input {

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 function FirstSection() {
 	let navigate = useNavigate();
 	const [disable,setDisable]=useState(false);
+	const [email,setEmail]=useState("");
   return (
 		<>
 			<section className={styles.main}>
@@ -27,10 +28,16 @@ function FirstSection() {
 									type="email"
 									className={styles.input}
 									placeholder="Email address"
+									onChange={(ev)=>{
+										setEmail(ev.target.value)
+									}}
+									value={email}
 								/>
 								<button className={styles.signUpBtn} onClick={()=>{
-									navigate("register")
-									setDisable(true)
+									if(email.trim()!==""){
+										navigate("register",{state:{email}})
+										setDisable(true)
+									}
 								}} disabled={disable}>
 									Get Started <img src="./rightArrow.png" alt="" className={styles.i1} />
 									<img src="./right.png" alt="" className={styles.i2} />
