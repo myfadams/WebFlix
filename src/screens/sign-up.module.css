@@ -4,7 +4,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 100%;
+    /* padding: auto; */
     /* Ensure it covers full screen */
     /* padding-bottom: 6.875rem; */
 }
@@ -35,10 +36,30 @@
     z-index: 2;
     display: flex;
     flex-direction: column;
-    /* max-width: ; */
-    width: 30%;
-    background-color: red;
+    max-width: 25%;
+    @media (max-width:1200px) {
+        max-width: 40%;
+        
+    }
+        @media (max-width:800px) {
+            max-width: 50%;
+    
+        }
+        @media (max-width:600px) {
+            max-width: 60%;
+    
+        }
+    gap: 0.8rem;
+    /* width: 25%; rgba(255, 255, 255, 0.4);*/
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
     padding: 3.3rem;
+
+    & h2{
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 600;
+    }
 
 }
 .logoDiv{
@@ -50,9 +71,113 @@
     /* height: 3.5rem; */
     /* height: 5%; */
    
-    width: 6%;
+    /* width: 6%; */
+    width: 4.6875rem;
 
     @media (max-width:510px) {
         width: 3rem;
     }
+}
+
+.signBtn{
+    background-color: var(--primary-btn);
+    color: white;
+    font-size: 1.1rem;
+}
+
+
+
+
+
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    /* color: #333; */
+}
+
+.checkboxContainer input {
+    display: none;
+    /* Hide default checkbox */
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #D33682;
+    /* Border color */
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    margin-right: 8px;
+}
+
+/* When checked, show a custom checkmark */
+.checkboxContainer input:checked+.checkmark {
+    background-color: #D33682;
+    border-color: #D33682;
+}
+
+.checkboxContainer input:checked+.checkmark::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.new{
+    & p:first-of-type{
+        font-size: 1rem;
+        margin-bottom: 0.7rem;
+    }
+
+    & p:last-of-type{
+        font-size: 0.7rem;
+        color: var(--input-text);
+
+        & a{
+            color: var(--primary-btn);
+        }
+    }
+}
+.footerD {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    margin-top: 2.5%;
+    & div {
+        display: flex;
+        flex-direction: column;
+        & a {
+            color: var(--input-text);
+        }
+        & a:hover {
+            color: var(--primary-btn);
+        }
+        
+    }
+    @media (max-width:510px) {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width:450px) {
+    .signBody form {
+        padding: 2rem;
+        max-width: 80%;
+    }
+        .logoDiv {
+            position: relative;
+            padding: 1.5rem 1rem;
+        }
 }
