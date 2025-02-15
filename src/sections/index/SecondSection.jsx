@@ -1,41 +1,40 @@
-import React, { useState } from 'react'
-import styles from "./secondSection.module.css"
-import { useNavigate } from 'react-router';
-const MoreComponent=({title,text})=>{
-	
-	const [show,setShow]=useState(false)
-	
-    return (
+import React, { useState } from "react";
+import styles from "./secondSection.module.css";
+import { useNavigate } from "react-router";
+const MoreComponent = ({ title, text }) => {
+	const [show, setShow] = useState(false);
+
+	return (
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				gap: "10px",
+				width: "100%",
+				cursor: "pointer",
+			}}
+		>
 			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					gap: "10px",
-					width: "100%",
-					cursor: "pointer",
+				className={styles.aboutUsDiv}
+				onClick={() => {
+					setShow(!show);
 				}}
 			>
-				<div
-					className={styles.aboutUsDiv}
-					onClick={() => {
-						setShow(!show);
-					}}
-				>
-					<h3>{title}</h3>
-					<img src="./more.png" alt="" />
-				</div>
-				<div className={`${styles.mAbout} ${show ? styles.show : styles.hide}`}>
-					<p>{text}</p>
-				</div>
+				<h3>{title}</h3>
+				<img src="./more.png" alt="" />
 			</div>
-		);
-}
+			<div className={`${styles.mAbout} ${show ? styles.show : styles.hide}`}>
+				<p>{text}</p>
+			</div>
+		</div>
+	);
+};
 
 function SecondSection() {
 	const navigate = useNavigate();
-	const [disable,setDisable]=useState(false);
+	const [disable, setDisable] = useState(false);
 	const [email, setEmail] = useState("");
-  return (
+	return (
 		<section className={styles.main}>
 			<div className={styles.mainDiv}>
 				<div className={`${styles.div} ${styles.d1}`}>
@@ -101,13 +100,21 @@ function SecondSection() {
 								type="email"
 								className={styles.input}
 								placeholder="Email address"
+								onChange={(ev) => {
+									setEmail(ev.target.value);
+								}}
+								value={email}
 							/>
-							<button className={styles.signUpBtn} onClick={()=>{
-								if (email.trim() !== "") {
-									navigate("register", { state: { email } });
-									setDisable(true);
-								}
-							}} disabled={disable}>
+							<button
+								className={styles.signUpBtn}
+								onClick={() => {
+									if (email.trim() !== "") {
+										navigate("register", { state: { email } });
+										setDisable(true);
+									}
+								}}
+								disabled={disable}
+							>
 								Get Started{" "}
 								<img src="./rightArrow.png" alt="" className={styles.i1} />
 								<img src="./right.png" alt="" className={styles.i2} />
@@ -142,4 +149,4 @@ function SecondSection() {
 	);
 }
 
-export default SecondSection
+export default SecondSection;

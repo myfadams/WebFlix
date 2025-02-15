@@ -6,7 +6,7 @@
 
   /* color-scheme: light dark; #D33682 #9747FF*/
   color: rgba(255, 255, 255, 0.87);
-  background-color: #000;
+  background-color: #141414;
   --primary-btn: #D33682;
   --border-light:#808080;
   --input-text:#BCBCBC;  
@@ -64,3 +64,10 @@ button {
   }
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: var(--input-text);
+}

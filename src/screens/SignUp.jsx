@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import styles from "./sign-up.module.css";
 import Input from "../components/input/Input";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 
 function SignUp() {
+	const location = useLocation();
+	const email = location.state?.email;
 	const [userDetails, setUserDetails] = useState({
 		username: "",
-		email: "",
+		email: "" || email,
 		password: "",
 		confirmPassword: "",
 	});
 	const [remember, setRemember] = useState(false);
+	
+	
 	return (
 		<section className={styles.signMain}>
 			<div className={styles.mainOverlay}></div>
