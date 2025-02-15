@@ -27,7 +27,7 @@
         font-weight: 400;
     }
     & img{
-        width: 50%;
+        width: 44%;
     }
 }
 
@@ -60,6 +60,9 @@
         font-size: 1rem;
         padding-left: 2rem;
         padding-right:2rem ;
+        @media (max-width:510px) {
+            padding: 0.8rem ;
+        }
     }
 }
 
@@ -228,6 +231,9 @@ form {
         width: 75%;
     }
     
+    .footerD a{
+        font-size: 0.8rem;
+    }
    
 }
 
