@@ -61,7 +61,7 @@ function SignUp() {
 						<button className={styles.signBtn} onClick={()=>{
 							navigate("/selectProfile");
 							setDisable(!disable)
-						}}>Sign Up</button>
+						}} disabled={disable}>Sign Up</button>
 						<label className={styles.checkboxContainer}>
 							<input
 								type="checkbox"

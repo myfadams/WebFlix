@@ -13,6 +13,7 @@ function SelectUser() {
 		name: "",
 		profile: "./avatar1.png",
 	});
+	// const [di]
 	useEffect(()=>{
 		if(newUser.name!=="")
 			setUserProfiles([...userProfiles, newUser]);
