@@ -13,6 +13,7 @@
   --gradient-color-1:#100725;
   /* #0E1B4F; */
   --gradient-color-2:#6E1F86;
+  --text-primary:"#E5E5E5"
 
   /* background: linear-gradient(90deg, #100725 0%, #6E1F86 100%); */
 
@@ -29,7 +30,11 @@ a:hover {
 
 body {
   margin: 0;
+    /* -webkit-overflow-scrolling: touch; */
 }
+
+
+
 
 h1 {
   font-size: 3.2em;

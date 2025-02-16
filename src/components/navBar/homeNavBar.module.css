@@ -1,0 +1,87 @@
+.navHB{
+    padding: 1rem;
+}
+.homeNav{
+    display: flex;
+    
+    justify-content: space-between;
+    align-items: center;
+}
+.homeNav a{
+    transition: transform 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+.homeNav a:hover{
+    transform: scale(1.09);
+}
+
+.first, .links,.second, .linksPhone{
+    display:flex;
+    align-items: center;
+    /* gap: 1.5rem; */
+    column-gap: 1.5rem;
+}
+.linksPhone {
+    display: flex;
+    align-items: center;
+    /* gap: 1.5rem; */
+    column-gap: 1.5rem;
+}
+.links > a, .linksPhone>a{
+    color: var(--text-primary) ;
+    font-size: 0.8rem;
+    font-weight: 400;
+
+}
+.linksPhone > a{
+    padding: 0 5px;
+
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        flex-shrink: 0;
+}
+.linksPhone{
+    display: none;
+    /* flex-wrap: wrap; */
+    /* justify-content: center; */
+    margin-top: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+   
+    -ms-overflow-style: none;
+
+        -webkit-overflow-scrolling: touch;
+}
+.linksPhone::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+    /* Hide scrollbar for Chrome/Safari */
+}
+
+.links > a:hover,.linksPhone>a:hover{
+    color: var(--primary-btn);
+
+}
+@media (max-width:900px) {
+    .links{
+        display: none;
+    }
+    .linksPhone{
+        display: flex;
+    }
+}
+.pLi {
+    display: none;
+}
+
+.second > a:hover{
+    .pLi{
+        display: inline;
+    }
+    .whLi{
+        display: none;
+    }
+}

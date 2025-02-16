@@ -3,6 +3,9 @@
     justify-content: space-between;
     align-items: center;
     padding:  1.5rem 8%;
+    @media (max-width:500px) {
+        padding: 1.5rem 4%;
+    }
 }
 
 .signIn{
@@ -11,10 +14,10 @@
 
 }
 .logo{
-    width: 7rem;
+    /* width: 7rem; */
     /* height: 5%; */
     /* width: 26%; */
     @media (max-width:510px) {
-        width: 5rem;
+        /* width: 5rem; */
     }
 }

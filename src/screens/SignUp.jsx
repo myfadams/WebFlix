@@ -60,7 +60,7 @@ function SignUp() {
 						{/* <img src="./hide.png" alt="" /> */}
 						<button className={styles.signBtn} onClick={()=>{
 							navigate("/selectProfile");
-							setDisable(!disable)
+							setDisable(true)
 						}} disabled={disable}>Sign Up</button>
 						<label className={styles.checkboxContainer}>
 							<input

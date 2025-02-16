@@ -31,7 +31,7 @@ function SelectUser() {
 						return (
 							<li key={id} className={`${commonStyles.touchableOpacity}`} onClick={()=>{
 
-								navigate("/home",{state:user})
+								navigate("/home",{state:{user}})
 								// setDisable(true)
 							}}>
 								<img src={user.profile} alt={`${user.name} profile`} />
