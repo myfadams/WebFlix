@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./selectuser.module.css";
 import commonStyles from "../components/common/commonstyles.module.css"
 import PopUp from "../components/popup/PopUp";
+import { useNavigate } from "react-router";
 function SelectUser() {
 	const [userProfiles, setUserProfiles] = useState([
 		{ name: "Jennifer", profile: "./avatar1.png" },
@@ -13,7 +14,8 @@ function SelectUser() {
 		name: "",
 		profile: "./avatar1.png",
 	});
-	// const [di]
+	// const [disable,setDisable]=useState(false)
+	const navigate =useNavigate()
 	useEffect(()=>{
 		if(newUser.name!=="")
 			setUserProfiles([...userProfiles, newUser]);
@@ -27,7 +29,11 @@ function SelectUser() {
 				<ul>
 					{userProfiles.map((user, id) => {
 						return (
-							<li key={id} className={`${commonStyles.touchableOpacity}`}>
+							<li key={id} className={`${commonStyles.touchableOpacity}`} onClick={()=>{
+
+								navigate("/home",{state:user})
+								// setDisable(true)
+							}}>
 								<img src={user.profile} alt={`${user.name} profile`} />
 								<p>{user.name}</p>
 							</li>
