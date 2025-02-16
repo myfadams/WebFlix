@@ -1,31 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./selectuser.module.css";
 import commonStyles from "../components/common/commonstyles.module.css"
+import PopUp from "../components/popup/PopUp";
 function SelectUser() {
-	const userProfiles = [
+	const [userProfiles, setUserProfiles] = useState([
 		{ name: "Jennifer", profile: "./avatar1.png" },
 		{ name: "Rex", profile: "./avatar2.png" },
 		{ name: "Bill", profile: "./avatar3.png" },
-		{ name: "Arthur", profile: "./avatar4.png" },
-	];
+		// { name: "Arthur", profile: "./avatar4.png" },
+	]);
+	const [newUser, setNewUser] = useState({
+		name: "",
+		profile: "./avatar1.png",
+	});
+	useEffect(()=>{
+		if(newUser.name!=="")
+			setUserProfiles([...userProfiles, newUser]);
+	},[newUser])
+	const [isOpen, setISOpen]=useState(false)
 	return (
 		<div className={styles.sectionUser}>
 			<h1>Who's watching?</h1>
+			<PopUp isOpen={isOpen} onClose={() => setISOpen(false)} setDet={setNewUser}/>
 			<div className={styles.main}>
 				<ul>
 					{userProfiles.map((user, id) => {
 						return (
-							<li
-								key={id}
-								className={`${commonStyles.touchableOpacity}`}
-							>
+							<li key={id} className={`${commonStyles.touchableOpacity}`}>
 								<img src={user.profile} alt={`${user.name} profile`} />
 								<p>{user.name}</p>
 							</li>
 						);
 					})}
 
-					<div className={`${commonStyles.touchableOpacity} ${styles.addBtn}`}>
+					<div
+						className={`${commonStyles.touchableOpacity} ${styles.addBtn}`}
+						onClick={() => setISOpen(true)}
+					>
 						<img src="./CirclePlus.png" alt="" />
 						<p>Add Profile</p>
 					</div>
