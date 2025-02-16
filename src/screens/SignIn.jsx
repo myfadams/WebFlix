@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import styles from "./sign-up.module.css";
 import Input from "../components/input/Input";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 function SignIn() {
   const [userDetails, setUserDetails] = useState({
-		username: "",
 		email: "",
 		password: "",
-		confirmPassword: "",
 	});
 	const [remember, setRemember] = useState(false);
+	const [disable,setDisable]=useState(false)
+	const navigate =useNavigate()
 	return (
 		<section className={styles.signMain}>
 			<div className={styles.mainOverlay}></div>
@@ -40,7 +40,10 @@ function SignIn() {
 
 						
 						{/* <img src="./hide.png" alt="" /> */}
-						<button className={styles.signBtn}>Sign In</button>
+						<button className={styles.signBtn} onClick={()=>{
+							navigate("/selectProfile");
+							setDisable(!disable)
+						}} disabled={disable}>Sign In</button>
 						<label className={styles.checkboxContainer}>
 							<input
 								type="checkbox"

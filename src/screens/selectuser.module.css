@@ -1,0 +1,72 @@
+
+.sectionUser{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 2rem;
+    height: 100vh;
+    & h1{
+        font-weight: 500;
+    }
+}
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    & ul{
+        padding: 0;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        & li{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out
+        }
+        & li:hover{
+            transform: scale(1.05);
+        }
+        & li >img{
+            width: 7rem;
+            height: 7rem;
+            border-radius: 4px;
+        }
+        & li >p{
+            font-size: 1rem;
+            color: var(--input-text);
+        }
+    }
+}
+
+.addBtn{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    & img {
+            width: 3rem;
+            height: 3rem;
+        }
+}
+
+.btnMan{
+    border-color: var(--border-light) !important;
+    color: var(--input-text) !important;
+    margin-top: 2rem;
+}
+.btnMan:hover{
+    color: var(--primary-btn) !important;
+    border-color: var(--primary-btn) !important;
+}

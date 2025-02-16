@@ -5,6 +5,7 @@ import App from "./App";
 import "./index.css"
 import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
+import SelectUser from "./screens/SelectUser";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
@@ -12,7 +13,8 @@ ReactDOM.createRoot(root).render(
 		<Routes>
 			<Route index element={<App />} />
 			<Route path="register" element={<SignUp />} />
-			<Route path="login" element={<SignIn/>} />
+			<Route path="login" element={<SignIn />} />
+			<Route path="selectProfile" element={<SelectUser/>} />
 		</Routes>
 	</BrowserRouter>
 );

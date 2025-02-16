@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./sign-up.module.css";
 import Input from "../components/input/Input";
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 
 function SignUp() {
 	const location = useLocation();
@@ -13,6 +13,8 @@ function SignUp() {
 		confirmPassword: "",
 	});
 	const [remember, setRemember] = useState(false);
+	const [disable,setDisable]=useState(false)
+	const navigate = useNavigate();
 	
 	
 	return (
@@ -56,7 +58,10 @@ function SignUp() {
 							name={"confirmPassword"}
 						/>
 						{/* <img src="./hide.png" alt="" /> */}
-						<button className={styles.signBtn}>Sign Up</button>
+						<button className={styles.signBtn} onClick={()=>{
+							navigate("/selectProfile");
+							setDisable(!disable)
+						}}>Sign Up</button>
 						<label className={styles.checkboxContainer}>
 							<input
 								type="checkbox"

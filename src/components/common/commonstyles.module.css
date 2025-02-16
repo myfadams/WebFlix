@@ -1,0 +1,32 @@
+.outlineBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    /* width: 13rem; */
+    padding: 0.7rem;
+    font-size: 1.2rem;
+
+    & img {
+        height: 0.9rem;
+    }
+}
+.outlineBtn:hover {
+    border-color: var(--primary-btn);
+    color: var(--primary-btn);
+}
+
+.touchableOpacity {
+    display: "flex";
+    justify-content: "center";
+    align-items: "center";
+    cursor: "pointer";
+    transition: opacity 0.2s ease-in-out;
+}
+
+.touchableOpacity:active {
+    opacity: 0.6;
+}
