@@ -21,6 +21,9 @@
     /* gap: 1.5rem; */
     column-gap: 1.5rem;
 }
+.active{
+    color: var(--primary-btn) !important;
+}
 .linksPhone {
     display: flex;
     align-items: center;

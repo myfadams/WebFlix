@@ -8,7 +8,7 @@ function Home() {
   // console.log(userData)
   return (
 		<div>
-			<HomeNavBar userDetails={userData} />
+			<HomeNavBar userDetails={userData} page={"home"}/>
 			<h1 style={{fontSize:"2rem", margin:"1rem"}}>Welcome {userData?.name}</h1>
 		</div>
 	);
