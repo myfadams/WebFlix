@@ -1,18 +1,33 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from "./homeNavBar.module.css"
 
-const PhoneCarousel = () => {
+const useIsVisible = (threshold = 0.1) => {
+	const [isVisible, setIsVisible] = useState(false);
+	const elementRef = useRef(null);
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				setIsVisible(entry.isIntersecting);
+			},
+			{ threshold }
+		);
+
+		if (elementRef.current) {
+			observer.observe(elementRef.current);
+		}
+
+		return () => {
+			if (elementRef.current) observer.unobserve(elementRef.current);
+		};
+	}, [threshold]);
+	console.log(isVisible)
+	return [elementRef, isVisible];
+};
+
+const PhoneCarousel = ({page}) => {
 	const carouselRef = useRef(null);
-	// useEffect(() => {
-	// 	const el = carouselRef.current;
-	// 	if (el) {
-	// 		// Force it to start at the very first item
-	// 		setTimeout(() => {
-	// 			el.scrollTo({ left: 0, behavior: "instant" });
-	// 		}, 50);
-	// 	}
-	// }, []);
-	// Touch scroll handling
+	
 	const handleTouchStart = (e) => {
 		carouselRef.current.startX = e.touches[0].clientX;
 		carouselRef.current.scrollLeftStart = carouselRef.current.scrollLeft;
@@ -29,87 +44,123 @@ const PhoneCarousel = () => {
 		carouselRef.current.startX = null;
 	};
 
+
+	
+
+
 	return (
-		<div
-			ref={carouselRef}
-			className={styles.linksPhone}
-			onTouchStart={handleTouchStart}
-			onTouchMove={handleTouchMove}
-			onTouchEnd={handleTouchEnd}
-		>
-			<a href="#">Home</a>
-			<a href="#">TV Shows</a>
-			<a href="#">Movies</a>
-			<a href="#">New & Popular</a>
-			<a href="#">My List</a>
-			<a href="#">Browse by Language</a>
-		</div>
+		<>
+			<div
+				ref={carouselRef}
+				className={styles.linksPhone}
+				onTouchStart={handleTouchStart}
+				onTouchMove={handleTouchMove}
+				onTouchEnd={handleTouchEnd}
+			>
+				<a href="" className={`${page == "home" && styles.active}`}>
+					Home
+				</a>
+				<a href="" className={`${page == "tv_shows" && styles.active}`}>
+					Tv Shows
+				</a>
+				<a href="" className={`${page == "movies" && styles.active}`}>
+					Movies
+				</a>
+				<a href="" className={`${page == "new" && styles.active}`}>
+					New & Popular
+				</a>
+				<a href="" className={`${page == "my_list" && styles.active}`}>
+					My List
+				</a>
+				<a href="" className={`${page == "languages" && styles.active}`}>
+					Browse by Language
+				</a>
+			</div>
+			
+		</>
 	);
 };
 
 
 function HomeNavBar({userDetails, page}) {
+	const [ref, isVisible] = useIsVisible();
   return (
-		<div className={styles.navHB}>
-			<div className={styles.homeNav}>
-				<div className={styles.first}>
-					<div className={styles.logo}>
-						<img src="./Wordmark.png" alt="web flix logo" />
+		<>
+			<div className={`${styles.navHB}  ${!isVisible && styles.navHover}`}>
+				<div className={`${styles.homeNav}`}>
+					<div className={styles.first}>
+						<div className={styles.logo}>
+							<img src="./Wordmark.png" alt="web flix logo" />
+						</div>
+						<div className={styles.links}>
+							<a href="" className={`${page == "home" && styles.active}`}>
+								Home
+							</a>
+							<a href="" className={`${page == "tv_shows" && styles.active}`}>
+								Tv Shows
+							</a>
+							<a href="" className={`${page == "movies" && styles.active}`}>
+								Movies
+							</a>
+							<a href="" className={`${page == "new" && styles.active}`}>
+								New & Popular
+							</a>
+							<a href="" className={`${page == "my_list" && styles.active}`}>
+								My List
+							</a>
+							<a href="" className={`${page == "languages" && styles.active}`}>
+								Browse by Language
+							</a>
+						</div>
 					</div>
-					<div className={styles.links}>
-						<a href="" className={`${page=="home"&& styles.active}`}>Home</a>
-						<a href="" className={`${page=="tv_shows"&& styles.active}`}>Tv Shows</a>
-						<a href="" className={`${page=="movies"&& styles.active}`}>Movies</a>
-						<a href="" className={`${page=="new"&& styles.active}`}>New & Popular</a>
-						<a href="" className={`${page=="my_list"&& styles.active}`}>My List</a>
-						<a href="" className={`${page=="languages"&& styles.active}`}>Browse by Language</a>
+					<div className={styles.second}>
+						<a href="">
+							<img
+								src="./Search1.png"
+								alt="Search button"
+								className={styles.whLi}
+								style={{ width: "1.3rem" }}
+							/>
+							<img
+								src="./Search.png"
+								alt="Search button"
+								className={styles.pLi}
+								style={{ width: "1.3rem" }}
+							/>
+						</a>
+						<a href="">
+							<img
+								src="./Notification1.png"
+								alt="Notification buttons"
+								className={styles.whLi}
+								style={{ width: "1.3rem" }}
+							/>
+							<img
+								src="./Notification.png"
+								alt="Notification buttons"
+								className={styles.pLi}
+								style={{ width: "1.3rem" }}
+							/>
+						</a>
+						<a
+							href=""
+							style={{ display: "flex", alignItems: "center", gap: "5px" }}
+						>
+							<img
+								src={userDetails?.profile}
+								alt="profile"
+								style={{ width: "2rem", height: "2rem", borderRadius: "2px" }}
+							/>
+							<img src="./down1.png" alt="" className={styles.whLi} />
+							<img src="./down.png" alt="" className={styles.pLi} />
+						</a>
 					</div>
 				</div>
-				<div className={styles.second}>
-					<a href="">
-						<img
-							src="./Search1.png"
-							alt="Search button"
-							className={styles.whLi}
-						/>
-						<img src="./Search.png" alt="Search button" className={styles.pLi} />
-					</a>
-					<a href="">
-						<img
-							src="./Notification1.png"
-							alt="Notification buttons"
-							className={styles.whLi}
-						/>
-						<img
-						src="./Notification.png"
-						alt="Notification buttons"
-						className={styles.pLi}
-					/>
-					</a>
-					<a
-						href=""
-						style={{ display: "flex", alignItems: "center", gap: "5px" }}
-					>
-						<img
-							src={userDetails?.profile}
-							alt="profile"
-							style={{ width: "2rem", height: "2rem", borderRadius: "2px" }}
-						/>
-						<img src="./down1.png" alt="" className={styles.whLi} />
-						<img src="./down.png" alt="" className={styles.pLi} />
-					</a>
-				</div>
+
+				<PhoneCarousel page={page} />
 			</div>
-			{/* <div className={styles.linksPhone}>
-				<a href="">Home</a>
-				<a href="">Tv Shows</a>
-				<a href="">Movies</a>
-				<a href="">New & Popular</a>
-				<a href="">My List</a>
-				<a href="">Browse by Language</a>
-			</div> */}
-            <PhoneCarousel/>
-		</div>
+			<div ref={ref} style={{ height: "1px" }}></div>
+		</>
 	);
 }
 

@@ -6,14 +6,16 @@
 
   /* color-scheme: light dark; #D33682 #9747FF*/
   color: rgba(255, 255, 255, 0.87);
-  background-color: #141414;
-  --primary-btn: #D33682;
+  /* background-color: #141414; */
+  background-color:#100115;
+  --primary-btn: #e91e63;
   --border-light:#808080;
   --input-text:#BCBCBC;  
   --gradient-color-1:#100725;
   /* #0E1B4F; */
   --gradient-color-2:#6E1F86;
-  --text-primary:"#E5E5E5"
+  --text-primary:"#E5E5E5";
+  --btn-hover: rgba(211,54,130,0.8);
 
   /* background: linear-gradient(90deg, #100725 0%, #6E1F86 100%); */
 

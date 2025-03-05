@@ -1,0 +1,77 @@
+.bodyDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 50%;
+    height: 31.25rem;
+    @media (max-width:750px) {
+        width: 100%;
+        align-items: center;
+    }
+}
+.mainH{
+    display: flex;
+    /* height: 31.25rem; */
+}
+
+.btnMains{
+    box-sizing: border-box;
+    & h1{
+        margin: 0;
+        font-weight:900 ;
+    @media (min-width:1200px) {
+            width: 80%;
+        }
+    }
+    padding: 2rem;
+
+    & p{
+        font-size: 1rem;
+        margin-top:1rem ;
+        color: var(--input-text);
+        @media (min-width:1200px) {
+            width: 80%;
+        }
+    }
+}
+
+.buttonsH{
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    & img{
+        width: 15px;
+        height: 15px;
+    }
+    & button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+       
+        font-weight: 600;
+        
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    & button:first-of-type{
+       
+        background-color: var(--primary-btn);
+        color: white;
+    }
+    & button:first-of-type:hover{
+        background-color: var(--btn-hover);
+    }
+    & button:last-of-type{
+        /* co */
+        background-color: transparent;
+        border: 1.5px solid var(--input-text);
+        color: var(--input-text);
+    }
+         & button:last-of-type:hover{
+            background-color: white;
+            color: var(--primary-btn);
+            border-color: var(--primary-btn);
+            /* border: none; */
+         }
+}

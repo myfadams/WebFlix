@@ -30,3 +30,12 @@
 .touchableOpacity:active {
     opacity: 0.6;
 }
+.movieCard{
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.movieCard:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    /* box-shadow: 0 8px 16px rgba(255, 0, 255, 0.3); */
+      
+}

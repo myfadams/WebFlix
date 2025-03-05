@@ -75,6 +75,7 @@ p{
     width: 42%;
     /* background-color: transparent; */
     background: rgba(0, 0, 0, 0.45);
+    /* background-color: rgba(180, 160, 200, 0.2); */
     padding: 0.7rem 1rem;
     outline: none;
     border-radius: 4px;

@@ -51,7 +51,8 @@
         }
     gap: 0.8rem;
     /* width: 25%; rgba(255, 255, 255, 0.4);*/
-    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(0, 0, 0, 0.5); */
+        background-color: rgba(16, 1, 21, 0.45);
     border-radius: 4px;
     padding: 3.3rem;
 
@@ -106,7 +107,7 @@
 .checkmark {
     width: 18px;
     height: 18px;
-    border: 2px solid #D33682;
+    border: 2px solid var(--primary-btn);
     /* Border color */
     border-radius: 4px;
     display: inline-block;
@@ -116,8 +117,8 @@
 
 /* When checked, show a custom checkmark */
 .checkboxContainer input:checked+.checkmark {
-    background-color: #D33682;
-    border-color: #D33682;
+    background-color: var(--primary-btn);
+    border-color: var(--primary-btn);
 }
 
 .checkboxContainer input:checked+.checkmark::after {
@@ -150,7 +151,8 @@
 .footerD {
     position: relative;
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.8);
+    /* background-color: rgba(0, 0, 0, 0.8); */
+    background-color: rgba(16, 1, 21, 0.7);
     display: flex;
     justify-content: space-around;
     align-items: center;

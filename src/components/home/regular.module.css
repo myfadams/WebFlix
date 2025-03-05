@@ -1,0 +1,70 @@
+.vidArea{
+    margin-top: 3rem;
+
+    & h4{
+        margin: 1.2rem 2rem 0;
+        font-size: 1.4rem;
+        @media (max-width:500px) {
+                margin:0 1rem;
+            }
+    }
+}
+
+.movieThumb {
+    width: 10rem;
+    height: 7rem;
+    object-fit: cover;
+    border-radius: 6px;
+}
+.fwd,.bck{
+    width: 30px;
+    height: 30px;
+    /* padding: 1rem; */
+    top: 32%;
+    color:white;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 100%;
+    padding: 1rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 1000;
+
+    @media (max-width:1000px) {
+        display: none;
+    }
+}
+@media (min-width:999px) {
+    .hove:hover {
+    
+            .fwd,
+            .bck {
+                display: flex;
+            }
+        }
+}
+.fwd{
+    left: 2.5rem;
+}
+.bck{
+    right: 2.5rem;
+}
+.movieFlex{
+   
+    display: flex;
+    gap: 0.6rem;
+   scroll-behavior: smooth;
+    overflow-x: auto;
+    overflow-y: hidden;
+        white-space: nowrap;
+        scrollbar-width: none;
+    
+        -ms-overflow-style: none;
+    
+        -webkit-overflow-scrolling: touch;
+    margin: 1rem 2rem;
+    @media (max-width:500px) {
+        margin: 1rem;
+    }
+}
