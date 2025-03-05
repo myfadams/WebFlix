@@ -29,7 +29,7 @@ function PopUpMenu() {
 					Manage Profiles
 				</button>
 				<button className={styles.menuBtn}>
-					<img src="./upload.png" alt="" style={{ width: "1.6rem" }} />
+					<img src="./QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
 					Upload a Movie
 				</button>
 			</div>

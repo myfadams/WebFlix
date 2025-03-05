@@ -47,3 +47,23 @@
     margin-top: 1rem;
     font-size: 1rem;
 }
+
+.profSelect{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    margin: 2rem;
+    gap: 16px;
+
+    & img{
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    & img:hover{
+        transform: scale(1.04);
+        cursor: pointer;
+    }
+}
+
+.highlighted{
+    border: 3px solid var(--primary-btn);
+    transform: scale(1.04);
+}
