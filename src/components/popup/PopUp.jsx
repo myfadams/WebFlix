@@ -39,7 +39,7 @@ const PopUp = ({ isOpen, onClose, setDet }) => {
 					})}
 				</div>
 				<button className={styles.popBtn} onClick={()=>{
-                    if(userProfile.profileName!==""){
+                    if(userProfile.profileName.trim()!=="" && userProfile.profileImg.trim()!==""){
                         setDet({ name: userProfile.profileName, profile:userProfile.profileImg });
                         onClose()
 
