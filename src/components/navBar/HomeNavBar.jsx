@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from "./homeNavBar.module.css"
+import PopUpMenu from './PopUpMenu';
 
 const useIsVisible = (threshold = 0.1) => {
 	const [isVisible, setIsVisible] = useState(false);
@@ -84,6 +85,7 @@ const PhoneCarousel = ({page}) => {
 
 function HomeNavBar({userDetails, page}) {
 	const [ref, isVisible] = useIsVisible();
+	const [showMenu,setShowMenu]=useState(false)
   return (
 		<>
 			<div className={`${styles.navHB}  ${!isVisible && styles.navHover}`}>
@@ -142,19 +144,60 @@ function HomeNavBar({userDetails, page}) {
 								style={{ width: "1.3rem" }}
 							/>
 						</a>
-						<a
+						<button
 							href=""
-							style={{ display: "flex", alignItems: "center", gap: "5px" }}
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: "5px",
+								padding: "0",
+								backgroundColor: "transparent",
+							}}
+							onClick={() => {
+								setShowMenu(!showMenu);
+							}}
 						>
 							<img
 								src={userDetails?.profile}
 								alt="profile"
 								style={{ width: "2rem", height: "2rem", borderRadius: "2px" }}
 							/>
-							<img src="./down1.png" alt="" className={styles.whLi} />
-							<img src="./down.png" alt="" className={styles.pLi} />
-						</a>
+							{!showMenu && (
+								<>
+									<img
+										src="./down1.png"
+										alt=""
+										className={styles.whLi}
+										style={{ width: "1.5rem" }}
+									/>
+									<img
+										src="./down.png"
+										alt=""
+										className={styles.pLi}
+										style={{ width: "1.5rem" }}
+									/>
+								</>
+							)}
+							{showMenu && (
+								<>
+									<img
+										src="./up.png"
+										alt=""
+										className={styles.whLi}
+										style={{ width: "1.5rem" }}
+									/>
+									<img
+										src="./up1.png"
+										alt=""
+										className={styles.pLi}
+										style={{ width: "1.5rem" }}
+									/>
+								</>
+							)}
+						</button>
 					</div>
+
+					{showMenu && <PopUpMenu />}
 				</div>
 
 				<PhoneCarousel page={page} />
