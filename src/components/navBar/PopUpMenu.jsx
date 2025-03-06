@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import styles from "./popup.module.css"
+import { useNavigate } from 'react-router';
 function PopUpMenu({onClose}) {
+	const navigate = useNavigate();
+	const [disable,setDisable]=useState(false);
     const [userProfiles, setUserProfiles] = useState([
             { name: "Jennifer", profile: "./avatar1.png" },
             { name: "Rex", profile: "./avatar2.png" },
@@ -29,7 +32,10 @@ function PopUpMenu({onClose}) {
 					<img src="./QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
 					Manage Profiles
 				</button>
-				<button className={styles.menuBtn}>
+				<button className={styles.menuBtn} onClick={()=>{
+					navigate("/upload");
+					setDisable(true)
+				}} disabled={disable}>
 					<img src="./upload.png" alt="" style={{ width: "1.6rem" }} />
 					Upload a Movie
 				</button>
