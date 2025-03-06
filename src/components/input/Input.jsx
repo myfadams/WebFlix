@@ -12,6 +12,7 @@ function Input({value,setValue,placeHolder, type,name}) {
 					setValue({ ...value, [name]: val });
 				}}
 				value={value[name]}
+				required
                 // hidden=
 			/>
 			{(name === "password" || name === "confirmPassword") && (
