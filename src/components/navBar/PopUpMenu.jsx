@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./popup.module.css"
-function PopUpMenu() {
+function PopUpMenu({onClose}) {
     const [userProfiles, setUserProfiles] = useState([
             { name: "Jennifer", profile: "./avatar1.png" },
             { name: "Rex", profile: "./avatar2.png" },
@@ -8,6 +8,7 @@ function PopUpMenu() {
             // { name: "Arthur", profile: "./avatar4.png" },
         ]);
   return (
+		<div className={styles.overlay} onClick={()=>{onClose(false)}}>
 		<div className={styles.mainMenu}>
 			<div className={styles.subMen}>
 				{userProfiles.map((user, id) => (
@@ -29,12 +30,13 @@ function PopUpMenu() {
 					Manage Profiles
 				</button>
 				<button className={styles.menuBtn}>
-					<img src="./QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
+					<img src="./upload.png" alt="" style={{ width: "1.6rem" }} />
 					Upload a Movie
 				</button>
 			</div>
 
 			<button className={styles.menuBtn}>Sign out of MovieHaven</button>
+		</div>
 		</div>
 	);
 }

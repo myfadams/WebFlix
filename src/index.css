@@ -4,11 +4,11 @@
   line-height: 1.5;
   font-weight: 400;
 
-  /* color-scheme: light dark; #D33682 #9747FF*/
+  /* color-scheme: light dark; #D33682 #9747FF #e91e63*/
   color: rgba(255, 255, 255, 0.87);
   /* background-color: #141414; */
   background-color:#100115;
-  --primary-btn: #e91e63;
+  --primary-btn: #9D2DC5;
   --border-light:#808080;
   --input-text:#BCBCBC;  
   --gradient-color-1:#100725;

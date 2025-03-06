@@ -86,6 +86,9 @@ const PhoneCarousel = ({page}) => {
 function HomeNavBar({userDetails, page}) {
 	const [ref, isVisible] = useIsVisible();
 	const [showMenu,setShowMenu]=useState(false)
+	useEffect(() => {
+		setShowMenu(false);
+	}, [isVisible]);
   return (
 		<>
 			<div className={`${styles.navHB}  ${!isVisible && styles.navHover}`}>
@@ -197,7 +200,7 @@ function HomeNavBar({userDetails, page}) {
 						</button>
 					</div>
 
-					{showMenu && <PopUpMenu />}
+					{showMenu && <PopUpMenu  onClose={setShowMenu}/>}
 				</div>
 
 				<PhoneCarousel page={page} />
