@@ -22,7 +22,11 @@ function SignUp() {
 			<div className={styles.mainOverlay}></div>
 			<div>
 				<div className={styles.logoDiv}>
-					<img src="./Wordmark.png" alt="" className={styles.logo} />
+					<img
+						src="./Wordmark.png"
+						alt=""
+						className={`${styles.logo} siteLogo`}
+					/>
 				</div>
 				<div className={styles.signBody}>
 					{/* <div className=''> */}
@@ -58,10 +62,16 @@ function SignUp() {
 							name={"confirmPassword"}
 						/>
 						{/* <img src="./hide.png" alt="" /> */}
-						<button className={styles.signBtn} onClick={()=>{
-							navigate("/selectProfile");
-							setDisable(true)
-						}} disabled={disable}>Sign Up</button>
+						<button
+							className={styles.signBtn}
+							onClick={() => {
+								navigate("/selectProfile");
+								setDisable(true);
+							}}
+							disabled={disable}
+						>
+							Sign Up
+						</button>
 						<label className={styles.checkboxContainer}>
 							<input
 								type="checkbox"
@@ -73,7 +83,8 @@ function SignUp() {
 						</label>
 						<div className={styles.new}>
 							<p>
-								Already have an account? <NavLink to={"/login"}>Sign in.</NavLink>
+								Already have an account?{" "}
+								<NavLink to={"/login"}>Sign in.</NavLink>
 							</p>
 							<p>
 								This page is protected by Google reCAPTCHA to ensure you’re not

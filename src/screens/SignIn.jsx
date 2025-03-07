@@ -16,13 +16,17 @@ function SignIn() {
 			<div className={styles.mainOverlay}></div>
 			<div>
 				<div className={styles.logoDiv}>
-					<img src="./Wordmark.png" alt="" className={styles.logo} />
+					<img
+						src="./Wordmark.png"
+						alt=""
+						className={`${styles.logo} siteLogo`}
+					/>
 				</div>
 				<div className={styles.signBody}>
 					{/* <div className=''> */}
 					<form action="">
 						<h2>Sign in</h2>
-		
+
 						<Input
 							placeHolder={"Email"}
 							setValue={setUserDetails}
@@ -38,12 +42,17 @@ function SignIn() {
 							name={"password"}
 						/>
 
-						
 						{/* <img src="./hide.png" alt="" /> */}
-						<button className={styles.signBtn} onClick={()=>{
-							navigate("/selectProfile");
-							setDisable(!disable)
-						}} disabled={disable}>Sign In</button>
+						<button
+							className={styles.signBtn}
+							onClick={() => {
+								navigate("/selectProfile");
+								setDisable(!disable);
+							}}
+							disabled={disable}
+						>
+							Sign In
+						</button>
 						<label className={styles.checkboxContainer}>
 							<input
 								type="checkbox"

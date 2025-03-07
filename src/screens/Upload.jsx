@@ -128,7 +128,7 @@ const Upload = () => {
 					gap: "1rem",
 				}}
 			>
-				<img src="./Wordmark.png" alt="" style={{ objectFit: "contain" }} />{" "}
+				<img src="./Wordmark.png" alt="" className="siteLogo" />{" "}
 				<h2>Upload a Movie</h2>
 			</div>
 			<form onSubmit={handleSubmit} className={styles.UploadForm}>

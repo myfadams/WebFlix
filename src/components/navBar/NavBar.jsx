@@ -7,7 +7,11 @@ function NavBar() {
   return (
 		<div className={styles.navBody}>
 			<div className={styles.logo}>
-				<img src="./Wordmark.png" alt="" className={styles.logo} />
+				<img
+					src="./Wordmark.png"
+					alt=""
+					className={`${styles.logo} siteLogo`}
+				/>
 			</div>
 			<button
 				className={styles.signIn}
