@@ -95,7 +95,11 @@ function HomeNavBar({userDetails, page}) {
 				<div className={`${styles.homeNav}`}>
 					<div className={styles.first}>
 						<div className={styles.logo}>
-							<img src="./Wordmark.png" alt="web flix logo" />
+							<img
+								src="./Wordmark.png"
+								alt="web flix logo"
+								className=".siteLogo"
+							/>
 						</div>
 						<div className={styles.links}>
 							<a href="" className={`${page == "home" && styles.active}`}>
@@ -200,7 +204,7 @@ function HomeNavBar({userDetails, page}) {
 						</button>
 					</div>
 
-					{showMenu && <PopUpMenu  onClose={setShowMenu}/>}
+					{showMenu && <PopUpMenu onClose={setShowMenu} />}
 				</div>
 
 				<PhoneCarousel page={page} />

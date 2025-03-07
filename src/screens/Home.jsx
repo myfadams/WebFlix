@@ -19,10 +19,21 @@ function Home() {
 					position: "absolute",
 					zIndex: "-1000",
 					// height: "100%",
-					opacity: "0.5",
+					// opacity: "0.4",
 					height: "39.5rem",
 				}}
 			/>
+			<div style={{
+					width: "100%",
+					objectFit: "cover",
+					position: "absolute",
+					zIndex: "-1",
+					backgroundColor:"rgba(0,0,0,0.5)",
+					height: "39.5rem",
+				}}
+			>
+
+			</div>
 			<HomeNavBar userDetails={userData} page={"home"} />
 			{/* <h1 style={{fontSize:"2rem", margin:"1rem"}}>Welcome {userData?.name}</h1> */}
 			<Popular />

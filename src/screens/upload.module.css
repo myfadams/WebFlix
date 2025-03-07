@@ -50,9 +50,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(100%) brightness(100%);
     cursor: pointer;
 }
-.UploadForm:hover{
-    cursor: pointer;
-}
+/* .UploadForm:hover{
+    
+} */
 
 .fileField{
     position: relative;
@@ -85,7 +85,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         color: var(--input-text);
     }
 }
-
+.fileField:hover{
+    cursor: pointer !important;
+    .upBtn button{
+        background-color: var(--btn-hover);
+    }
+}
 .upBtn{
     display: flex;
     /* gap:0.7rem; */
@@ -138,7 +143,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width:500px) {
-    .upInp,.date,.UploadForm .select, .UploadForm textArea,.fileField{
+    .mD{
+        width: 100% !important;
+    }
+    .upInp,.date,.UploadForm .select, .UploadForm textArea{
         width: 90%;
+    }
+    .fileField{
+        width: 85%;
     }
 }
