@@ -205,6 +205,7 @@ const Upload = () => {
 					required
 					placeholder="Release Date"
 					className={styles.upInp}
+					// style={{width:"200px" }}
 				/>
 
 				<input
@@ -219,7 +220,7 @@ const Upload = () => {
 				/>
 
 				{/* Genres */}
-				<DropDown list={genreOptions} />
+				<DropDown list={genreOptions}  setValue={setMovieData} values={movieData}/>
 				<input
 					type="text"
 					value={movieData.language}

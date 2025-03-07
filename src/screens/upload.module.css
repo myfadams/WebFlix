@@ -18,7 +18,7 @@
           
         }
 
-    & select, & textArea{
+    & .select, & textArea{
         width: 40%;
         
             box-sizing: border-box;
@@ -37,12 +37,12 @@
         height: 10rem;
     }
 
-    &    select option {
+    &    .select option {
             background: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 10px;
         }
-    & select option:hover {
+    & .select option:hover {
         background: var(--btn-hover);
     }
 }
@@ -138,7 +138,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width:500px) {
-    .upInp,.date,.UploadForm select, .UploadForm textArea,.fileField{
+    .upInp,.date,.UploadForm .select, .UploadForm textArea,.fileField{
         width: 90%;
     }
 }

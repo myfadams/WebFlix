@@ -1,0 +1,39 @@
+.select {
+    width: 40%;
+    position: relative;
+    box-sizing: border-box;
+    /* display: flex; */
+    border-radius: 4px;
+    /* background-color: rgba(100, 100, 100, 0.3); */
+    background-color: rgba(180, 160, 200, 0.2);
+    border: 2px solid var(--primary-btn);
+    padding: 1rem;
+    outline: none;
+    font-size: 1.2rem;
+    color: var(--input-text);
+    max-height: 3.9rem;
+    /* overflow: auto; */
+}
+
+.select option {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+}
+
+.select option:hover {
+    background: var(--btn-hover);
+}
+
+@media (max-width:500px) {
+.select{
+        width: 90%;
+    }
+}
+.sel{
+    position: absolute;
+    width: 90%;
+    opacity: 0;
+    bottom:0;
+    height: 92%;
+}
