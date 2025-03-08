@@ -1,10 +1,10 @@
 .mainOver{
-    padding: 0 2rem ;
+   
     margin-top: 1rem;
     /* border: 1px solid ; */
 }
 .overDesc{
-
+    padding: 0 2rem;
     & h4{
         margin-bottom: 1rem;
         font-weight: 600;
@@ -64,3 +64,101 @@
         border-radius: 5px;
     }
 }
+
+.cast{
+    margin-top: 1.5rem;
+    background-color: var(--card-bg);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 1rem 2rem;
+    & h4 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+}
+.crew{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    
+    & h4{
+        margin: 0 0 0.4rem;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    /* & > div{
+        
+    } */
+    & img{
+        width: 3rem;
+    }
+    & div > div{
+        display: flex;
+        gap: 0.8rem;
+        background-color: #000;
+        border: 1.5px solid var(--primary-btn);
+        padding: 0.3rem 1rem;
+        border-radius: 5px;
+        align-items: center;
+       &  p{
+        font-size: 0.8rem;
+       }
+    }
+}
+
+.cas{
+    & h4{
+        font-size: 1rem;
+    }
+    margin-top: 1rem;
+   
+    & > div:first-of-type{
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        & div{
+            display: flex;
+            gap: 1rem;
+            @media (max-width:500px) {
+                display: none;
+            }
+        }
+    }
+    & > div:last-of-type{
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+        /* scr */
+        & div{
+            & img{
+                width: 5rem;
+                border-radius: 5px;
+            }
+            & p{
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
+
+.carou {
+     background-color: #2A2A2A !important;
+     border: 1.5px solid var(--input-text);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     color: var(--input-text);
+     & img{
+        width: 1rem;
+     }
+
+ }
+
+.carou:hover {
+     border-color: var(--primary-btn);
+
+ }

@@ -41,6 +41,7 @@ const Upload = () => {
 		language: "",
 		director: "",
 		cast: [],
+		crew:[],
 		rating: "",
 		trailer: "",
 		posterLink: "", // Local file upload

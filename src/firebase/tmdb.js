@@ -41,6 +41,7 @@ const fetchMovieDetails = async (
 				detailsData.credits.crew.find((p) => p.job === "Director")?.name ||
 				"Unknown",
 			cast: detailsData.credits.cast.slice(0, 5).map((a) => a),
+			crew: detailsData.credits.crew,
 			rating: detailsData.vote_average,
 			trailer: detailsData.videos.results.find((v) => v.type === "Trailer")
 				? `https://www.youtube.com/watch?v=${

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styles from "./overview.module.css"
 
 import { Rating } from '@mui/material';
@@ -10,6 +10,73 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 			"Mandarin",
 			"Hindi",
 		];
+	const tempGenres=["Horror","SCI-FI", "Action"]
+	const tempCast = [
+		{
+			name: "John Doe",
+			character: "Hero",
+			profile_path: "/cast/Image1.png",
+		},
+		{
+			name: "Jane Smith",
+			character: "Villain",
+			profile_path: "/cast/Image2.png",
+		},
+		{
+			name: "Mike Johnson",
+			character: "Sidekick",
+			profile_path: "/cast/Image3.png",
+		},
+		{
+			name: "Emily Davis",
+			character: "Detective",
+			profile_path: "/cast/Image4.png",
+		},
+		{
+			name: "Chris Brown",
+			character: "Scientist",
+			profile_path: "/cast/Image5.png",
+		},
+	];
+	const crew = [
+		{
+			adult: false,
+			gender: 2,
+			id: 7467,
+			known_for_department: "Directing",
+			name: "David Fincher",
+			original_name: "David Fincher",
+			popularity: 18.514,
+			profile_path: "/cast/Image.png",
+			credit_id: "52fe4250c3a36847f80149f3",
+			department: "Directing",
+			job: "Director",
+		},
+		{
+			adult: false,
+			gender: 2,
+			id: 7468,
+			known_for_department: "Writing",
+			name: "Jim Uhls",
+			original_name: "Jim Uhls",
+			popularity: 6.823,
+			profile_path: "/cast/Image.png",
+			credit_id: "52fe4250c3a36847f80149f7",
+			department: "Writing",
+			job: "Screenplay",
+		},
+	];
+
+	const sliderRef = useRef(null);
+
+	const scroll = (direction) => {
+		if (sliderRef.current) {
+			const scrollAmount = 100;
+			sliderRef.current.scrollLeft +=
+				direction === "left" ? -scrollAmount : scrollAmount;
+		}
+	};
+
   return (
 		<div className={styles.mainOver}>
 			<div className={styles.overDesc}>
@@ -36,7 +103,7 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 				</div>
 				<div className={styles.lang}>
 					{movieLanguages.map((language, id) => (
-						<div>{language}</div>
+						<div key={id}>{language}</div>
 					))}
 				</div>
 
@@ -71,6 +138,71 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 							style={{ color: "var(--primary-btn)" }}
 							size="small"
 						/>
+					</div>
+				</div>
+
+				<div className={styles.releDet}>
+					<div>
+						{" "}
+						<img src="/genre.png" alt="" />
+						Genres
+					</div>
+				</div>
+				<div className={styles.lang}>
+					{tempGenres.map((genre, id) => (
+						<div key={id}>{genre}</div>
+					))}
+				</div>
+			</div>
+			<div className={styles.cast}>
+				<h4>Cast and Crew</h4>
+				<div className={styles.crew}>
+					{crew.map((member, id) => {
+						return (
+							<div key={id}>
+								<h4>{member.job}</h4>
+								<div>
+									<img
+										src={member.profile_path}
+										alt={`picture of ${member.name}`}
+									/>
+									<p>{member.name}</p>
+								</div>
+							</div>
+						);
+					})}
+				</div>
+				<div className={styles.cas}>
+					<div>
+						<h4>Cast</h4>{" "}
+						<div>
+							<button
+								onClick={() => {
+									scroll("left");
+								}}
+								className={styles.carou}
+							>
+								<img src="/moveFwd.png" alt="" />
+							</button>
+							<button
+								onClick={() => {
+									scroll("right");
+								}}
+								className={styles.carou}
+							>
+								<img src="/moveBck.png" alt="" />
+							</button>
+						</div>
+					</div>
+					<div ref={sliderRef}>
+						{tempCast.map((member, id) => {
+							return (
+								<div key={id}>
+									<img src={member.profile_path} alt="" />
+									<p>{member.name}</p>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			</div>
