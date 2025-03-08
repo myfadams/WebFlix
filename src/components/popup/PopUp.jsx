@@ -4,7 +4,7 @@ import Input from  "../input/Input"
 
 const prof = [];
 for (let i = 0; i <= 15; i++) {
-	prof.push(`./avatars/avatar${i != 0 ? i:""}.png`);
+	prof.push(`/avatars/avatar${i != 0 ? i:""}.png`);
 }
 const PopUp = ({ isOpen, onClose, setDet }) => {
 	if (!isOpen) return null; // Don't render if popup is closed

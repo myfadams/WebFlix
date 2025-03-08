@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useLocation } from 'react-router';
 import HomeNavBar from '../components/navBar/HomeNavBar';
 import Popular from '../components/home/Popular';
@@ -8,6 +8,9 @@ function Home() {
   const location = useLocation();
   const userData=location?.state.user
   // console.log(userData)
+  useEffect(()=>{
+		window.scroll(0,0)
+	},[])
   return (
 		<div className={styles.mainBodyHome}>
 			<img
@@ -23,35 +26,44 @@ function Home() {
 					height: "39.5rem",
 				}}
 			/>
-			<div style={{
+			<div
+				style={{
 					width: "100%",
 					objectFit: "cover",
 					position: "absolute",
 					zIndex: "-1",
-					backgroundColor:"rgba(0,0,0,0.5)",
+					backgroundColor: "rgba(0,0,0,0.5)",
 					height: "39.5rem",
 				}}
-			>
-
-			</div>
+			></div>
 			<HomeNavBar userDetails={userData} page={"home"} />
 			{/* <h1 style={{fontSize:"2rem", margin:"1rem"}}>Welcome {userData?.name}</h1> */}
 			<Popular />
 			<div style={{ position: "relative" }}>
 				<div className={styles.title}>Movies</div>
 				<div className={styles.mov}>
-					<VideoDisplay heading={"Our Genre"} single={false} />
-					<VideoDisplay single={true} heading={"Trending Movies"} />
+					<VideoDisplay
+						heading={"Our Genre"}
+						single={false}
+						userData={userData}
+					/>
+					<VideoDisplay
+						single={true}
+						heading={"Trending Movies"}
+						userData={userData}
+					/>
 					<VideoDisplay
 						heading={"Popular Top 10 In Genres"}
 						top10={true}
 						single={false}
+						userData={userData}
 					/>
 					<VideoDisplay
 						single={true}
 						heading={"New Releases"}
 						show={true}
 						newRelease={true}
+						userData={userData}
 					/>
 				</div>
 			</div>

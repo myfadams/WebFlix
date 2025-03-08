@@ -4,15 +4,18 @@ import commonStyles from "../components/common/commonstyles.module.css"
 import PopUp from "../components/popup/PopUp";
 import { useNavigate } from "react-router";
 function SelectUser() {
+	useEffect(()=>{
+			window.scroll(0,0)
+		},[])
 	const [userProfiles, setUserProfiles] = useState([
-		{ name: "Jennifer", profile: "./avatar1.png" },
-		{ name: "Rex", profile: "./avatar2.png" },
-		{ name: "Bill", profile: "./avatar3.png" },
+		{ name: "Jennifer", profile: "/avatar1.png" },
+		{ name: "Rex", profile: "/avatar2.png" },
+		{ name: "Bill", profile: "/avatar3.png" },
 		// { name: "Arthur", profile: "./avatar4.png" },
 	]);
 	const [newUser, setNewUser] = useState({
 		name: "",
-		profile: "./avatar1.png",
+		profile: "/avatar1.png",
 	});
 	// const [disable,setDisable]=useState(false)
 	const navigate =useNavigate()

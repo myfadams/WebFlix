@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../common/commonstyles.module.css";
+import { useNavigate } from "react-router";
 function Single({
 	views,
 	watchTime,
@@ -9,6 +10,9 @@ function Single({
 	show,
 	seasons,
 	newRe,
+	title,
+	movieId,
+	userData
 }) {
 	function formatViews(views) {
 		if (views >= 1_000_000) {
@@ -54,6 +58,8 @@ function Single({
 
 		return `${day} ${month} ${year}`;
 	}
+
+	const navigate =useNavigate();
 	return (
 		<div
 			style={{
@@ -62,6 +68,11 @@ function Single({
 				padding: "0.7rem",
 			}}
 			className={styles.movieCard}
+			onClick={()=>{
+				navigate(`/details/${title}`, {
+					state: { isShow: show, seasons, userData },
+				});
+			}}
 		>
 			<div style={{}}>
 				<img

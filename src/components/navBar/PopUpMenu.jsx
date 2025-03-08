@@ -5,9 +5,9 @@ function PopUpMenu({onClose}) {
 	const navigate = useNavigate();
 	const [disable,setDisable]=useState(false);
     const [userProfiles, setUserProfiles] = useState([
-            { name: "Jennifer", profile: "./avatar1.png" },
-            { name: "Rex", profile: "./avatar2.png" },
-            { name: "Bill", profile: "./avatar3.png" },
+            { name: "Jennifer", profile: "/avatar1.png" },
+            { name: "Rex", profile: "/avatar2.png" },
+            { name: "Bill", profile: "/avatar3.png" },
             // { name: "Arthur", profile: "./avatar4.png" },
         ]);
   return (
@@ -21,22 +21,22 @@ function PopUpMenu({onClose}) {
 					</button>
 				))}
 				<button className={styles.menuBtn}>
-					<img src="./edit.png" alt="" style={{ width: "1.6rem" }} /> Manage
+					<img src="/edit.png" alt="" style={{ width: "1.6rem" }} /> Manage
 					Profiles
 				</button>
 				<button className={styles.menuBtn}>
-					<img src="./transfer.png" alt="" style={{ width: "1.6rem" }} />
+					<img src="/transfer.png" alt="" style={{ width: "1.6rem" }} />
 					Transfer Profiles
 				</button>
 				<button className={styles.menuBtn}>
-					<img src="./QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
+					<img src="/QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
 					Manage Profiles
 				</button>
 				<button className={styles.menuBtn} onClick={()=>{
 					navigate("/upload");
 					setDisable(true)
 				}} disabled={disable}>
-					<img src="./upload.png" alt="" style={{ width: "1.6rem" }} />
+					<img src="/upload.png" alt="" style={{ width: "1.6rem" }} />
 					Upload a Movie
 				</button>
 			</div>

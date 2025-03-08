@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import styles from "./regular.module.css"
 import Genre from './Genre';
 import Single from './Single';
-function VideoDisplay({ heading, top10,single,show,newRelease }) {
+function VideoDisplay({ heading, top10,single,show,newRelease, userData }) {
 	const movieGenres = [
 		{ id: 1, name: "Action" },
 		{ id: 2, name: "Adventure" },
@@ -273,7 +273,10 @@ const newReleases = [
 					{single && !show && (
 						<>
 							{movies.map(
-								({ imageUrl, views, runtime, title, releaseDate }, id) => (
+								(
+									{ imageUrl, views, runtime, title, releaseDate, id: movieId },
+									id
+								) => (
 									<Single
 										imgUrl={imageUrl}
 										releaseDate={releaseDate}
@@ -281,6 +284,9 @@ const newReleases = [
 										views={views}
 										show={show}
 										key={id}
+										title={title}
+										movieId={movieId}
+										userData={userData}
 									/>
 								)
 							)}
@@ -297,6 +303,7 @@ const newReleases = [
 										title,
 										releaseDate,
 										seasons,
+										id: movieId,
 									},
 									id
 								) => (
@@ -308,6 +315,9 @@ const newReleases = [
 										show={show}
 										seasons={seasons}
 										key={id}
+										title={title}
+										movieId={movieId}
+										userData={userData}
 									/>
 								)
 							)}
@@ -325,6 +335,7 @@ const newReleases = [
 										title,
 										releaseDate,
 										seasons,
+										id: movieId,
 									},
 									id
 								) => (
@@ -337,6 +348,9 @@ const newReleases = [
 										seasons={seasons}
 										key={id}
 										newRe={newRelease}
+										title={title}
+										movieId={movieId}
+										userData={userData}
 									/>
 								)
 							)}

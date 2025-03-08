@@ -1,42 +1,17 @@
 import React from 'react'
-import styles from "./SignUp"
-function SignUp() {
+// import HomeNavBar from '../components/navBar/HomeNavBar';
+import { useLocation } from 'react-router';
+function MovieDetails() {
+    const location = useLocation();
+		const userData = location?.state.userData;
+    console.log(userData)
   return (
-		<section className={styles.main}>
-			<div className={styles.mainOverlay}></div>
-			<div className={styles.mainDiv}>
-				<NavBar />
-				<div className={styles.margDiv}>
-					<div className={styles.mainText}>
-						<h1>Unlimited movies, TV shows, and more</h1>
-						<p>Watch anywhere. Cancel anytime.</p>
-					</div>
-					<div className={styles.signUp}>
-						<p>
-							Ready to watch? Enter your email to create or restore your access.
-						</p>
-						<form action="">
-							<input
-								type="email"
-								className={styles.input}
-								placeholder="Email address"
-							/>
-							<button
-								className={styles.signUpBtn}
-								onClick={() => {
-									navigate("/register");
-								}}
-							>
-								Get Started{" "}
-								<img src="./rightArrow.png" alt="" className={styles.i1} />
-								<img src="./right.png" alt="" className={styles.i2} />
-							</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+    <div>
+      {/* <HomeNavBar userDetails={userData}/> */}
+      <img src="avatar3.png" alt="i am here" />
+      <h1>hrll</h1>
+    </div>
+  )
 }
 
-export default SignUp
+export default MovieDetails

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./sign-up.module.css";
 import Input from "../components/input/Input";
 import { NavLink, useLocation, useNavigate } from "react-router";
@@ -12,6 +12,9 @@ function SignUp() {
 		password: "",
 		confirmPassword: "",
 	});
+	useEffect(()=>{
+			window.scroll(0,0)
+		},[])
 	const [remember, setRemember] = useState(false);
 	const [disable,setDisable]=useState(false)
 	const navigate = useNavigate();

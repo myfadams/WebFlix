@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DropDown from "../components/input/DropDown";
 import styles from "./upload.module.css";
 import fetchMovieDetails from "../firebase/tmdb";
@@ -17,6 +17,9 @@ function convertBytes(bytes) {
 	}
 }
 const Upload = () => {
+	useEffect(()=>{
+			window.scroll(0,0)
+		},[])
 	const genreOptions = [
 		"Action",
 		"Comedy",

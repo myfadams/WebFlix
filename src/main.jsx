@@ -8,6 +8,7 @@ import SignIn from "./screens/SignIn";
 import SelectUser from "./screens/SelectUser";
 import Home from "./screens/Home";
 import Upload from "./screens/Upload";
+import Details from "./screens/Details";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
@@ -18,7 +19,9 @@ ReactDOM.createRoot(root).render(
 			<Route path="login" element={<SignIn />} />
 			<Route path="selectProfile" element={<SelectUser />} />
 			<Route path="home" element={<Home />} />
-			<Route path="upload" element={<Upload/>} />
+			<Route path="upload" element={<Upload />} />
+			
+			<Route path="details/:movieName" element={<Details/>} />
 		</Routes>
 	</BrowserRouter>
 );

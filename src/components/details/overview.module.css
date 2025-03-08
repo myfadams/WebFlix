@@ -1,0 +1,66 @@
+.mainOver{
+    padding: 0 2rem ;
+    margin-top: 1rem;
+    /* border: 1px solid ; */
+}
+.overDesc{
+
+    & h4{
+        margin-bottom: 1rem;
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+    & p{
+       @media (min-width:900px) {
+            max-width: 80%;
+       }
+        font-size: 1rem;
+    }
+}
+
+.releDet{
+    margin: 1.5rem 0;
+    & div{
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.8rem;
+    }
+    & div img{
+        width: 1rem;
+    }
+}
+
+.lang{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    & div{
+        font-size: 0.8rem;
+        border: 1.5px solid var(--primary-btn);
+        padding: 0.3rem 0.5rem;
+        border-radius: 4px;
+        background-color: #000;
+    }
+}
+
+.rating{
+    display: flex;
+    gap: 1.5rem;
+    & div{
+        & h4 {
+                /* margin-bottom: 1rem; */
+                margin: 0;
+                font-weight: 600;
+                font-size: 1rem;
+                
+            }
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        flex-direction: column;
+        border: 1px solid var(--primary-btn);
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+    }
+}

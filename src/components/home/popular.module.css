@@ -75,3 +75,24 @@
             /* border: none; */
          }
 }
+
+.detH{
+    gap: 1rem;
+}
+.detBtn{
+    background-color: #2A2A2A !important;
+        border: 1.5px solid var(--input-text);
+        color: var(--input-text);
+        /* border-radius: 50%; */
+        /* padding: ; */
+}
+.detBtn:hover {
+    /* background-color: transparent !important; */
+    /* color: var(--primary-btn); */
+    border-color: var(--primary-btn);
+    /* border: none; */
+}
+
+.bodyDType {
+    height: 25rem;
+}

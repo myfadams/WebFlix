@@ -96,7 +96,7 @@ function HomeNavBar({userDetails, page}) {
 					<div className={styles.first}>
 						<div className={styles.logo}>
 							<img
-								src="./Wordmark.svg"
+								src="/Wordmark.svg"
 								alt="web flix logo"
 								className="siteLogo"
 							/>
@@ -125,13 +125,13 @@ function HomeNavBar({userDetails, page}) {
 					<div className={styles.second}>
 						<a href="">
 							<img
-								src="./Search1.png"
+								src="/Search1.png"
 								alt="Search button"
 								className={styles.whLi}
 								style={{ width: "1.3rem" }}
 							/>
 							<img
-								src="./Search.png"
+								src="/Search.png"
 								alt="Search button"
 								className={styles.pLi}
 								style={{ width: "1.3rem" }}
@@ -139,13 +139,13 @@ function HomeNavBar({userDetails, page}) {
 						</a>
 						<a href="">
 							<img
-								src="./Notification1.png"
+								src="/Notification1.png"
 								alt="Notification buttons"
 								className={styles.whLi}
 								style={{ width: "1.3rem" }}
 							/>
 							<img
-								src="./Notification.png"
+								src="/Notification.png"
 								alt="Notification buttons"
 								className={styles.pLi}
 								style={{ width: "1.3rem" }}
@@ -172,13 +172,13 @@ function HomeNavBar({userDetails, page}) {
 							{!showMenu && (
 								<>
 									<img
-										src="./down1.png"
+										src="/down1.png"
 										alt=""
 										className={styles.whLi}
 										style={{ width: "1.5rem" }}
 									/>
 									<img
-										src="./down.png"
+										src="/down.png"
 										alt=""
 										className={styles.pLi}
 										style={{ width: "1.5rem" }}
@@ -188,13 +188,13 @@ function HomeNavBar({userDetails, page}) {
 							{showMenu && (
 								<>
 									<img
-										src="./up.png"
+										src="/up.png"
 										alt=""
 										className={styles.whLi}
 										style={{ width: "1.5rem" }}
 									/>
 									<img
-										src="./up1.png"
+										src="/up1.png"
 										alt=""
 										className={styles.pLi}
 										style={{ width: "1.5rem" }}
