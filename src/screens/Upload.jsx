@@ -118,7 +118,7 @@ const Upload = () => {
 	};
 
 	return (
-		<div>
+		<div className={styles.mainFor}>
 			<div
 				style={{
 					display: "flex",
@@ -128,7 +128,7 @@ const Upload = () => {
 					gap: "1rem",
 				}}
 			>
-				<img src="./Wordmark.png" alt="" className="siteLogo" />{" "}
+				<img src="./Wordmark.svg" alt="" className="siteLogo" />{" "}
 				<h2>Upload a Movie</h2>
 			</div>
 			<form onSubmit={handleSubmit} className={styles.UploadForm}>

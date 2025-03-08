@@ -47,6 +47,9 @@
     margin-top: 1rem;
     font-size: 1rem;
 }
+.popBtn:hover{
+    background-color: var(--btn-hover);
+}
 
 .profSelect{
     display: grid;

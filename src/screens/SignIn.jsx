@@ -17,7 +17,7 @@ function SignIn() {
 			<div>
 				<div className={styles.logoDiv}>
 					<img
-						src="./Wordmark.png"
+						src="./Wordmark.svg"
 						alt=""
 						className={`${styles.logo} siteLogo`}
 					/>

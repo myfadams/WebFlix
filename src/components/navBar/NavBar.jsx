@@ -8,7 +8,7 @@ function NavBar() {
 		<div className={styles.navBody}>
 			<div className={styles.logo}>
 				<img
-					src="./Wordmark.png"
+					src="./Wordmark.svg"
 					alt=""
 					className={`${styles.logo} siteLogo`}
 				/>

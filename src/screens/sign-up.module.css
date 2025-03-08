@@ -87,8 +87,9 @@
     font-size: 1.1rem;
 }
 
-
-
+.signBtn:hover{
+    background-color: var(--btn-hover);
+}
 
 
 .checkboxContainer {

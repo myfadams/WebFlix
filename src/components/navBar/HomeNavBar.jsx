@@ -96,7 +96,7 @@ function HomeNavBar({userDetails, page}) {
 					<div className={styles.first}>
 						<div className={styles.logo}>
 							<img
-								src="./Wordmark.png"
+								src="./Wordmark.svg"
 								alt="web flix logo"
 								className="siteLogo"
 							/>
