@@ -4,7 +4,9 @@
 
 .trailVid{
     height: 20rem;
-
+    @media (max-width:500px) {
+        height: 15rem;
+    }
     background-color: var(--card-bg);
     border-radius: 5px;
     @media (max-width:500px) {
@@ -44,6 +46,10 @@
         position: absolute;
         bottom: 0;
         right: 1rem;
+    }
+
+    @media (max-width:500px) {
+        margin: 1rem;
     }
 }
 
@@ -109,7 +115,7 @@
     }
 }
 
-.revDiv > div > div:last-of-type{
+.text{
     & p {
         font-size: 0.7rem;
     }
@@ -142,4 +148,16 @@
         width: 1rem;
     }
    }
+}
+
+.like{
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+
+.fav:hover{
+    cursor: pointer !important;
+    transform: scale(1.1);
 }

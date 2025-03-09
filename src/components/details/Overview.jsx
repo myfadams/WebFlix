@@ -66,6 +66,7 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 			job: "Screenplay",
 		},
 	];
+	
 
 	const sliderRef = useRef(null);
 
@@ -124,6 +125,12 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 							precision={0.5}
 							readOnly
 							style={{ color: "var(--primary-btn)" }}
+							
+							sx={{
+								"& .MuiRating-iconEmpty": {
+									color: "white", // Sets unfilled stars to white
+								},
+							}}
 							size="small"
 						/>
 					</div>
