@@ -42,3 +42,11 @@
         }
     }
 }
+
+.isActive{
+    color:var(--primary-btn) !important;
+    /* font-weight: 600; */
+    span {
+            width: 100%;
+        }
+}
