@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import styles from "./popular.module.css"
-function Popular({title,details,type}) {
+import { useNavigate } from 'react-router';
+function Popular({title,details,type,user}) {
     const [btnHover,setBtnHover]=useState(false);
 	const [btnLHover, setBtnLHover] = useState(false);
 	const [btnPHover, setBtnPHover] = useState(false);
+	const [disable, setDisable] = useState(false);
+	const navigate =useNavigate()
+	
   return (
 		<div className={styles.mainH}>
-			<div className={`${styles.bodyDiv} ${type&&styles.bodyDType}`}>
+			<div className={`${styles.bodyDiv} ${type && styles.bodyDType}`}>
 				<div className={styles.btnMains}>
 					<h1>House of Ninjas</h1>
 					{!type && (
@@ -19,7 +23,12 @@ function Popular({title,details,type}) {
 					<div className={`${styles.buttonsH} ${type && styles.detH}`}>
 						{!type && (
 							<>
-								<button>
+								<button
+									onClick={() => {
+										setDisable(true);
+										navigate(`/movie/${"movieWatch"}`);
+									}}
+								>
 									<img src="/Play2.png" alt="" /> Play
 								</button>
 								<button
@@ -29,6 +38,9 @@ function Popular({title,details,type}) {
 									onMouseLeave={() => {
 										setBtnHover(false);
 									}}
+									onClick={()=>{
+										navigate("/details/HomeMovie",{state:{userData:user}});
+									}}
 								>
 									<img src={btnHover ? "/Info.png" : "/Info2.png"} alt="" />
 									More info
@@ -37,7 +49,12 @@ function Popular({title,details,type}) {
 						)}
 						{type && (
 							<>
-								<button>
+								<button
+									onClick={() => {
+										setDisable(true);
+										navigate(`/movie/${"movieWatch"}`);
+									}}
+								>
 									<img src="/Play2.png" alt="" /> Play
 								</button>
 								<button

@@ -58,22 +58,22 @@ const PhoneCarousel = ({page}) => {
 				onTouchMove={handleTouchMove}
 				onTouchEnd={handleTouchEnd}
 			>
-				<a href="" className={`${page == "home" && styles.active}`}>
+				<a href="#" className={`${page == "home" && styles.active}`}>
 					Home
 				</a>
-				<a href="" className={`${page == "tv_shows" && styles.active}`}>
+				<a href="#" className={`${page == "tv_shows" && styles.active}`}>
 					Tv Shows
 				</a>
-				<a href="" className={`${page == "movies" && styles.active}`}>
+				<a href="#" className={`${page == "movies" && styles.active}`}>
 					Movies
 				</a>
-				<a href="" className={`${page == "new" && styles.active}`}>
+				<a href="#" className={`${page == "new" && styles.active}`}>
 					New & Popular
 				</a>
-				<a href="" className={`${page == "my_list" && styles.active}`}>
+				<a href="#" className={`${page == "my_list" && styles.active}`}>
 					My List
 				</a>
-				<a href="" className={`${page == "languages" && styles.active}`}>
+				<a href="#" className={`${page == "languages" && styles.active}`}>
 					Browse by Language
 				</a>
 			</div>

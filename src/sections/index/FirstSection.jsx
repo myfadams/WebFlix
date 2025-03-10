@@ -38,7 +38,7 @@ function FirstSection() {
 										navigate("register",{state:{email}})
 										setDisable(true)
 									}
-								}} disabled={disable}>
+								}} disabled={disable} type='button'>
 									Get Started <img src="./rightArrow.png" alt="" className={styles.i1} />
 									<img src="./right.png" alt="" className={styles.i2} />
 								</button>

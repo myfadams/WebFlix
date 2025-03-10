@@ -6,6 +6,7 @@ import Popular from "../components/home/Popular";
 import Overview from "../components/details/Overview";
 import TrailerReview from "../components/details/TrailerReview";
 import PopUp from "../components/popup/PopUp";
+import Episodes from "../components/details/Episodes";
 function Details() {
 	const location = useLocation();
 	const userData = location?.state.userData;
@@ -57,6 +58,9 @@ function Details() {
 	console.log(userData);
 	useEffect(()=>{
 		window.scroll(0,0)
+		// return ()=>{
+		// 	window.scroll(0, 0);
+		// }
 	},[])
 	const [current,setCurrent]=useState("overview");
 	const [newReview, setNewRewiew] = useState(null);
@@ -67,10 +71,15 @@ function Details() {
 		}, [newReview]);
 	return (
 		<div>
-			<PopUp isOpen={showReview} setDet={setNewRewiew} onClose={()=>{
-				setShowReveiw(false);
-				Details
-			}}  type={"review"}/>
+			<PopUp
+				isOpen={showReview}
+				setDet={setNewRewiew}
+				onClose={() => {
+					setShowReveiw(false);
+					Details;
+				}}
+				type={"review"}
+			/>
 			<div className={styles.mainDetails}>
 				<img
 					src="/temp-bg.png"
@@ -136,7 +145,14 @@ function Details() {
 				</div>
 				{current === "overview" && <Overview />}
 				{current === "trailer" && (
-					<TrailerReview setShowReveiw={setShowReveiw} newReview={newReview} dataR={reviews} />
+					<TrailerReview
+						setShowReveiw={setShowReveiw}
+						newReview={newReview}
+						dataR={reviews}
+					/>
+				)}
+				{current === "episode" && (
+					<Episodes/>
 				)}
 			</div>
 		</div>

@@ -38,7 +38,7 @@ function Home() {
 			></div>
 			<HomeNavBar userDetails={userData} page={"home"} />
 			{/* <h1 style={{fontSize:"2rem", margin:"1rem"}}>Welcome {userData?.name}</h1> */}
-			<Popular />
+			<Popular user={userData}/>
 			<div style={{ position: "relative" }}>
 				<div className={styles.title}>Movies</div>
 				<div className={styles.mov}>
