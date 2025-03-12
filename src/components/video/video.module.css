@@ -125,6 +125,13 @@ video::-webkit-media-controls-start-playback-button {
 	height: 100%;
   }
 }
+.rotback{
+	 transform: translate(-50%, -50%) rotate(0deg);
+	 	position: fixed;
+  width: 100vw !important;
+  height: 80vh;
+
+}
 
 .mobileTitle{
 	display: flex;
@@ -133,7 +140,7 @@ video::-webkit-media-controls-start-playback-button {
 	width: 100%;
 	/* justify-content: ; */
 	top: 1rem;
-	z-index: 40;
+	z-index: 2000;
 	gap: 25%;
 	& button{
 		background-color: transparent;
@@ -144,5 +151,17 @@ video::-webkit-media-controls-start-playback-button {
 	& p{
 		/* margin: auto; */
 		flex-grow: 1;
+	}
+}
+
+.adVideo{
+	position: absolute;
+	z-index: 10000;
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	& video{
+		width: 100% !important;
+		height: 100%;
 	}
 }

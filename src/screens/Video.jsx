@@ -14,8 +14,8 @@ function Video() {
 				justifyContent: "center",
 				alignItems: "center",
 				height: "100vh",
-				overflow: "hidden !important",
-				overscrollBehavior: "contain",
+				// overflow: "hidden !important",
+				// overscrollBehavior: "contain",
 				touchAction: "none",
 			}}
 		>

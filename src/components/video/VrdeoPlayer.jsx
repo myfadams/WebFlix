@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { isIOS } from "react-device-detect";
 import styles from "./video.module.css";
 import { Slider } from "@mui/material";
 import Loading from "./Loading";
 import LoadingSpinner from "../LoadingSpinner";
 import { formatMovieTime } from "../../commonJs/common";
 import { useNavigate } from "react-router";
+import useWindowSize from "../../custom/CustomHooks";
+import { useMediaQuery } from "react-responsive";
 function VideoPlayer() {
 	const videoRef = useRef(null);
 	const containerRef = useRef(null);
@@ -14,18 +16,28 @@ function VideoPlayer() {
 	const [hasLoaded, setHasLoaded] = useState(false);
 	const [duration, setDuration] = useState(false);
 	const [sliderTime, setSliderTime] = useState(0);
-	const navigate= useNavigate();
-	const [disable,setDisable]=useState(false)
-
+	const navigate = useNavigate();
+	const [disable, setDisable] = useState(false);
+	const videoSize = useWindowSize();
+	const [checkMobile, setCheckMobile] = useState(false);
+	const isMobile = useMediaQuery({ maxWidth: 768 });
+	const [showAds,setShowAds]=useState(false);
+	const [mute,setMute]=useState(true);
+	const [adtime,setAdtime]=useState(0);
+	const adRef=useRef()
+	const [timeToplayAd,setTimeToplayAd]=useState(null);
+	const [hasPlayed,setHasPlayed]=useState(false)
+	const isLandscape = useMediaQuery({ query: "(orientation: landscape)" });
 	useEffect(() => {
-			window.scroll(0, 0);
-			const hasVisited = localStorage.getItem("hasVisited");
-			if (!hasVisited) {
-				localStorage.setItem("hasVisited", "true");
-				window.location.reload(); // Reloads the page
-				// window.location.reload();
-			}
-		}, []);
+		// console.log(isMobile, "mobile");
+		if (isMobile) {
+			setCheckMobile(true);
+			return;
+		}
+		setCheckMobile(false);
+	}, [videoSize]);
+	
+	// console.log(videoSize);
 	const handleMove = () => {
 		setShouldShow(true);
 
@@ -52,11 +64,21 @@ function VideoPlayer() {
 	function handleTimeUpdates(event) {
 		const percentage = (event.target.currentTime / duration) * 100;
 		setSliderTime(percentage);
+		// console.log(event.target.currentTime);
+		if (Math.abs(event.target.currentTime - timeToplayAd) <= 0.5 && !hasPlayed) {
+			togglePlay();
+			setShowAds(true)
+			setHasPlayed(true)
+			// console.log("play the add");
+		}
 	}
 	const handleLoading = (event) => {
 		setHasLoaded(true);
 		setDuration(event.target.duration);
 		console.log(event.target.duration, "duration");
+		const adT = Math.random() * (event.target.duration*0.65 - 100) + 100;
+		console.log(adT,"add time")
+		setTimeToplayAd(adT)
 	};
 	const togglePlay = () => {
 		// console.log("plat")
@@ -70,7 +92,7 @@ function VideoPlayer() {
 		}
 	};
 
-	const toggleFullscreen = () => {
+	const toggleFullscreen = async () => {
 		if (containerRef.current) {
 			if (!document.fullscreenElement) {
 				containerRef.current.requestFullscreen();
@@ -78,20 +100,32 @@ function VideoPlayer() {
 				document.exitFullscreen();
 			}
 		}
+
+		if (screen.orientation && screen.orientation.lock) {
+			try {
+				await screen.orientation.lock("landscape");
+			} catch (err) {
+				console.warn("Orientation lock failed:", err);
+			}
+		}
 	};
 	const [shouldShow, setShouldShow] = useState(false);
 	return (
 		<div
 			ref={containerRef}
-			className={`${styles.videoContainer}  ${isMobile && styles.videoMobile}`}
+			className={`${styles.videoContainer}  ${
+				checkMobile && isIOS && styles.videoMobile
+			} ${checkMobile && isIOS && isLandscape &&styles.rotback}`}
 			onMouseMove={handleMove}
 			style={{
-				width: isMobile
-					? `${window.innerHeight}px`
-					: `${window.innerWidth}px`,
+				width:
+					checkMobile && isIOS
+						? `${videoSize.height}px`
+						: `${videoSize.width}px`,
+				height: !checkMobile ? `100vh` : !isIOS && `50vh`,
 			}}
 		>
-			{shouldShow && hasLoaded && (
+			{shouldShow && hasLoaded && !showAds && (
 				<>
 					<div className={styles.mobileTitle}>
 						<button
@@ -103,7 +137,7 @@ function VideoPlayer() {
 						>
 							<img src="/moveFwd.png" alt="" />
 						</button>
-						{isMobile && <p>Sactuary Episode 1</p>}
+						{checkMobile && <p>Sactuary Episode 1</p>}
 					</div>
 
 					<div className={styles.slder}>
@@ -111,7 +145,7 @@ function VideoPlayer() {
 							defaultValue={0}
 							aria-label="none"
 							step={1}
-							disabled={isMobile}
+							disabled={isIOS}
 							disableSwap
 							value={sliderTime}
 							onChange={(_, value) => {
@@ -126,8 +160,8 @@ function VideoPlayer() {
 								"& .MuiSlider-rail": { backgroundColor: "white" },
 								"& .MuiSlider-thumb": {
 									backgroundColor: "var(--primary-btn)",
-									width: isMobile ? 14 : 8, // Bigger thumb for better touch support
-									height: isMobile ? 14 : 8,
+									width: checkMobile ? 14 : 8, // Bigger thumb for better touch support
+									height: checkMobile ? 14 : 8,
 								},
 							}}
 						/>
@@ -137,7 +171,7 @@ function VideoPlayer() {
 								: formatMovieTime((sliderTime / 100) * duration)}
 						</span>
 					</div>
-					{isMobile && (
+					{checkMobile && (
 						<div className={styles.controls}>
 							<button
 								onClick={() => {
@@ -160,7 +194,7 @@ function VideoPlayer() {
 					)}
 					<div className={styles.videoOptions}>
 						<div>
-							{!isMobile && (
+							{!checkMobile && (
 								<button onClick={togglePlay}>
 									<img src={playing ? "/pause.png" : "/LargePlay.png"} alt="" />
 								</button>
@@ -168,7 +202,7 @@ function VideoPlayer() {
 							<button>
 								<img src="/volume.png" alt="" />
 							</button>
-							{!isMobile && (
+							{!checkMobile && (
 								<>
 									<button
 										onClick={() => {
@@ -187,7 +221,7 @@ function VideoPlayer() {
 								</>
 							)}
 						</div>
-						{!isMobile && <div>Sactuary Episode 1</div>}
+						{!checkMobile && <div>Sactuary Episode 1</div>}
 						<div>
 							<button>
 								<img src="/nextVideo.png" alt="" />
@@ -201,7 +235,7 @@ function VideoPlayer() {
 							<button>
 								<img src="/speed.png" alt="" />
 							</button>
-							{!isMobile && (
+							{!isIOS && (
 								<button onClick={toggleFullscreen}>
 									<img src="/resize.png" alt="" />
 								</button>
@@ -221,9 +255,76 @@ function VideoPlayer() {
 					setPlaying(false);
 				}}
 				controls={false}
-				playsInline={isMobile}
+				playsInline={isIOS}
 				// poster={poster}
 			/>
+			{showAds && (
+				<div className={`${styles.adVideo}`}>
+					<button
+						onClick={() => {
+							if (adRef.current.muted) {
+								adRef.current.muted = false;
+								return;
+							}
+							setMute(!mute);
+							adRef.current.muted = true;
+						}}
+						style={{
+							position: "absolute",
+							zIndex: "3000",
+							width: "",
+							backgroundColor: "transparent",
+							bottom: "2rem",
+						}}
+					>
+						<img
+							src={!mute ? "/mute.png" : "/unmute.png"}
+							alt=""
+							style={{ width: "1.5rem" }}
+						/>
+					</button>
+					<button
+						onClick={() => {
+							setShowAds(false);
+							togglePlay();
+						}}
+						style={{
+							position: "absolute",
+							zIndex: "3000",
+
+							color: "white",
+							bottom: "2rem",
+							right: "1rem",
+							backgroundColor: "var(--primary-btn)",
+						}}
+						disabled={adtime < 6}
+					>
+						{adtime < 6 ? `Skip in ${adtime}s` : "Skip"}
+					</button>
+					<video
+						ref={adRef}
+						className={`${styles.adMobile}`}
+						src={"/temp/advideo.mp4"}
+						onEnded={() => {
+							setShowAds(false);
+							togglePlay();
+						}}
+						onClick={() => {
+							adRef.current.pause();
+						}}
+						onTimeUpdate={() => {
+							setTimeout(() => {
+								setAdtime(adtime + 1);
+							}, 1500);
+						}}
+						controls={false}
+						playsInline={isIOS}
+						// poster={poster}
+						muted
+						autoPlay
+					/>
+				</div>
+			)}
 		</div>
 	);
 }
