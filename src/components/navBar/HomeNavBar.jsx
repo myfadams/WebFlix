@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from "./homeNavBar.module.css"
 import PopUpMenu from './PopUpMenu';
+import { Link } from 'react-router';
 
 const useIsVisible = (threshold = 0.1) => {
 	const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +27,7 @@ const useIsVisible = (threshold = 0.1) => {
 	return [elementRef, isVisible];
 };
 
-const PhoneCarousel = ({page}) => {
+const PhoneCarousel = ({page,userDetails}) => {
 	const carouselRef = useRef(null);
 	
 	const handleTouchStart = (e) => {
@@ -58,32 +59,93 @@ const PhoneCarousel = ({page}) => {
 				onTouchMove={handleTouchMove}
 				onTouchEnd={handleTouchEnd}
 			>
-				<a href="#" className={`${page == "home" && styles.active}`}>
+				<Link
+					className={`${page === "home" && styles.active}`}
+					to={"/home"}
+					state={{ user: userDetails, active: "home", userData: userDetails }}
+					replace
+				>
 					Home
-				</a>
-				<a href="#" className={`${page == "tv_shows" && styles.active}`}>
+				</Link>
+
+				<Link
+					className={`${page === "tv_shows" && styles.active}`}
+					to={"/browse/tv shows"}
+					state={{
+						browseDetails: {
+							genreName: "Tv Shows and Series",
+							active: "tv_shows",
+							userData: userDetails,
+						},
+					}}
+					replace
+				>
 					Tv Shows
-				</a>
-				<a href="#" className={`${page == "movies" && styles.active}`}>
+				</Link>
+				<Link
+					className={`${page === "movies" && styles.active}`}
+					to={"/browse/movies"}
+					state={{
+						browseDetails: {
+							genreName: "All Movies",
+							active: "movies",
+							userData: userDetails,
+						},
+					}}
+					replace
+				>
 					Movies
-				</a>
-				<a href="#" className={`${page == "new" && styles.active}`}>
+				</Link>
+				<Link
+					className={`${page === "new" && styles.active}`}
+					to={"/browse/new popoluar"}
+					state={{
+						browseDetails: {
+							genreName: "New & Popular",
+							active: "new",
+							userData: userDetails,
+						},
+					}}
+					replace
+				>
 					New & Popular
-				</a>
-				<a href="#" className={`${page == "my_list" && styles.active}`}>
+				</Link>
+				<Link
+					className={`${page === "my_list" && styles.active}`}
+					to={"/browse/my list"}
+					state={{
+						browseDetails: {
+							genreName: "My List",
+							active: "my_list",
+							userData: userDetails,
+						},
+					}}
+					replace
+				>
 					My List
-				</a>
-				<a href="#" className={`${page == "languages" && styles.active}`}>
+				</Link>
+				<Link
+					className={`${page == "languages" && styles.active}`}
+					to={"/browse/language"}
+					state={{
+						browseDetails: {
+							genreName: "Browse by Language",
+							active: "languages",
+							userData: userDetails,
+						},
+					}}
+					replace
+				>
 					Browse by Language
-				</a>
+				</Link>
 			</div>
-			
 		</>
 	);
 };
 
 
 function HomeNavBar({userDetails, page}) {
+	// console.log(page)
 	const [ref, isVisible] = useIsVisible();
 	const [showMenu,setShowMenu]=useState(false)
 	useEffect(() => {
@@ -102,28 +164,93 @@ function HomeNavBar({userDetails, page}) {
 							/>
 						</div>
 						<div className={styles.links}>
-							<a href="" className={`${page == "home" && styles.active}`}>
+							<Link
+								className={`${page === "home" && styles.active}`}
+								to={"/home"}
+								state={{
+									user: userDetails,
+									active: "home",
+									userData: userDetails,
+								}}
+								replace
+							>
 								Home
-							</a>
-							<a href="" className={`${page == "tv_shows" && styles.active}`}>
+							</Link>
+
+							<Link
+								className={`${page === "tv_shows" && styles.active}`}
+								to={"/browse/tv shows"}
+								state={{
+									browseDetails: {
+										genreName: "Tv Shows and Series",
+										active: "tv_shows",
+										userData: userDetails,
+									},
+								}}
+								replace
+							>
 								Tv Shows
-							</a>
-							<a href="" className={`${page == "movies" && styles.active}`}>
+							</Link>
+							<Link
+								className={`${page === "movies" && styles.active}`}
+								to={"/browse/movies"}
+								state={{
+									browseDetails: {
+										genreName: "All Movies",
+										active: "movies",
+										userData: userDetails,
+									},
+								}}
+								replace
+							>
 								Movies
-							</a>
-							<a href="" className={`${page == "new" && styles.active}`}>
+							</Link>
+							<Link
+								className={`${page === "new" && styles.active}`}
+								to={"/browse/new popoluar"}
+								state={{
+									browseDetails: {
+										genreName: "New & Popular",
+										active: "new",
+										userData: userDetails,
+									},
+								}}
+								replace
+							>
 								New & Popular
-							</a>
-							<a href="" className={`${page == "my_list" && styles.active}`}>
+							</Link>
+							<Link
+								className={`${page === "my_list" && styles.active}`}
+								to={"/browse/my list"}
+								state={{
+									browseDetails: {
+										genreName: "My List",
+										active: "my_list",
+										userData: userDetails,
+									},
+								}}
+								replace
+							>
 								My List
-							</a>
-							<a href="" className={`${page == "languages" && styles.active}`}>
+							</Link>
+							<Link
+								className={`${page == "languages" && styles.active}`}
+								to={"/browse/language"}
+								state={{
+									browseDetails: {
+										genreName: "Browse by Language",
+										active: "languages",
+										userData: userDetails,
+									},
+								}}
+								replace
+							>
 								Browse by Language
-							</a>
+							</Link>
 						</div>
 					</div>
 					<div className={styles.second}>
-						<a href="">
+						<Link>
 							<img
 								src="/Search1.png"
 								alt="Search button"
@@ -136,8 +263,8 @@ function HomeNavBar({userDetails, page}) {
 								className={styles.pLi}
 								style={{ width: "1.3rem" }}
 							/>
-						</a>
-						<a href="">
+						</Link>
+						<Link>
 							<img
 								src="/Notification1.png"
 								alt="Notification buttons"
@@ -150,7 +277,7 @@ function HomeNavBar({userDetails, page}) {
 								className={styles.pLi}
 								style={{ width: "1.3rem" }}
 							/>
-						</a>
+						</Link>
 						<button
 							href=""
 							style={{
@@ -207,7 +334,7 @@ function HomeNavBar({userDetails, page}) {
 					{showMenu && <PopUpMenu onClose={setShowMenu} />}
 				</div>
 
-				<PhoneCarousel page={page} />
+				<PhoneCarousel page={page} userDetails={userDetails} />
 			</div>
 			<div ref={ref} style={{ height: "1px" }}></div>
 		</>

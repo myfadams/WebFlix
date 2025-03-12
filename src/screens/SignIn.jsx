@@ -67,7 +67,7 @@ function SignIn() {
 						</label>
 						<div className={styles.new}>
 							<p>
-								New to MovieHaven? <NavLink to={"/register"}>Sign up.</NavLink>
+								New to MovieHaven? <NavLink to={"/register"} replace>Sign up.</NavLink>
 							</p>
 							<p>
 								This page is protected by Google reCAPTCHA to ensure you’re not

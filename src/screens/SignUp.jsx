@@ -87,7 +87,9 @@ function SignUp() {
 						<div className={styles.new}>
 							<p>
 								Already have an account?{" "}
-								<NavLink to={"/login"}>Sign in.</NavLink>
+								<NavLink to={"/login"} replace>
+									Sign in.
+								</NavLink>
 							</p>
 							<p>
 								This page is protected by Google reCAPTCHA to ensure you’re not

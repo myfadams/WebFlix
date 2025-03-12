@@ -13,20 +13,21 @@ function Single({
 	newRe,
 	title,
 	movieId,
-	userData
+	userData,
 }) {
-	
-
-	const navigate =useNavigate();
+	const navigate = useNavigate();
 	return (
 		<div
 			style={{
 				backgroundColor: "#1F0725",
 				borderRadius: "5px",
 				padding: "0.7rem",
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
 			}}
 			className={styles.movieCard}
-			onClick={()=>{
+			onClick={() => {
 				navigate(`/details/${title}`, {
 					state: { isShow: show, seasons, userData },
 				});
@@ -68,6 +69,7 @@ function Single({
 						justifyContent: "space-between",
 						alignItems: "center",
 						margin: "0.3rem 0 0.2rem ",
+						width: "100%",
 					}}
 				>
 					<div
@@ -82,7 +84,7 @@ function Single({
 					>
 						<>
 							<img
-								src="./time.png"
+								src="/time.png"
 								alt=""
 								style={{ width: "0.6rem", height: "0.6rem" }}
 							/>
@@ -102,7 +104,7 @@ function Single({
 						{!show && (
 							<>
 								<img
-									src="./Union.png"
+									src="/Union.png"
 									alt=""
 									style={{ width: "0.6rem", height: "0.6rem" }}
 								/>
@@ -113,7 +115,7 @@ function Single({
 						{show && (
 							<>
 								<img
-									src="./showIcon.png"
+									src="/showIcon.png"
 									alt=""
 									style={{ width: "0.6rem", height: "0.6rem" }}
 								/>

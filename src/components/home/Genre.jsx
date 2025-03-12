@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "../common/commonstyles.module.css";
-function Genre({genreName,top10}) {
+import { useNavigate } from 'react-router';
+function Genre({genreName,top10,userData}) {
      const videos = [
 			{ link: "./temp/movie.png" },
 			{ link: "./temp/movie.png" },
 			{ link: "./temp/movie.png" },
 			{ link: "./temp/movie.png" },]
+
+	const navigate=useNavigate()
+	
+	const [disable,setDisable]=useState(false);
   return (
 		<div
 			style={{
@@ -15,6 +20,10 @@ function Genre({genreName,top10}) {
 				padding: "0.7rem",
 			}}
 			className={styles.movieCard}
+			onClick={()=>{
+				setDisable(true)
+				navigate(`/browse/${top10?"Top10 "+genreName:genreName}`,{state:{browseDetails:{top10,genreName,userData}}});
+			}}
 		>
 			<div
 				style={{

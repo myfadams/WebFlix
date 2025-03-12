@@ -120,7 +120,11 @@ const Upload = () => {
 		console.log("Movie Data Submitted:", movieData);
 		alert("Movie uploaded successfully!");
 	};
-
+	const [selected, setSelected] = useState("movies");
+	const handleChange = (event) => {
+		setSelected(event.target.value);
+		onSelect(event.target.value);
+	};
 	return (
 		<div className={styles.mainFor}>
 			<div
@@ -135,7 +139,7 @@ const Upload = () => {
 				<img src="./Wordmark.svg" alt="" className="siteLogo" />{" "}
 				<h2>Upload a Movie</h2>
 			</div>
-			<form onSubmit={handleSubmit} className={styles.UploadForm}>
+			<div  className={styles.UploadForm}>
 				<div
 					style={{
 						width: "40%",
@@ -152,13 +156,16 @@ const Upload = () => {
 						onChange={(e) =>
 							setMovieData({ ...movieData, title: e.target.value })
 						}
-						onBlur={() =>
-							fetchMovieDetails(
-								movieData.title,
-								setLoading,
-								setCastInfo,
-								setMovieData
-							)
+						onKeyDown={(event) =>{
+							if(event.key==="Enter")
+								fetchMovieDetails(
+									movieData.title,
+									setLoading,
+									setCastInfo,
+									setMovieData
+								);
+							}
+								
 						}
 						placeholder="Enter movie title"
 						required
@@ -166,7 +173,30 @@ const Upload = () => {
 						className={styles.upInp}
 					/>
 				</div>
-				{!loading && movieData.title.trim() != "" && (
+				<div className={styles.radio}>
+					<label>
+						<input
+							type="radio"
+							name="mediaType"
+							value="movies"
+							checked={selected === "movies"}
+							onChange={handleChange}
+						/>
+						<span>Movies</span>
+					</label>
+					<label>
+						<input
+							type="radio"
+							name="mediaType"
+							value="tvshows"
+							checked={selected === "tvshows"}
+							onChange={handleChange}
+						/>
+						<span>TV Shows</span>
+					</label>
+				</div>
+
+				{!loading && (
 					<>
 						<div className={styles.fileField}>
 							<>
@@ -442,7 +472,7 @@ const Upload = () => {
 						</button>
 					</>
 				)}
-			</form>
+			</div>
 		</div>
 	);
 };

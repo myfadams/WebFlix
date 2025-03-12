@@ -38,7 +38,7 @@ function Home() {
 			></div>
 			<HomeNavBar userDetails={userData} page={"home"} />
 			{/* <h1 style={{fontSize:"2rem", margin:"1rem"}}>Welcome {userData?.name}</h1> */}
-			<Popular user={userData}/>
+			<Popular user={userData} />
 			<div style={{ position: "relative" }}>
 				<div className={styles.title}>Movies</div>
 				<div className={styles.mov}>
@@ -72,7 +72,11 @@ function Home() {
 				<div className={styles.title}>Shows</div>
 				<div className={styles.mov}>
 					<VideoDisplay heading={"Our Genre"} single={false} />
-					<VideoDisplay single={true} heading={"Trending Shows"} show={true} />
+					<VideoDisplay
+						single={true}
+						heading={"Trending Shows"}
+						tvShow={"show"}
+					/>
 					<VideoDisplay
 						heading={"Popular Top 10 In Genres"}
 						top10={true}
@@ -82,7 +86,7 @@ function Home() {
 					<VideoDisplay
 						single={true}
 						heading={"New Releases"}
-						show={true}
+						tvShow={"show"}
 						newRelease={true}
 					/>
 				</div>

@@ -1,0 +1,19 @@
+.bHeader{
+    margin-left: 1rem;
+    margin-right: 1rem;
+     @media (max-width:500px) {
+        font-size: 1.5rem;
+     }
+}
+.moviePage{
+    display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(11rem, 11rem));
+   gap: 2rem;
+   justify-content: center;
+   margin: 1rem;
+   @media (max-width:500px) {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 10rem));
+    gap: 1rem;
+    margin: 0;
+   }
+}

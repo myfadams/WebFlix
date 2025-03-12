@@ -10,6 +10,7 @@ import Home from "./screens/Home";
 import Upload from "./screens/Upload";
 import Details from "./screens/Details";
 import Video from "./screens/Video";
+import BrowseScreen from "./screens/BrowseScreen";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
@@ -23,7 +24,8 @@ ReactDOM.createRoot(root).render(
 			<Route path="upload" element={<Upload />} />
 
 			<Route path="details/:movieName" element={<Details />} />
-			<Route path="movie/:movieName" element={<Video/>} />
+			<Route path="movie/:movieName" element={<Video />} />
+			<Route path="browse/:category" element={<BrowseScreen/>} />
 		</Routes>
 	</BrowserRouter>
 );
