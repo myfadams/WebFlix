@@ -62,4 +62,143 @@ const fetchMovieDetails = async (
 	setLoading(false);
 };
 
+
+export async function fetchShowDetails(
+	showName,
+	seasonNumber,
+	episodeNumber,
+	setCastInfo,
+	setEpisodeDetails,
+	setLoading
+) {
+	setLoading(true)
+	try {
+		// Step 1: Search for the show by name
+		const searchRes = await fetch(
+			`https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(
+				showName
+			)}`
+		);
+		const searchData = await searchRes.json();
+		if (!searchData.results.length) throw new Error("Show not found");
+
+		const show = searchData.results[0]; // First result (most relevant)
+		const showId = show.id;
+
+		// Step 2: Fetch full show details
+		const showRes = await fetch(
+			`https://api.themoviedb.org/3/tv/${showId}?api_key=${API_KEY}`
+		);
+		const showDetails = await showRes.json();
+		
+		// Step 3: Fetch credits (cast & crew)
+		const creditsRes = await fetch(
+			`https://api.themoviedb.org/3/tv/${showId}/credits?api_key=${API_KEY}`
+		);
+		const creditsData = await creditsRes.json();
+
+		// Extract cast details
+		const cast = creditsData.cast
+			? creditsData.cast
+					.slice(0, 10)
+					.map(({ name, character, profile_path }) => ({
+						name,
+						character,
+						image: profile_path
+							? `https://image.tmdb.org/t/p/w500${profile_path}`
+							: "https://via.placeholder.com/100", // Default placeholder if no image
+					}))
+			: [];
+			setCastInfo(cast)
+		// Extract crew details
+		const crew = creditsData.crew
+			? creditsData.crew
+					.filter(
+						(person) => person.job === "Director" || person.job === "Producer"
+					)
+					.map(({ name, job, profile_path }) => ({
+						name,
+						job,
+						image: profile_path
+							? `https://image.tmdb.org/t/p/w500${profile_path}`
+							: "https://via.placeholder.com/100", // Default placeholder if no image
+					}))
+			: [];
+		
+
+		const videosRes = await fetch(
+			`https://api.themoviedb.org/3/tv/${showId}/videos?api_key=${API_KEY}`
+		);
+		const videosData = await videosRes.json();
+		const trailer =
+			videosData.results.find((video) => video.type === "Trailer")?.key || "";
+		const trailerLink = trailer
+			? `https://www.youtube.com/watch?v=${trailer}`
+			: "";
+		
+		// Calculate total runtime (estimated)
+		const avgRuntime = showDetails.episode_run_time?.[0] || 40; // Average episode runtime
+		const totalEpisodes = showDetails.number_of_episodes;
+		const totalRuntime = avgRuntime * totalEpisodes; // Estimated total runtime
+
+		// Step 4: Fetch specific season & episode details (if provided)
+		let episodeDetails = {};
+		if (seasonNumber && episodeNumber) {
+			const episodeRes = await fetch(
+				`https://api.themoviedb.org/3/tv/${showId}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${API_KEY}`
+			);
+			episodeDetails = await episodeRes.json();
+
+			console.log(episodeDetails);
+		}
+
+		// Step 5: Format and return the collected data
+		const res = {
+			name: showDetails.name,
+			genres: showDetails.genres.map((g) => g.name),
+			description: showDetails.overview,
+			language: showDetails.original_language,
+			director: showDetails.created_by[0],
+			numberOfSeasons:showDetails.number_of_seasons,
+
+			showReleaseDate: showDetails.first_air_date,
+			cast,
+			crew,
+			rating: showDetails.vote_average,
+			trailer:
+				trailerLink||
+				"",
+			posterLink: showDetails.poster_path
+				? `https://image.tmdb.org/t/p/w500${showDetails.poster_path}`
+				: "",
+			backdropLink: showDetails.backdrop_path
+				? `https://image.tmdb.org/t/p/original${showDetails.backdrop_path}`
+				: "",
+			totalRuntime, // Estimated total runtime (avg episode runtime * total episodes)
+			seasonDetails: {
+				seasonNumber,
+				episodeDetails: episodeNumber
+					? {
+							title: episodeDetails.name,
+							overview: episodeDetails.overview,
+							runtime: episodeDetails.runtime,
+							airDate: episodeDetails.air_date,
+							stillPath: episodeDetails.still_path
+								? `https://image.tmdb.org/t/p/w500${episodeDetails.still_path}`
+								: "",
+					  }
+					: {},
+			},
+		};
+		setEpisodeDetails(res)
+		// console.log(res)
+		setLoading(false)
+	} catch (error) {
+		console.error("Error fetching show details:", error);
+	}
+}
+
+
+
+
 export default fetchMovieDetails;

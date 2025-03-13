@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./drop.module.css";
-function DropDown({ list, name, setValue, values }) {
+function DropDown({ list, name, setValue, values,type }) {
 	const [selectedGenre, setSelectedGenre] = useState(values.genres); // Use a string instead of an array
 
 	const handleGenreChange = (event) => {
@@ -10,9 +10,7 @@ function DropDown({ list, name, setValue, values }) {
 			setSelectedGenre(updatedGenres);
 			setValue({ ...values, genres: updatedGenres });
 		}
-		// setSelectedGenre([...selectedGenre, newGenre]);
-		// setValue({ ...values, genres: [...values.genres, newGenre] });
-		// console.log(values);
+	
 	};
 
 	return (
