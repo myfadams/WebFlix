@@ -25,6 +25,11 @@
     background: var(--btn-hover);
 }
 
+@media (max-width: 1000px) {
+    .select{
+        width: 70%
+    }
+}
 @media (max-width:500px) {
 .select{
         width: 90%;

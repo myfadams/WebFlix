@@ -62,7 +62,11 @@ const PhoneCarousel = ({page,userDetails}) => {
 				<Link
 					className={`${page === "home" && styles.active}`}
 					to={"/home"}
-					state={{ user: userDetails, active: "home", userData: userDetails }}
+					state={{
+						user: userDetails,
+						active: "home",
+						userData: userDetails,
+					}}
 					replace
 				>
 					Home
@@ -77,6 +81,8 @@ const PhoneCarousel = ({page,userDetails}) => {
 							active: "tv_shows",
 							userData: userDetails,
 						},
+						typeSect: "sections",
+						show: "show",
 					}}
 					replace
 				>
@@ -91,6 +97,7 @@ const PhoneCarousel = ({page,userDetails}) => {
 							active: "movies",
 							userData: userDetails,
 						},
+						typeSect: "sections",
 					}}
 					replace
 				>
@@ -105,6 +112,7 @@ const PhoneCarousel = ({page,userDetails}) => {
 							active: "new",
 							userData: userDetails,
 						},
+						typeSect: "sections",
 					}}
 					replace
 				>
@@ -119,6 +127,7 @@ const PhoneCarousel = ({page,userDetails}) => {
 							active: "my_list",
 							userData: userDetails,
 						},
+						typeSect: "sections",
 					}}
 					replace
 				>
@@ -133,6 +142,7 @@ const PhoneCarousel = ({page,userDetails}) => {
 							active: "languages",
 							userData: userDetails,
 						},
+						typeSect: "sections",
 					}}
 					replace
 				>
@@ -186,6 +196,8 @@ function HomeNavBar({userDetails, page}) {
 										active: "tv_shows",
 										userData: userDetails,
 									},
+									typeSect: "sections",
+									show: "show",
 								}}
 								replace
 							>
@@ -200,6 +212,7 @@ function HomeNavBar({userDetails, page}) {
 										active: "movies",
 										userData: userDetails,
 									},
+									typeSect: "sections",
 								}}
 								replace
 							>
@@ -214,6 +227,7 @@ function HomeNavBar({userDetails, page}) {
 										active: "new",
 										userData: userDetails,
 									},
+									typeSect: "sections",
 								}}
 								replace
 							>
@@ -228,6 +242,7 @@ function HomeNavBar({userDetails, page}) {
 										active: "my_list",
 										userData: userDetails,
 									},
+									typeSect: "sections",
 								}}
 								replace
 							>
@@ -242,6 +257,7 @@ function HomeNavBar({userDetails, page}) {
 										active: "languages",
 										userData: userDetails,
 									},
+									typeSect: "sections",
 								}}
 								replace
 							>
@@ -279,7 +295,6 @@ function HomeNavBar({userDetails, page}) {
 							/>
 						</Link>
 						<button
-							href=""
 							style={{
 								display: "flex",
 								alignItems: "center",

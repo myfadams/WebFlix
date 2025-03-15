@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../common/commonstyles.module.css";
 import { useNavigate } from "react-router";
 import formatViews, { formatDate, formatRuntime } from "../../commonJs/common";
@@ -13,11 +13,13 @@ function Single({
 	newRe,
 	title,
 	movieId,
-	userData,
+	userData, detObj
 }) {
 	const navigate = useNavigate();
+	const [disable,setDisable]=useState(false)
+	console.log(detObj)
 	return (
-		<div
+		<button
 			style={{
 				backgroundColor: "#1F0725",
 				borderRadius: "5px",
@@ -25,13 +27,36 @@ function Single({
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
+				color:"white"
 			}}
 			className={styles.movieCard}
 			onClick={() => {
-				navigate(`/details/${title}`, {
-					state: { isShow: show, seasons, userData },
-				});
+				setDisable(true)
+				if(!show){
+					navigate(`/details/${title || detObj?.title || detObj?.name}`, {
+						state: {
+							isShow: show,
+							seasons,
+							userData,
+							filmObj: detObj,
+							typeOfFilm: "movie",
+						},
+					});
+				}else{
+					navigate(`/details/${title || detObj?.title || detObj?.name}`, {
+						state: {
+							isShow: show,
+							seasons: detObj?.seasons.filter((season) => season !== null),
+							userData,
+							filmObj: detObj,
+							typeOfFilm: "shows",
+						},
+					});
+				}
+				setDisable(false)
 			}}
+			disabled={disable}
+			
 		>
 			<div style={{}}>
 				<img
@@ -138,7 +163,7 @@ function Single({
 					release at {formatDate(releaseDate)}{" "}
 				</div>
 			)}
-		</div>
+		</button>
 	);
 }
 

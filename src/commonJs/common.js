@@ -442,3 +442,78 @@ export const newReleases = [
 		imageUrl: "./temp/show4.png",
 	},
 ];
+
+
+export function getLanguageName(code) {
+	const languageMap = {
+		en: "English",
+		zh: "Chinese",
+		hi: "Hindi",
+		es: "Spanish",
+		fr: "French",
+		ar: "Arabic",
+		bn: "Bengali",
+		ru: "Russian",
+		pt: "Portuguese",
+		ja: "Japanese",
+		de: "German",
+		ko: "Korean",
+		te: "Telugu",
+		ta: "Tamil",
+		mr: "Marathi",
+		tr: "Turkish",
+		pa: "Punjabi",
+		it: "Italian",
+		ur: "Urdu",
+		fa: "Persian",
+	};
+
+	return languageMap[code] || code;
+}
+
+export function convertToEmbedURL(url) {
+	const urlObj = new URL(url);
+	const videoID = urlObj.searchParams.get("v");
+
+	if (!videoID) {
+		return "Invalid YouTube URL";
+	}
+
+	return `https://www.youtube.com/embed/${videoID}?fs=0`;
+}
+
+
+export function shuffleArray(array) {
+	for (let i = array?.length - 1; i > 0; i--) {
+		let j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+		[array[i], array[j]] = [array[j], array[i]]; // Swap elements
+	}
+	return array;
+}
+
+export function get4Covers(array, genre) {
+	let selected = array
+		?.filter((item) =>
+			item.genres.some((it) => it.toLowerCase().includes(genre.toLowerCase()))
+		)
+		.slice(0, 4);
+
+	if (selected?.length < 4) {
+		// Get movies that are NOT already selected
+		let remainingMovies = array.filter((item) => !selected.includes(item));
+
+		// Shuffle the remaining movies
+		for (let i = remainingMovies?.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[remainingMovies[i], remainingMovies[j]] = [
+				remainingMovies[j],
+				remainingMovies[i],
+			];
+		}
+
+		// Add enough unique movies to reach 4
+		selected = [...selected, ...remainingMovies.slice(0, 4 - selected.length)];
+	}
+
+	return selected;
+}

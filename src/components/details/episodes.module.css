@@ -112,7 +112,9 @@
     } */
 }
 .mob{
-    max-height: 2rem;
+   display: none;
+   @media (max-width:600px) {
+         max-height: 2rem;
     display: flex;
         background-color: transparent;
         align-items: center;
@@ -121,6 +123,7 @@
         & img {
             width: 1.2rem;
         }
+   }
 }
 
 @media (max-width:830px) {

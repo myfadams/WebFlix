@@ -96,7 +96,9 @@ export async function fetchShowDetails(
 			`https://api.themoviedb.org/3/tv/${showId}/credits?api_key=${API_KEY}`
 		);
 		const creditsData = await creditsRes.json();
-
+		console.log(
+			`https://api.themoviedb.org/3/tv/${showId}/credits?api_key=${API_KEY}`
+		);
 		// Extract cast details
 		const cast = creditsData.cast
 			? creditsData.cast
@@ -108,24 +110,25 @@ export async function fetchShowDetails(
 							? `https://image.tmdb.org/t/p/w500${profile_path}`
 							: "https://via.placeholder.com/100", // Default placeholder if no image
 					}))
-			: [];
+			: null;
 			setCastInfo(cast)
 		// Extract crew details
-		const crew = creditsData.crew
-			? creditsData.crew
-					.filter(
-						(person) => person.job === "Director" || person.job === "Producer"
-					)
-					.map(({ name, job, profile_path }) => ({
-						name,
-						job,
-						image: profile_path
-							? `https://image.tmdb.org/t/p/w500${profile_path}`
-							: "https://via.placeholder.com/100", // Default placeholder if no image
-					}))
-			: [];
 		
-
+		const crew = creditsData.crew
+			? creditsData.crew.slice(0,5): [];
+		
+		const director = creditsData.crew
+			.filter(
+				(person) => person.job === "Director" || person.job === "Producer"
+			)
+			.map(({ name, job, profile_path }) => ({
+				name,
+				job,
+				image: profile_path
+					? `https://image.tmdb.org/t/p/w500${profile_path}`
+					: "https://via.placeholder.com/100", // Default placeholder if no image
+			}));
+			console.log(showDetails.guest_stars);
 		const videosRes = await fetch(
 			`https://api.themoviedb.org/3/tv/${showId}/videos?api_key=${API_KEY}`
 		);
@@ -149,36 +152,37 @@ export async function fetchShowDetails(
 			);
 			episodeDetails = await episodeRes.json();
 
-			console.log(episodeDetails);
 		}
-
+		
 		// Step 5: Format and return the collected data
+		
+		console.log(cast);
 		const res = {
 			name: showDetails.name,
 			genres: showDetails.genres.map((g) => g.name),
 			description: showDetails.overview,
 			language: showDetails.original_language,
-			director: showDetails.created_by[0],
-			numberOfSeasons:showDetails.number_of_seasons,
+			director: director[0] || showDetails.created_by[0] ,
+			numberOfSeasons: showDetails.number_of_seasons,
 
 			showReleaseDate: showDetails.first_air_date,
-			cast,
+			cast: cast.length>0 ? cast:episodeDetails.guest_stars.slice(0, 5),
 			crew,
 			rating: showDetails.vote_average,
-			trailer:
-				trailerLink||
-				"",
+			trailer: trailerLink || "",
 			posterLink: showDetails.poster_path
 				? `https://image.tmdb.org/t/p/w500${showDetails.poster_path}`
 				: "",
 			backdropLink: showDetails.backdrop_path
 				? `https://image.tmdb.org/t/p/original${showDetails.backdrop_path}`
 				: "",
-			totalRuntime, // Estimated total runtime (avg episode runtime * total episodes)
+			totalRuntime,
 			seasonDetails: {
 				seasonNumber,
 				episodeDetails: episodeNumber
 					? {
+							episodeNo: episodeNumber,
+							seasonNumber,
 							title: episodeDetails.name,
 							overview: episodeDetails.overview,
 							runtime: episodeDetails.runtime,

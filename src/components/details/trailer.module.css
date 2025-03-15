@@ -4,6 +4,7 @@
 
 .trailVid{
     height: 20rem;
+    width: 100%;
     @media (max-width:500px) {
         height: 15rem;
     }
@@ -20,13 +21,23 @@
 .mainTandR{
     
 }
-
+.tVid{
+    display:flex;
+     @media (max-width:500px) {
+     justify-content:center;
+     }
+}
 .vidsect{
     margin: 2rem;
-    position: relative;
+    /* position: relative; */
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    width: 50%;
+    @media (max-width:500px) {
+        width: 90%;
+    }
+    height: auto;
     & button{
         /* top: 8.5rem; */
         position: absolute;

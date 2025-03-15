@@ -4,10 +4,13 @@
     justify-content: flex-end;
     width: 50%;
     height: 31.25rem;
+
     @media (max-width:750px) {
         width: 100%;
         align-items: center;
+        height: auto;
     }
+
 }
 .mainH{
     display: flex;
@@ -32,6 +35,7 @@
         @media (min-width:1200px) {
             width: 80%;
         }
+        text-overflow: ellipsis;
     }
 }
 

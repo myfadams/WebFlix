@@ -2,8 +2,13 @@ import React, { useEffect } from "react";
 import VideoPlayer from "../components/video/VrdeoPlayer";
 import { Slider } from "@mui/material";
 import VerticalSlider from "../components/video/Temp";
+import { useLocation } from "react-router";
 
 function Video() {
+	const location =useLocation();
+	const url = location?.state?.filmUrl;
+	const title=location?.state?.title
+
 	useEffect(() => {
 		window.scroll(0, 0);
 	}, []);
@@ -19,7 +24,7 @@ function Video() {
 				touchAction: "none",
 			}}
 		>
-			<VideoPlayer />
+			<VideoPlayer urlFilm={url} title={title}/>
 		</div>
 	);
 }

@@ -1,10 +1,42 @@
-import React, { useRef } from 'react'
-import styles from "./regular.module.css"
-import Genre from './Genre';
-import Single from './Single';
-import { movieGenres, movies, newReleases, shows } from '../../commonJs/common';
-function VideoDisplay({ heading, top10,single,tvShow,newRelease, userData }) {
-	
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./regular.module.css";
+import Genre from "./Genre";
+import Single from "./Single";
+import {
+	movieGenres,
+	movies,
+	newReleases,
+	shows,
+	shuffleArray,
+} from "../../commonJs/common";
+import { getMovies, getShows } from "../../firebase/database";
+function VideoDisplay({
+	heading,
+	top10,
+	single,
+	tvShow,
+	newRelease,
+	userData,
+}) {
+	const [isLoading, setIsLoading] = useState(false);
+	const [moviesData, setMoviesData] = useState();
+	const [showsData, setShowsData] = useState();
+	useEffect(() => {
+		setIsLoading(true);
+		getMovies("movies").then((movies) => {
+			// console.log(movies);
+			setMoviesData(shuffleArray(movies));
+		});
+		getShows()
+			.then((shows) => {
+				// console.log(shows);
+				setShowsData(shuffleArray(shows));
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	}, []);
+
 	const sliderRef = useRef(null);
 
 	const scroll = (direction) => {
@@ -14,7 +46,6 @@ function VideoDisplay({ heading, top10,single,tvShow,newRelease, userData }) {
 				direction === "left" ? -scrollAmount : scrollAmount;
 		}
 	};
-
 	return (
 		<div className={styles.vidArea}>
 			<h4>{heading}</h4>
@@ -22,97 +53,74 @@ function VideoDisplay({ heading, top10,single,tvShow,newRelease, userData }) {
 				<div className={styles.movieFlex} ref={sliderRef}>
 					{!single && (
 						<>
-							
 							{movieGenres.map(({ name }, id) => (
-								<Genre genreName={name} key={id} top10={top10} userData={userData}/>
+								<Genre
+									genreName={name}
+									key={id}
+									top10={top10}
+									userData={userData}
+									movies={moviesData}
+									tvShows={showsData}
+									show={tvShow}
+								/>
 							))}
 						</>
 					)}
 
 					{single && !tvShow && (
 						<>
-							{movies.map(
-								(
-									{ imageUrl, views, runtime, title, releaseDate, id: movieId },
-									id
-								) => (
-									<Single
-										imgUrl={imageUrl}
-										releaseDate={releaseDate}
-										watchTime={runtime}
-										views={views}
-										show={tvShow}
-										key={id}
-										title={title}
-										movieId={movieId}
-										userData={userData}
-									/>
-								)
-							)}
+							{moviesData?.map((movie, id) => (
+								<Single
+									imgUrl={movie?.posterLink}
+									releaseDate={movie?.releaseDate}
+									watchTime={movie?.runtime}
+									views={movie?.views || 0}
+									show={tvShow}
+									key={id}
+									title={movie?.title}
+									movieId={movie?.id}
+									userData={userData}
+									detObj={movie}
+								/>
+							))}
 						</>
 					)}
 					{single && tvShow && !newRelease && (
 						<>
-							{shows.map(
-								(
-									{
-										imageUrl,
-										views,
-										totalWatchTime,
-										title,
-										releaseDate,
-										seasons,
-										id: movieId,
-									},
-									id
-								) => (
-									<Single
-										imgUrl={imageUrl}
-										releaseDate={releaseDate}
-										watchTime={totalWatchTime}
-										views={views}
-										show={tvShow}
-										seasons={seasons}
-										key={id}
-										title={title}
-										movieId={movieId}
-										userData={userData}
-									/>
-								)
-							)}
+							{showsData?.map((show, id) => (
+								<Single
+									imgUrl={show?.posterLink}
+									releaseDate={show?.showReleaseDate}
+									watchTime={show?.totalRuntime}
+									views={show?.views}
+									show={tvShow}
+									seasons={show?.numberOfSeasons}
+									key={id}
+									title={show?.name}
+									// movieId={movieId}
+									userData={userData}
+									detObj={show}
+								/>
+							))}
 						</>
 					)}
 
 					{single && tvShow && newRelease && (
 						<>
-							{newReleases.map(
-								(
-									{
-										imageUrl,
-										views,
-										totalWatchTime,
-										title,
-										releaseDate,
-										seasons,
-										id: movieId,
-									},
-									id
-								) => (
-									<Single
-										imgUrl={imageUrl}
-										releaseDate={releaseDate}
-										watchTime={totalWatchTime}
-										views={views}
-										show={tvShow}
-										seasons={seasons}
-										key={id}
-										newRe={newRelease}
-										title={title}
-										movieId={movieId}
-										userData={userData}
-									/>
-								)
-							)}
+							{showsData?.map((show, id) => (
+								<Single
+									imgUrl={show?.posterLink}
+									releaseDate={show?.showReleaseDate}
+									watchTime={show?.totalRuntime}
+									views={show?.views}
+									show={tvShow}
+									seasons={show?.numberOfSeasons}
+									key={id}
+									title={show?.name}
+									userData={userData}
+									detObj={show}
+								/>
+							))}
 						</>
 					)}
 				</div>
@@ -140,4 +148,4 @@ function VideoDisplay({ heading, top10,single,tvShow,newRelease, userData }) {
 	);
 }
 
-export default VideoDisplay
+export default VideoDisplay;

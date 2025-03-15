@@ -2,7 +2,11 @@ import React, { useRef } from 'react'
 import styles from "./overview.module.css"
 
 import { Rating } from '@mui/material';
-function Overview({Descprition,releaseDate,cast,genres,directior}) {
+import { getLanguageName } from '../../commonJs/common';
+function Overview({descprition,releaseDate,cast,genres,director, fType, fCrew, movieGenre, lang, movieRating}) {
+	// console.log(fCrew)
+	const date = new Date(releaseDate);
+	
     const movieLanguages = [
 			"English",
 			"Spanish",
@@ -38,7 +42,7 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 			profile_path: "/cast/Image5.png",
 		},
 	];
-	const crew = [
+	const tempCrew = [
 		{
 			adult: false,
 			gender: 2,
@@ -66,7 +70,11 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 			job: "Screenplay",
 		},
 	];
-	
+	let crew;
+	if(fCrew)
+		crew = [...fCrew];
+	else
+		crew=[{...director,job:"Director"}]
 
 	const sliderRef = useRef(null);
 
@@ -83,16 +91,15 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 			<div className={styles.overDesc}>
 				<h4>Description</h4>
 				<p>
-					Years after retiring from their formidable ninja lives, a
-					dysfunctional family must return to shadowy missions to counteract a
-					string of looming threats.
+					{descprition ||
+						"Years after retiring from their formidable ninja lives, a dysfunctional family must return to shadowy missions to counteract a string of looming threats."}
 				</p>
 
 				<div className={styles.releDet}>
 					<div>
 						{" "}
 						<img src="/calender.png" alt="" />
-						Release Year 2024
+						Release Year {date.getFullYear() || "2020"}
 					</div>
 				</div>
 				<div className={styles.releDet}>
@@ -103,9 +110,13 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 					</div>
 				</div>
 				<div className={styles.lang}>
-					{movieLanguages.map((language, id) => (
-						<div key={id}>{language}</div>
-					))}
+					{lang
+						? lang.map((language, id) => (
+								<div key={id}>{getLanguageName(language)}</div>
+						  ))
+						: movieLanguages.map((language, id) => (
+								<div key={id}>{language}</div>
+						  ))}
 				</div>
 
 				<div className={styles.releDet}>
@@ -121,11 +132,10 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 						<Rating
 							name="rating"
 							// defaultValue={2.5}
-							value={4}
+							value={(movieRating / 10) * 5}
 							precision={0.5}
 							readOnly
 							style={{ color: "var(--primary-btn)" }}
-							
 							sx={{
 								"& .MuiRating-iconEmpty": {
 									color: "white", // Sets unfilled stars to white
@@ -139,10 +149,15 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 						<Rating
 							name="rating"
 							// defaultValue={2.5}
-							value={4.5}
+							value={(movieRating / 10) * 5}
 							precision={0.5}
 							readOnly
 							style={{ color: "var(--primary-btn)" }}
+							sx={{
+								"& .MuiRating-iconEmpty": {
+									color: "white", // Sets unfilled stars to white
+								},
+							}}
 							size="small"
 						/>
 					</div>
@@ -156,28 +171,63 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 					</div>
 				</div>
 				<div className={styles.lang}>
-					{tempGenres.map((genre, id) => (
-						<div key={id}>{genre}</div>
-					))}
+					{movieGenre
+						? movieGenre.map((genre, id) => <div key={id}>{genre}</div>)
+						: tempGenres.map((genre, id) => <div key={id}>{genre}</div>)}
 				</div>
 			</div>
 			<div className={styles.cast}>
 				<h4>Cast and Crew</h4>
 				<div className={styles.crew}>
-					{crew.map((member, id) => {
-						return (
-							<div key={id}>
-								<h4>{member.job}</h4>
-								<div>
-									<img
-										src={member.profile_path}
-										alt={`picture of ${member.name}`}
-									/>
-									<p>{member.name}</p>
-								</div>
-							</div>
-						);
-					})}
+					{crew
+						? crew.map((member, id) => {
+								return (
+									<div key={id}>
+										<h4>{member.job}</h4>
+										<div>
+											<img
+												style={{
+													width: "3.5rem",
+													height: "3.5rem",
+													objectFit: "cover",
+													margin: "0.5rem",
+													borderRadius: "5px",
+													backgroundColor: "var( --input-text)",
+												}}
+												src={
+													member.profile_path
+														? `https://image.tmdb.org/t/p/w500${member.profile_path}`
+														: "/noProfile.png"
+												}
+												alt={`picture of ${member.name}`}
+											/>
+											<p>{member.name}</p>
+										</div>
+									</div>
+								);
+						  })
+						: tempCrew.map((member, id) => {
+								return (
+									<div key={id}>
+										<h4>{member.job}</h4>
+										<div>
+											<img
+												style={{
+													width: "3.5rem",
+													height: "3.5rem",
+													objectFit: "cover",
+													margin: "0.5rem",
+													borderRadius: "5px",
+													backgroundColor: "var( --input-text)",
+												}}
+												src={member.profile_path}
+												alt={`picture of ${member.name}`}
+											/>
+											<p>{member.name}</p>
+										</div>
+									</div>
+								);
+						  })}
 				</div>
 				<div className={styles.cas}>
 					<div>
@@ -202,14 +252,31 @@ function Overview({Descprition,releaseDate,cast,genres,directior}) {
 						</div>
 					</div>
 					<div ref={sliderRef}>
-						{tempCast.map((member, id) => {
-							return (
-								<div key={id}>
-									<img src={member.profile_path} alt="" />
-									<p>{member.name}</p>
-								</div>
-							);
-						})}
+						{!cast
+							? tempCast.map((member, id) => {
+									return (
+										<div key={id}>
+											<img src={member.profile_path} alt="" />
+											<p>{member.name}</p>
+										</div>
+									);
+							  })
+							: cast.map((member, id) => {
+									return (
+										<div key={id}>
+											<img
+												style={{ height: "5rem", objectFit: "cover" }}
+												src={
+													fType === "movie"
+														? `https://image.tmdb.org/t/p/w500${member?.profile_path}`
+														: member?.image
+												}
+												alt=""
+											/>
+											<p>{member.name}</p>
+										</div>
+									);
+							  })}
 					</div>
 				</div>
 			</div>

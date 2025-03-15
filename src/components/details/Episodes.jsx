@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./episodes.module.css";
 import commonStyles from "../common/commonstyles.module.css";
-import { formatRuntime, seasons } from "../../commonJs/common";
+import { formatRuntime,  } from "../../commonJs/common";
 import { useNavigate } from "react-router";
 
 const Episode = ({ season, episodes }) => {
@@ -29,46 +29,56 @@ const Episode = ({ season, episodes }) => {
 			</div>
 			{shouldShow &&
 				episodes.map((episode, id) => (
-					<div className={styles.episode} key={id} onClick={()=>{
-						navigate(`/movie/${episode?.title}`)
-					}}>
-						<div style={{display:"flex",justifyContent:"space-between"}}>
+					<div
+						className={styles.episode}
+						key={id}
+						onClick={() => {
+							navigate(`/movie/${episode?.title}`, {
+								state: { filmUrl: episode?.episodeLink, title:episode?.title },
+							});
+						}}
+					>
+						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<div className={styles.epThumb}>
 								<span>{id + 1}</span>
 								<span>
 									<span className={styles.thPlay}>
 										<img src="/epPlay.png" alt="" />
 									</span>
-									<img className={styles.thumb} src="/temp/movie.png" alt="" />
+									<img
+										className={styles.thumb}
+										src={episode?.stillPath || "/temp/movie.png"}
+										alt=""
+									/>
 								</span>
 							</div>
 							<div className={styles.mob}>
 								<img src="/outlineClock.png" alt="" />
-								<span>{formatRuntime(52)}</span>
+								<span>{formatRuntime(episode?.runtime)}</span>
 							</div>
 						</div>
 						<div>
 							<div className={styles.epHead}>
-								<div>{episode.title}</div>
+								<div>{episode?.title}</div>
 								<div>
 									<img src="/outlineClock.png" alt="" />
-									<span>{formatRuntime(52)}</span>
+									<span>{formatRuntime(episode?.runtime)}</span>
 								</div>
 							</div>
-							<div className={styles.epBody}>{episode.description}</div>
+							<div className={styles.epBody}>{episode?.overview}</div>
 						</div>
 					</div>
 				))}
 		</div>
 	);
 };
-function Episodes() {
+function Episodes({seasons}) {
 	return (
 		<div className={styles.mainEpDiv}>
 			<h4>Seasons and Episodes</h4>
 			{seasons.map((season, id) => {
 				return (
-					<Episode episodes={season.episodes} season={season.season} key={id} />
+					<Episode episodes={season.episodes} season={id+1} key={id} />
 				);
 			})}
 		</div>

@@ -1,32 +1,56 @@
-import React, { useState } from 'react'
-import styles from "./popular.module.css"
-import { useNavigate } from 'react-router';
-function Popular({title,details,type,user}) {
-    const [btnHover,setBtnHover]=useState(false);
+import React, { useState } from "react";
+import styles from "./popular.module.css";
+import { useNavigate } from "react-router";
+function Popular({ title, details, type, user, filmObj }) {
+	const [btnHover, setBtnHover] = useState(false);
 	const [btnLHover, setBtnLHover] = useState(false);
 	const [btnPHover, setBtnPHover] = useState(false);
 	const [disable, setDisable] = useState(false);
-	const navigate =useNavigate()
-	
-  return (
+	const navigate = useNavigate();
+
+	let firstEpUrl;
+	let nameEp ;
+	if (filmObj?.seasons && Array.isArray(filmObj.seasons)) {
+		const firstSeason = filmObj.seasons.find(
+			(season) => season && season.episodes?.length > 0
+		);
+
+		if (firstSeason) {
+			firstEpUrl = firstSeason.episodes[0]?.episodeLink;
+			nameEp = firstSeason.episodes[0]?.title;
+		}
+	}
+
+	return (
 		<div className={styles.mainH}>
-			<div className={`${styles.bodyDiv} ${type && styles.bodyDType}`}>
+			<div className={`${styles.bodyDiv} ${type ? styles.bodyDType:""}`}>
 				<div className={styles.btnMains}>
-					<h1>House of Ninjas</h1>
+					<h1>{filmObj?.title ||filmObj?.name|| "House of Ninjas"}</h1>
 					{!type && (
 						<p>
-							Years after retiring from their formidable ninja lives, a
-							dysfunctional family must return to shadowy missions to counteract
-							a string of looming threats.
+							{filmObj?.description ||
+								"Years after retiring from their formidable ninja lives, a dysfunctional family must return to shadowy missions to counteract a string of looming threats."}
 						</p>
 					)}
-					<div className={`${styles.buttonsH} ${type && styles.detH}`}>
+					<div className={`${styles.buttonsH} ${type ? styles.detH:""}`}>
 						{!type && (
 							<>
 								<button
 									onClick={() => {
 										setDisable(true);
-										navigate(`/movie/${"movieWatch"}`);
+										navigate(
+											`/movie/${
+												filmObj?.title || filmObj?.name || "movieWatch"
+											}`,
+											{
+												state: {
+													filmUrl:
+														filmObj?.movieLink,
+													title:
+														filmObj?.title,
+												},
+											}
+										);
 									}}
 								>
 									<img src="/Play2.png" alt="" /> Play
@@ -38,8 +62,10 @@ function Popular({title,details,type,user}) {
 									onMouseLeave={() => {
 										setBtnHover(false);
 									}}
-									onClick={()=>{
-										navigate("/details/HomeMovie",{state:{userData:user}});
+									onClick={() => {
+										navigate(`/details/${filmObj?.title||"HomeMovie"}`, {
+											state: { userData: user, filmObj, typeOfFilm:"movie" },
+										});
 									}}
 								>
 									<img src={btnHover ? "/Info.png" : "/Info2.png"} alt="" />
@@ -52,7 +78,22 @@ function Popular({title,details,type,user}) {
 								<button
 									onClick={() => {
 										setDisable(true);
-										navigate(`/movie/${"movieWatch"}`);
+										// console.log(filmObj?.seasons[0]?.episodes[0]?.episodeLink);
+										navigate(
+											`/movie/${
+												filmObj?.title || filmObj.name || "movieWatch"
+											}`,
+											{
+												state: {
+													filmUrl:
+														firstEpUrl ||
+														filmObj?.movieLink,
+													title:
+														filmObj?.title ||
+														nameEp,
+												},
+											}
+										);
 									}}
 								>
 									<img src="/Play2.png" alt="" /> Play
@@ -88,4 +129,4 @@ function Popular({title,details,type,user}) {
 	);
 }
 
-export default Popular
+export default Popular;

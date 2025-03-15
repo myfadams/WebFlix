@@ -4,7 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./trailer.module.css";
 import { Rating } from "@mui/material";
 import ReviewBox from "./ReviewBox";
+import { convertToEmbedURL } from "../../commonJs/common";
 function TrailerReview({ trailer, setShowReveiw,newReview,dataR }) {
+	console.log(trailer)
 	const [shouldPlay, setShouldPlay] = useState(false);
 	const [hover, setHover] = useState(true);
 	const [s, setS] = useState(false);
@@ -29,39 +31,16 @@ function TrailerReview({ trailer, setShowReveiw,newReview,dataR }) {
 	};
 	return (
 		<div className={styles.mainTandR}>
-			<div className={styles.vidsect}>
-				<video
-					src="/temp/question.mp4"
-					className={styles.trailVid}
-                    controls={false}
-					onClick={() => {
-						setS(true);
-						play();
-					}}
-					poster="/temp/movie.png"
-					ref={vidRef}
-					onEnded={() => {
-						setShouldPlay(true);
-					}}
-					onMouseOver={() => {
-						setHover(true);
-					}}
-					onMouseLeave={() => {
-						setHover(false);
-					}}
-                    playsInline
-				></video>
-				{s && hover && (
-					<button
-						onClick={play}
-						onMouseOver={() => {
-							setHover(true);
-						}}
-					>
-						<img src={shouldPlay ? "/Play2.png" : "/pause.png"} alt="" />
-					</button>
-				)}
-				{/* <p>{currentTime} seconds</p> */}
+			<div className={styles.tVid}>
+				<div className={styles.vidsect}>
+					<iframe
+						className={styles.trailVid}
+						src={
+							trailer ? convertToEmbedURL(trailer) : "/temp/404 Not Found.mp4"
+						}
+						frameborder="0"
+					></iframe>
+				</div>
 			</div>
 
 			<div className={styles.review}>
@@ -78,8 +57,8 @@ function TrailerReview({ trailer, setShowReveiw,newReview,dataR }) {
 				</div>
 				<div className={styles.revDiv} ref={sliderRef}>
 					{reviews.map((review, id) => (
-						<ReviewBox review={review} key={id}/>
-					))} 
+						<ReviewBox review={review} key={id} />
+					))}
 				</div>
 				<div className={styles.revButtons}>
 					<button

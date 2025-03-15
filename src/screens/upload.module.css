@@ -1,3 +1,26 @@
+.mainFor{
+	position: relative;
+}
+.over{
+	position: absolute;
+	z-index: 50000;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(23, 23, 23,0.7);
+	gap: 1rem;
+
+	& div{
+		position: static;
+	}
+	& h4{
+		font-size: 1.5rem;
+	}
+}
+
 .UploadForm {
 	display: flex;
 	flex-direction: column;
@@ -79,6 +102,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	}
 	& h4 {
 		font-size: 1.5rem;
+		white-space: normal;
+		word-wrap: break-word; 
+		overflow-wrap: break-word;
+		max-width: 100%;
 	}
 	& p {
 		font-size: 0.9rem;
@@ -143,15 +170,31 @@ input[type="file"]:hover {
 	padding: 1rem;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 1000px) {
 	.mD {
-		width: 100% !important;
+		width: 70% !important;
 	}
 	.upInp,
 	.date,
 	.UploadForm .select,
 	.UploadForm textArea {
 		width: 90%;
+	}
+	.fileField {
+		width: 85%;
+	}
+}
+
+@media (max-width: 500px) {
+	.mD {
+		width: 100% !important;
+	}
+	.upInp,
+	.radio,
+	.date,
+	.UploadForm .select,
+	.UploadForm textArea {
+		width: 90% !important;
 	}
 	.fileField {
 		width: 85%;
@@ -172,15 +215,21 @@ input[type="file"]:hover {
 		cursor: pointer;
 		width: 20px;
 		height: 20px;
-		border: 3px solid var(--primary-btn); 
+		border: 3px solid var(--primary-btn);
 		display: flex;
-        border-radius: 50%;
+		border-radius: 50%;
 		align-items: center;
 		justify-content: center;
 		transition: all 0.3s ease;
 	}
 	& input:checked {
 		background-color: var(--primary-btn) !important;
-        border-color: white;
+		border-color: white;
 	}
+}
+
+.addBtn {
+	background-color: var(--primary-btn);
+	color: white;
+	cursor: pointer;
 }

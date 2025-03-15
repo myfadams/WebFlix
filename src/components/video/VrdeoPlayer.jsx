@@ -8,7 +8,7 @@ import { formatMovieTime } from "../../commonJs/common";
 import { useNavigate } from "react-router";
 import useWindowSize from "../../custom/CustomHooks";
 import { useMediaQuery } from "react-responsive";
-function VideoPlayer() {
+function VideoPlayer({urlFilm, title}) {
 	const videoRef = useRef(null);
 	const containerRef = useRef(null);
 	const [playing, setPlaying] = useState(false);
@@ -115,7 +115,7 @@ function VideoPlayer() {
 			ref={containerRef}
 			className={`${styles.videoContainer}  ${
 				checkMobile && isIOS && styles.videoMobile
-			} ${checkMobile && isIOS && isLandscape &&styles.rotback}`}
+			} ${checkMobile && isIOS && isLandscape && styles.rotback}`}
 			onMouseMove={handleMove}
 			style={{
 				width:
@@ -137,7 +137,7 @@ function VideoPlayer() {
 						>
 							<img src="/moveFwd.png" alt="" />
 						</button>
-						{checkMobile && <p>Sactuary Episode 1</p>}
+						{checkMobile && <p>{title}</p>}
 					</div>
 
 					<div className={styles.slder}>
@@ -221,7 +221,7 @@ function VideoPlayer() {
 								</>
 							)}
 						</div>
-						{!checkMobile && <div>Sactuary Episode 1</div>}
+						{!checkMobile && <div>{title}</div>}
 						<div>
 							<button>
 								<img src="/nextVideo.png" alt="" />
@@ -248,7 +248,7 @@ function VideoPlayer() {
 			<video
 				ref={videoRef}
 				className={`${styles.video}`}
-				src={"/temp/question.mp4"}
+				src={urlFilm || "/temp/404 Not Found.mp4"}
 				onLoadedMetadata={handleLoading}
 				onTimeUpdate={handleTimeUpdates}
 				onEnded={() => {

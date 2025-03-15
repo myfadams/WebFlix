@@ -4,6 +4,7 @@ import styles from "./upload.module.css";
 import fetchMovieDetails, { fetchShowDetails } from "../firebase/tmdb";
 import uploadFiles from "../firebase/upload";
 import LoadingSpinner from "../components/LoadingSpinner";
+import addFilm from "../firebase/database";
 
 // console.log(API_KEY)
 function convertBytes(bytes) {
@@ -77,6 +78,7 @@ const Upload = () => {
 	});
 	const [castInfo, setCastInfo] = useState();
 	const [loading, setLoading] = useState(false);
+	const [addingMovie, setAddingMovie]=useState(false)
 	const [movieFiles, setMovieFiles] = useState({
 		movieFile: null,
 		poster: null,
@@ -173,6 +175,10 @@ const Upload = () => {
 	// console.log(seriesData)
 	return (
 		<div className={styles.mainFor}>
+			{addingMovie&&<div className={styles.over}>
+				<LoadingSpinner/>
+				<h4>Adding movie</h4>
+			</div>}
 			<div
 				style={{
 					display: "flex",
@@ -318,44 +324,332 @@ const Upload = () => {
 						/>
 					</>
 				)}
-				{(!loading && movieData.title.trim() != "") ||
-					(!loading && seriesData.name != "" && (
-						<>
-							<div className={styles.fileField}>
+				{((!loading && movieData.title.trim() != "") ||
+					(!loading && seriesData.name != "")) && (
+					<>
+						<div className={styles.fileField}>
+							<>
+								<img src="./uploadBG.png" alt="" />
+
+								<input
+									type="file"
+									accept="video/*"
+									onChange={(e) => handleFileChange(e, "movieFile")}
+									required
+									disabled={movDetails.disable}
+								/>
+								<h4>
+									{movieFiles.movieFile
+										? movieFiles.movieFile.name
+										: selected == "movies"
+										? "Upload Movie"
+										: "Upload Episode"}
+								</h4>
+								<p>
+									{!movieFiles.movieFile ? (
+										<>
+											Maximum 10GB,Preferred format is
+											<br />
+											MP4 (H.2644) or WEBM (VP8,VP9)
+										</>
+									) : (
+										convertBytes(movieFiles.movieFile.size)
+									)}
+								</p>
+								{!movieFiles.movieFile && (
+									<div className={styles.upBtn}>
+										<div>Drag and drop or</div>
+										<button type="button">select a file</button>
+									</div>
+								)}
+								{movieFiles.movieFile && (
+									<div className={styles.upBtn}>
+										<button
+											type="button"
+											style={{
+												position: "relative",
+												zIndex: "4",
+												borderRadius: "4px",
+											}}
+											onClick={() => {
+												uploadToDb(movieFiles.movieFile, "movies");
+											}}
+											disabled={movDetails.disable}
+										>
+											{movDetails.progress
+												? `${movDetails.progress}%`
+												: selected == "movies"
+												? "Upload Movie"
+												: "Upload Episode"}
+										</button>
+									</div>
+								)}
+							</>
+						</div>
+
+						<textarea
+							value={
+								selected === "movies"
+									? movieData.description
+									: seriesData.seasonDetails.episodeDetails.overview
+							}
+							onChange={(e) => {
+								if (selected === "movies")
+									setMovieData({ ...movieData, description: e.target.value });
+								else
+									setSeriesData({
+										...seriesData,
+										seasonDetails: {
+											...seriesData.seasonDetails,
+											episodeDetails: {
+												...seriesData.seasonDetails.episodeDetails,
+												overview: e.target.value,
+											},
+										},
+									});
+							}}
+							placeholder={
+								selected == "movies" ? "Movie synopsis" : "Episode overview"
+							}
+							required
+						/>
+
+						<input
+							type="date"
+							value={
+								selected === "movies"
+									? movieData.releaseDate
+									: seriesData.seasonDetails.episodeDetails.airDate
+							}
+							onChange={
+								(e) => {
+									if (selected === "movies")
+										setMovieData({
+											...movieData,
+											releaseDate: e.target.value,
+										});
+									else
+										setSeriesData({
+											...seriesData,
+											seasonDetails: {
+												...seriesData.seasonDetails,
+												episodeDetails: {
+													...seriesData.seasonDetails.episodeDetails,
+													airDate: e.target.value,
+												},
+											},
+										});
+								}
+								// setMovieData({ ...movieData, releaseDate: e.target.value })
+							}
+							required
+							placeholder="Release Date"
+							pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)"
+							className={styles.upInp}
+							// style={{width:"200px" }}
+						/>
+
+						<input
+							type="number"
+							value={
+								selected === "movies"
+									? movieData.runtime
+									: seriesData.seasonDetails.episodeDetails.runtime
+							}
+							onChange={
+								(e) => {
+									if (selected === "movies")
+										setMovieData({ ...movieData, runtime: e.target.value });
+									else
+										setSeriesData({
+											...seriesData,
+											seasonDetails: {
+												...seriesData.seasonDetails,
+												episodeDetails: {
+													...seriesData.seasonDetails.episodeDetails,
+													runtime: e.target.value,
+												},
+											},
+										});
+								}
+								// setMovieData({ ...movieData, runtime: e.target.value })
+							}
+							required
+							placeholder="Runtime (minutes)"
+							className={styles.upInp}
+						/>
+
+						{/* Genres */}
+						<DropDown
+							list={genreOptions}
+							setValue={selected === "movies" ? setMovieData : seriesData}
+							values={selected === "movies" ? movieData : seriesData}
+							type={selected}
+						/>
+						<input
+							type="text"
+							value={
+								selected === "movies" ? movieData.language : seriesData.language
+							}
+							onChange={
+								(e) => {
+									if (selected === "movies")
+										setMovieData({ ...movieData, language: e.target.value });
+									else
+										setSeriesData({
+											...seriesData,
+											language: e.target.value,
+										});
+								}
+								// setMovieData({ ...movieData, language: e.target.value })
+							}
+							required
+							className={styles.upInp}
+							placeholder="Language"
+						/>
+
+						<input
+							type="text"
+							value={
+								selected === "movies"
+									? movieData.director
+									: seriesData.director?.name || ""
+							}
+							onChange={
+								(e) => {
+									if (selected === "movies")
+										setMovieData({ ...movieData, director: e.target.value });
+									else
+										setSeriesData({
+											...seriesData,
+											director: e.target.value,
+										});
+								}
+								// setMovieData({ ...movieData, director: e.target.value })
+							}
+							className={styles.upInp}
+							placeholder="Director"
+						/>
+
+						<input
+							type="text"
+							value={
+								selected === "movies"
+									? movieData.cast.map(({ name }) => name)
+									: seriesData.cast.map(({ name }) => name)
+							}
+							onChange={
+								(e) => {
+									if (selected === "movies")
+										setMovieData({
+											...movieData,
+											cast: e.target.value.split(", "),
+										});
+									else
+										setSeriesData({
+											...seriesData,
+											cast: e.target.value.split(", "),
+										});
+								}
+								// setMovieData({
+								// 	...movieData,
+								// 	cast: e.target.value.split(", "),
+								// })
+							}
+							className={styles.upInp}
+							placeholder="Top five cast"
+						/>
+
+						<input
+							type="number"
+							step="0.1"
+							max={10}
+							min={1}
+							value={
+								selected === "movies" ? movieData.rating : seriesData.rating
+							}
+							onChange={
+								(e) => {
+									if (selected === "movies")
+										setMovieData({ ...movieData, rating: e.target.value });
+									else
+										setSeriesData({
+											...seriesData,
+											rating: e.target.value,
+										});
+								}
+								// setMovieData({ ...movieData, rating: e.target.value })
+							}
+							className={styles.upInp}
+							placeholder="IMDb Rating"
+						/>
+
+						<input
+							type="url"
+							value={
+								selected === "movies" ? movieData.trailer : seriesData.trailer
+							}
+							onChange={
+								(e) => {
+									if (selected === "movies")
+										setMovieData({ ...movieData, trailer: e.target.value });
+									else
+										setSeriesData({
+											...seriesData,
+											trailer: e.target.value,
+										});
+								}
+								// setMovieData({ ...movieData, trailer: e.target.value })
+							}
+							className={styles.upInp}
+							placeholder="URL for movie trailer"
+						/>
+
+						<div className={styles.fileField}>
+							{movieData.posterLink ||
+							seriesData.seasonDetails.episodeDetails.stillPath ? (
+								<img
+									src={
+										selected === "movies"
+											? movieData.posterLink
+											: seriesData.seasonDetails.episodeDetails.stillPath
+									}
+									alt=""
+								/>
+							) : (
 								<>
-									<img src="./uploadBG.png" alt="" />
+									<img src="./uploadImg.png" alt="" />
 
 									<input
 										type="file"
-										accept="video/*"
-										onChange={(e) => handleFileChange(e, "movieFile")}
+										accept="image/*"
+										onChange={(e) => handleFileChange(e, "poster")}
 										required
+										disabled={posDetails.disable}
 									/>
 									<h4>
-										{movieFiles.movieFile
-											? movieFiles.movieFile.name
-											: selected == "movies"
-											? "Upload Movie"
-											: "Upload Episode"}
+										{movieFiles.poster
+											? movieFiles.poster.name
+											: "Upload poster"}
 									</h4>
 									<p>
-										{!movieFiles.movieFile ? (
+										{!movieFiles.poster ? (
 											<>
-												Maximum 10GB,Preferred format is
+												Maximum 100MB,Preferred format is
 												<br />
-												MP4 (H.2644) or WEBM (VP8,VP9)
+												PNG, JPG, GIF or SVG.
 											</>
 										) : (
-											convertBytes(movieFiles.movieFile.size)
+											convertBytes(movieFiles.poster.size)
 										)}
 									</p>
-									{!movieFiles.movieFile && (
+									{!movieFiles.poster && (
 										<div className={styles.upBtn}>
 											<div>Drag and drop or</div>
 											<button type="button">select a file</button>
 										</div>
 									)}
-									{movieFiles.movieFile && (
+									{movieFiles.poster && (
 										<div className={styles.upBtn}>
 											<button
 												type="button"
@@ -365,382 +659,194 @@ const Upload = () => {
 													borderRadius: "4px",
 												}}
 												onClick={() => {
-													uploadToDb(movieFiles.movieFile, "movies");
+													uploadToDb(movieFiles.poster, "poster");
 												}}
-												disabled={movDetails.disable}
+												disabled={posDetails.disable}
 											>
-												{movDetails.progress
-													? `${movDetails.progress}%`
-													: selected == "movies"
-													? "Upload Movie"
-													: "Upload Episode"}
+												{posDetails.progress
+													? `${posDetails.progress}%`
+													: "Upload Poster"}
 											</button>
 										</div>
 									)}
 								</>
-							</div>
+							)}
+						</div>
 
-							<textarea
-								value={
-									selected === "movies"
-										? movieData.description
-										: seriesData.seasonDetails.episodeDetails.overview
-								}
-								onChange={(e) => {
-									if (selected === "movies")
-										setMovieData({ ...movieData, description: e.target.value });
-									else
-										setSeriesData({
-											...seriesData,
-											seasonDetails: {
-												...seriesData.seasonDetails,
-												episodeDetails: {
-													...seriesData.seasonDetails.episodeDetails,
-													overview: e.target.value,
-												},
-											},
+						<div className={styles.fileField}>
+							{movieData.backdropLink || seriesData.backdropLink ? (
+								<img
+									src={
+										selected === "movies"
+											? movieData.backdropLink
+											: seriesData.backdropLink
+									}
+									style={{ width: "55%" }}
+								/>
+							) : (
+								<>
+									<img src="./uploadImg.png" alt="" />
+
+									<input
+										type="file"
+										accept="image/*"
+										onChange={(e) => handleFileChange(e, "backdrop")}
+										required
+										disabled={backDetails.disable}
+									/>
+									<h4>
+										{movieFiles.backdrop
+											? movieFiles.backdrop.name
+											: "Upload Backdrop"}
+									</h4>
+									<p>
+										{!movieFiles.backdrop ? (
+											<>
+												Maximum 100MB,Preferred format is
+												<br />
+												PNG, JPG, GIF or SVG.
+											</>
+										) : (
+											convertBytes(movieFiles.backdrop.size)
+										)}
+									</p>
+									{!movieFiles.backdrop && (
+										<div className={styles.upBtn}>
+											<div>Drag and drop or</div>
+											<button type="button">select a file</button>
+										</div>
+									)}
+									{movieFiles.backdrop && (
+										<div className={styles.upBtn}>
+											<button
+												type="button"
+												style={{
+													position: "relative",
+													zIndex: "4",
+													borderRadius: "4px",
+												}}
+												disabled={backDetails.disable}
+												onClick={() => {
+													uploadToDb(movieFiles.backdrop, "backdrops");
+												}}
+											>
+												{backDetails.progress
+													? `${backDetails.progress}%`
+													: "Upload Backdrop"}
+											</button>
+										</div>
+									)}
+								</>
+							)}
+						</div>
+
+						{/* Movie File Upload */}
+
+						{/* Submit Button */}
+						<button
+							type="button"
+							onClick={() => {
+								setAddingMovie(true);
+								if (selected === "movies") {
+									addFilm(selected, movieData).then(() => {
+										
+										setMovDetails({
+											disable: false,
+											progress: null,
 										});
-								}}
-								placeholder={
-									selected == "movies" ? "Movie synopsis" : "Episode overview"
-								}
-								required
-							/>
-
-							<input
-								type="date"
-								value={
-									selected === "movies"
-										? movieData.releaseDate
-										: seriesData.seasonDetails.episodeDetails.airDate
-								}
-								onChange={
-									(e) => {
-										if (selected === "movies")
-											setMovieData({
-												...movieData,
-												releaseDate: e.target.value,
+										setPosDetails({
+											disable: false,
+											progress: null,
+										});
+										setBackDetails({
+											disable: false,
+											progress: null,
+										});
+										setMovieFiles({
+											movieFile: null,
+											poster: null,
+											backdrop: null,
+										});
+										setMovieData({
+											title: "",
+											description: "",
+											releaseDate: "",
+											runtime: "",
+											genres: [],
+											language: "",
+											director: "",
+											cast: [],
+											crew: [],
+											rating: "",
+											trailer: "",
+											posterLink: "", // Local file upload
+											backdropLink: "", // Local file upload
+											movieLink: "", // Movie file upload
+										});
+									}).finally(()=>{
+										setAddingMovie(false);
+									});
+								} else {
+									addFilm(selected, seriesData)
+										.then(() => {
+											setMovDetails({
+												disable: false,
+												progress: null,
 											});
-										else
+											setPosDetails({
+												disable: false,
+												progress: null,
+											});
+											setBackDetails({
+												disable: false,
+												progress: null,
+											});
+											setMovieFiles({
+												movieFile: null,
+												poster: null,
+												backdrop: null,
+											});
 											setSeriesData({
-												...seriesData,
+												name: "",
+												genres: [],
+												language: "",
+												director: "",
+												cast: [],
+												crew: [],
+												showReleaseDate: "",
+												rating: "",
+												numberOfSeasons: "",
+												trailer: "",
+												posterLink: "",
+												backdropLink: "",
+												totalRuntime: "",
 												seasonDetails: {
-													...seriesData.seasonDetails,
+													seasonNumber: "",
 													episodeDetails: {
-														...seriesData.seasonDetails.episodeDetails,
-														airDate: e.target.value,
+														episodeNo: "",
+														title: "",
+														overview: "",
+														runtime: "",
+														airDate: "",
+														stillPath: "",
+														episodeLink: "",
 													},
 												},
 											});
-									}
-									// setMovieData({ ...movieData, releaseDate: e.target.value })
+										})
+										.finally(() => {
+											setAddingMovie(false);
+										});
 								}
-								required
-								placeholder="Release Date"
-								pattern="(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)"
-								className={styles.upInp}
-								// style={{width:"200px" }}
-							/>
-
-							<input
-								type="number"
-								value={
-									selected === "movies"
-										? movieData.runtime
-										: seriesData.seasonDetails.episodeDetails.runtime
-								}
-								onChange={
-									(e) => {
-										if (selected === "movies")
-											setMovieData({ ...movieData, runtime: e.target.value });
-										else
-											setSeriesData({
-												...seriesData,
-												seasonDetails: {
-													...seriesData.seasonDetails,
-													episodeDetails: {
-														...seriesData.seasonDetails.episodeDetails,
-														runtime: e.target.value,
-													},
-												},
-											});
-									}
-									// setMovieData({ ...movieData, runtime: e.target.value })
-								}
-								required
-								placeholder="Runtime (minutes)"
-								className={styles.upInp}
-							/>
-
-							{/* Genres */}
-							<DropDown
-								list={genreOptions}
-								setValue={selected === "movies" ? setMovieData : seriesData}
-								values={selected === "movies" ? movieData : seriesData}
-								type={selected}
-							/>
-							<input
-								type="text"
-								value={
-									selected === "movies"
-										? movieData.language
-										: seriesData.language
-								}
-								onChange={
-									(e) => {
-										if (selected === "movies")
-											setMovieData({ ...movieData, language: e.target.value });
-										else
-											setSeriesData({
-												...seriesData,
-												language: e.target.value,
-											});
-									}
-									// setMovieData({ ...movieData, language: e.target.value })
-								}
-								required
-								className={styles.upInp}
-								placeholder="Language"
-							/>
-
-							<input
-								type="text"
-								value={
-									selected === "movies"
-										? movieData.director
-										: seriesData.director.name
-								}
-								onChange={
-									(e) => {
-										if (selected === "movies")
-											setMovieData({ ...movieData, director: e.target.value });
-										else
-											setSeriesData({
-												...seriesData,
-												director: e.target.value,
-											});
-									}
-									// setMovieData({ ...movieData, director: e.target.value })
-								}
-								className={styles.upInp}
-								placeholder="Director"
-							/>
-
-							<input
-								type="text"
-								value={
-									selected === "movies"
-										? movieData.cast.map(({ name }) => name)
-										: seriesData.cast.map(({ name }) => name)
-								}
-								onChange={
-									(e) => {
-										if (selected === "movies")
-											setMovieData({
-												...movieData,
-												cast: e.target.value.split(", "),
-											});
-										else
-											setSeriesData({
-												...seriesData,
-												cast: e.target.value.split(", "),
-											});
-									}
-									// setMovieData({
-									// 	...movieData,
-									// 	cast: e.target.value.split(", "),
-									// })
-								}
-								className={styles.upInp}
-								placeholder="Top five cast"
-							/>
-
-							<input
-								type="number"
-								step="0.1"
-								max={10}
-								min={1}
-								value={
-									selected === "movies" ? movieData.rating : seriesData.rating
-								}
-								onChange={
-									(e) => {
-										if (selected === "movies")
-											setMovieData({ ...movieData, rating: e.target.value });
-										else
-											setSeriesData({
-												...seriesData,
-												rating: e.target.value,
-											});
-									}
-									// setMovieData({ ...movieData, rating: e.target.value })
-								}
-								className={styles.upInp}
-								placeholder="IMDb Rating"
-							/>
-
-							<input
-								type="url"
-								value={
-									selected === "movies" ? movieData.trailer : seriesData.trailer
-								}
-								onChange={
-									(e) => {
-										if (selected === "movies")
-											setMovieData({ ...movieData, trailer: e.target.value });
-										else
-											setSeriesData({
-												...seriesData,
-												trailer: e.target.value,
-											});
-									}
-									// setMovieData({ ...movieData, trailer: e.target.value })
-								}
-								className={styles.upInp}
-								placeholder="URL for movie trailer"
-							/>
-
-							<div className={styles.fileField}>
-								{movieData.posterLink ||
-								seriesData.seasonDetails.episodeDetails.stillPath ? (
-									<img
-										src={
-											selected === "movies"
-												? movieData.posterLink
-												: seriesData.seasonDetails.episodeDetails.stillPath
-										}
-										alt=""
-									/>
-								) : (
-									<>
-										<img src="./uploadImg.png" alt="" />
-
-										<input
-											type="file"
-											accept="image/*"
-											onChange={(e) => handleFileChange(e, "poster")}
-											required
-										/>
-										<h4>
-											{movieFiles.poster
-												? movieFiles.poster.name
-												: "Upload poster"}
-										</h4>
-										<p>
-											{!movieFiles.poster ? (
-												<>
-													Maximum 100MB,Preferred format is
-													<br />
-													PNG, JPG, GIF or SVG.
-												</>
-											) : (
-												convertBytes(movieFiles.poster.size)
-											)}
-										</p>
-										{!movieFiles.poster && (
-											<div className={styles.upBtn}>
-												<div>Drag and drop or</div>
-												<button type="button">select a file</button>
-											</div>
-										)}
-										{movieFiles.poster && (
-											<div className={styles.upBtn}>
-												<button
-													type="button"
-													style={{
-														position: "relative",
-														zIndex: "4",
-														borderRadius: "4px",
-													}}
-													onClick={() => {
-														uploadToDb(movieFiles.poster, "poster");
-													}}
-													disabled={posDetails.disable}
-												>
-													{posDetails.progress
-														? `${posDetails.progress}%`
-														: "Upload Poster"}
-												</button>
-											</div>
-										)}
-									</>
-								)}
-							</div>
-
-							<div className={styles.fileField}>
-								{movieData.backdropLink || seriesData.backdropLink ? (
-									<img
-										src={
-											selected === "movies"
-												? movieData.backdropLink
-												: seriesData.backdropLink
-										}
-										style={{ width: "100%" }}
-									/>
-								) : (
-									<>
-										<img src="./uploadImg.png" alt="" />
-
-										<input
-											type="file"
-											accept="image/*"
-											onChange={(e) => handleFileChange(e, "backdrop")}
-											required
-										/>
-										<h4>
-											{movieFiles.backdrop
-												? movieFiles.backdrop.name
-												: "Upload Backdrop"}
-										</h4>
-										<p>
-											{!movieFiles.backdrop ? (
-												<>
-													Maximum 100MB,Preferred format is
-													<br />
-													PNG, JPG, GIF or SVG.
-												</>
-											) : (
-												convertBytes(movieFiles.backdrop.size)
-											)}
-										</p>
-										{!movieFiles.backdrop && (
-											<div className={styles.upBtn}>
-												<div>Drag and drop or</div>
-												<button type="button">select a file</button>
-											</div>
-										)}
-										{movieFiles.backdrop && (
-											<div className={styles.upBtn}>
-												<button
-													type="button"
-													style={{
-														position: "relative",
-														zIndex: "4",
-														borderRadius: "4px",
-													}}
-													disabled={backDetails.disable}
-													onClick={() => {
-														uploadToDb(movieFiles.backdrop, "backdrops");
-													}}
-												>
-													{backDetails.progress
-														? `${backDetails.progress}%`
-														: "Upload Backdrop"}
-												</button>
-											</div>
-										)}
-									</>
-								)}
-							</div>
-
-							{/* Movie File Upload */}
-
-							{/* Submit Button */}
-							<button type="submit">
-								{loading ? "Fetching Details..." : "Add Movie"}
-							</button>
-						</>
-					))}
+								// alert("Added to database")
+							}}
+							disabled={addingMovie}
+							className={styles.addBtn}
+						>
+							{loading ? "Fetching Details..." : "Add Movie"}
+						</button>
+					</>
+				)}
 			</div>
 		</div>
 	);
