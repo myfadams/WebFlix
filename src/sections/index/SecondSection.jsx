@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./secondSection.module.css";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 const MoreComponent = ({ title, text }) => {
 	const [show, setShow] = useState(false);
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from "./firstsection.module.css"
 import NavBar from '../../components/navBar/NavBar';
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 function FirstSection() {
 	let navigate = useNavigate();

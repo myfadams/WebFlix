@@ -1,32 +1,26 @@
-{/* <video
-					src="/temp/question.mp4"
-					className={styles.trailVid}
-                    controls={false}
-					onClick={() => {
-						setS(true);
-						play();
-					}}
-					poster="/temp/movie.png"
-					ref={vidRef}
-					onEnded={() => {
-						setShouldPlay(true);
-					}}
-					onMouseOver={() => {
-						setHover(true);
-					}}
-					onMouseLeave={() => {
-						setHover(false);
-					}}
-                    playsInline
-				></video> */}
-				{/* {s && hover && (
-					<button
-						onClick={play}
-						onMouseOver={() => {
-							setHover(true);
-						}}
-					>
-						<img src={shouldPlay ? "/Play2.png" : "/pause.png"} alt="" />
-					</button>
-				)} */}
-				{/* <p>{currentTime} seconds</p> */}
+{data?.active === "languages" && (
+						<>
+							{filmsData?.map((langFilm) => (
+								<div style={{margin:"1rem"}}>
+									<h4 style={{fontSize:"1.2rem"}}>{getLanguageName(langFilm?.language)}</h4>
+									<div className={styles.langPage}>
+										{langFilm?.films.map((film,id) => (
+											<Single
+												imgUrl={film?.posterLink}
+												releaseDate={film?.releaseDate || film?.showReleaseDate}
+												watchTime={film?.runtime || film?.totalRuntime}
+												views={film?.views || 0}
+												show={film?.type}
+												key={id}
+												title={film?.title}
+												movieId={film?.id || id}
+												userData={data?.userData}
+												detObj={film}
+												seasons={film?.numberOfSeasons}
+											/>
+										))}
+									</div>
+								</div>
+							))}
+						</>
+					)}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import HomeNavBar from "../components/navBar/HomeNavBar";
 import Popular from "../components/home/Popular";
 import styles from "./home.module.css";
@@ -47,6 +47,7 @@ function Home() {
 					// height: "100%",
 					// opacity: "0.4",
 					height: "39.5rem",
+					objectPosition: "center"
 				}}
 			/>
 			<div

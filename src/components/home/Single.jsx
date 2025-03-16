@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../common/commonstyles.module.css";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import formatViews, { formatDate, formatRuntime } from "../../commonJs/common";
 function Single({
 	views,

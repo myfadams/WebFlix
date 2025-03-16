@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./popup.module.css"
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 function PopUpMenu({onClose}) {
 	const navigate = useNavigate();
 	const [disable,setDisable]=useState(false);

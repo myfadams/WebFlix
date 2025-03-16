@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./sign-up.module.css";
 import Input from "../components/input/Input";
-import { NavLink, useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 function SignUp() {
 	const location = useLocation();

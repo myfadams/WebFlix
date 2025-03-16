@@ -5,10 +5,11 @@ import { Slider } from "@mui/material";
 import Loading from "./Loading";
 import LoadingSpinner from "../LoadingSpinner";
 import { formatMovieTime } from "../../commonJs/common";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import useWindowSize from "../../custom/CustomHooks";
 import { useMediaQuery } from "react-responsive";
-function VideoPlayer({urlFilm, title}) {
+import { incrementViews } from "../../firebase/database";
+function VideoPlayer({urlFilm, title,filmId}) {
 	const videoRef = useRef(null);
 	const containerRef = useRef(null);
 	const [playing, setPlaying] = useState(false);
@@ -72,13 +73,14 @@ function VideoPlayer({urlFilm, title}) {
 			// console.log("play the add");
 		}
 	}
-	const handleLoading = (event) => {
+	const handleLoading = async (event) => {
 		setHasLoaded(true);
 		setDuration(event.target.duration);
 		console.log(event.target.duration, "duration");
 		const adT = Math.random() * (event.target.duration*0.65 - 100) + 100;
 		console.log(adT,"add time")
 		setTimeToplayAd(adT)
+		await incrementViews(title,"views",filmId)
 	};
 	const togglePlay = () => {
 		// console.log("plat")
@@ -256,6 +258,7 @@ function VideoPlayer({urlFilm, title}) {
 				}}
 				controls={false}
 				playsInline={isIOS}
+				
 				// poster={poster}
 			/>
 			{showAds && (

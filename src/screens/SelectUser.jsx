@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./selectuser.module.css";
 import commonStyles from "../components/common/commonstyles.module.css"
 import PopUp from "../components/popup/PopUp";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 function SelectUser() {
 	useEffect(()=>{
 			window.scroll(0,0)

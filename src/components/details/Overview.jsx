@@ -263,12 +263,14 @@ function Overview({descprition,releaseDate,cast,genres,director, fType, fCrew, m
 							  })
 							: cast.map((member, id) => {
 									return (
-										<div key={id}>
+										<div key={id} style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
 											<img
 												style={{ height: "5rem", objectFit: "cover" }}
 												src={
 													fType === "movie"
-														? `https://image.tmdb.org/t/p/w500${member?.profile_path}`
+														? member?.profile_path
+															? `https://image.tmdb.org/t/p/w500${member?.profile_path}`
+															: "/noProfile.png"
 														: member?.image
 												}
 												alt=""

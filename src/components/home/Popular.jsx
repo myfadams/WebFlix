@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./popular.module.css";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 function Popular({ title, details, type, user, filmObj }) {
 	const [btnHover, setBtnHover] = useState(false);
 	const [btnLHover, setBtnLHover] = useState(false);
@@ -44,10 +44,9 @@ function Popular({ title, details, type, user, filmObj }) {
 											}`,
 											{
 												state: {
-													filmUrl:
-														filmObj?.movieLink,
-													title:
-														filmObj?.title,
+													filmUrl: filmObj?.movieLink,
+													title: filmObj?.title,
+													id: filmObj?.id,
 												},
 											}
 										);
@@ -85,12 +84,9 @@ function Popular({ title, details, type, user, filmObj }) {
 											}`,
 											{
 												state: {
-													filmUrl:
-														firstEpUrl ||
-														filmObj?.movieLink,
-													title:
-														filmObj?.title ||
-														nameEp,
+													filmUrl: firstEpUrl || filmObj?.movieLink,
+													title: filmObj?.title || nameEp,
+													id: filmObj?.id, 
 												},
 											}
 										);

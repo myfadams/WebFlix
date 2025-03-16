@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./sign-up.module.css";
 import Input from "../components/input/Input";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function SignIn() {
 	useEffect(()=>{

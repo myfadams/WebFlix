@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import HomeNavBar from "../components/navBar/HomeNavBar";
 import styles from "./details.module.css";
 import Popular from "../components/home/Popular";
@@ -93,6 +93,7 @@ function Details() {
 						// height: "100%",
 						// opacity: "0.4",
 						height: "100%",
+						objectPosition: "center",
 					}}
 				/>
 				<div
@@ -112,7 +113,7 @@ function Details() {
 			<div className={styles.mainDesc}>
 				<div className={styles.descNav}>
 					<button
-						className={current == "overview" ? styles.isActive:""}
+						className={current == "overview" ? styles.isActive : ""}
 						onClick={() => {
 							setCurrent("overview");
 						}}
@@ -120,7 +121,7 @@ function Details() {
 						Overview <span></span>
 					</button>
 					<button
-						className={current == "trailer" ? styles.isActive:""}
+						className={current == "trailer" ? styles.isActive : ""}
 						onClick={() => {
 							setCurrent("trailer");
 						}}
@@ -129,7 +130,7 @@ function Details() {
 					</button>
 					{typeOfFilm !== "movie" && (
 						<button
-							className={current == "episode" ? styles.isActive:""}
+							className={current == "episode" ? styles.isActive : ""}
 							onClick={() => {
 								setCurrent("episode");
 							}}
@@ -138,7 +139,7 @@ function Details() {
 						</button>
 					)}
 					<button
-						className={current == "more" ? styles.isActive:""}
+						className={current == "more" ? styles.isActive : ""}
 						onClick={() => {
 							setCurrent("more");
 						}}
@@ -168,7 +169,7 @@ function Details() {
 						trailer={film?.trailer}
 					/>
 				)}
-				{current === "episode" && <Episodes   seasons={seasons}/>}
+				{current === "episode" && <Episodes seasons={seasons} />}
 			</div>
 		</div>
 	);

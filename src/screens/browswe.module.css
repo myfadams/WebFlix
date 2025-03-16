@@ -12,8 +12,30 @@
    justify-content: center;
    margin: 1rem;
    @media (max-width:500px) {
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 10.7rem));
-    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 11rem));
+    row-gap: 1rem;
+    column-gap: 0.6rem;
     margin: 0;
+   }
+}
+.langDiv{
+   margin: 1rem;
+   & h4{
+      margin: 1rem 1rem 0;
+   }
+   @media (max-width:500px) {
+    margin: 0;
+   }  
+}
+.langPage{
+   display: flex;
+   flex-wrap: wrap;
+   
+   gap: 1rem;
+   @media (max-width:400px) {
+      justify-content: center;
+      margin: 0;
+      /* column-gap: 0.3rem;
+      row-gap: 1rem; */
    }
 }

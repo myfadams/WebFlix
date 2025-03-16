@@ -466,6 +466,18 @@ export function getLanguageName(code) {
 		it: "Italian",
 		ur: "Urdu",
 		fa: "Persian",
+		pl: "Polish", 
+
+		nl: "Dutch",
+		sv: "Swedish",
+		he: "Hebrew",
+		th: "Thai",
+		vi: "Vietnamese",
+		el: "Greek",
+		cs: "Czech",
+		hu: "Hungarian",
+		id: "Indonesian",
+		ro: "Romanian",
 	};
 
 	return languageMap[code] || code;
@@ -516,4 +528,21 @@ export function get4Covers(array, genre) {
 	}
 
 	return selected;
+}
+
+export function groupByLanguage(array) {
+  const grouped = array.reduce((acc, item) => {
+    const lang = item.language; // Get the language key
+    let group = acc.find((g) => g.language === lang);
+
+    if (!group) {
+      group = { language: lang, films: [] };
+      acc.push(group);
+    }
+
+    group.films.push(item);
+    return acc;
+  }, []);
+
+  return grouped;
 }

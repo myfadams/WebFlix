@@ -152,4 +152,29 @@ export const getShows = async () => {
 	}
 };
 
+export const incrementViews = async (name,attribute, id="") => {
+	console.log(name)
+
+	let moviesRef;
+	if (id!=="") moviesRef = ref(db, `movies/${name}/${id}`);
+	else moviesRef = ref(db, `shows/${name}`);
+	try {
+		const snapshot = await get(moviesRef);
+		if (snapshot.exists()) {
+			const filmData = snapshot.val();
+			const currentValue = filmData[attribute] || 0; 
+
+			
+			await update(moviesRef, {
+				[attribute]: currentValue + 1,
+			});
+
+			console.log(`Successfully updated ${attribute}`);
+		} else {
+			console.log(`not found`);
+		}
+	} catch (error) {
+		console.error("Error updating attribute:", error);
+	}
+};
 export default addFilm

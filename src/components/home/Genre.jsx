@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "../common/commonstyles.module.css";
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { get4Covers, shuffleArray } from '../../commonJs/common';
 function Genre({genreName,top10,userData,movies,tvShows ,show}) {
      const coversM = shuffleArray(get4Covers(movies, genreName));

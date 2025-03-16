@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./navbar.module.css"
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 function NavBar() {
   let navigate = useNavigate();
 	const [disable, setDisable] = useState(false);

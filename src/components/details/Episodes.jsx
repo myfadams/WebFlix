@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./episodes.module.css";
 import commonStyles from "../common/commonstyles.module.css";
 import { formatRuntime,  } from "../../commonJs/common";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const Episode = ({ season, episodes }) => {
     const [shouldShow, setShouldshow]=useState(false)

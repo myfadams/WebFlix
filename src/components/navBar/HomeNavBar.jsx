@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from "./homeNavBar.module.css"
 import PopUpMenu from './PopUpMenu';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const useIsVisible = (threshold = 0.1) => {
 	const [isVisible, setIsVisible] = useState(false);
