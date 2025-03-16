@@ -9,7 +9,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import { shows } from "../commonJs/common";
 function Home() {
 	const location = useLocation();
-	const userData = location?.state.user;
+	
 	const [movies, setMovies] = useState();
 	const [suggestedMovie, setSuggestedMovie] = useState();
 	const [isLoading, setIsLoading] = useState(false);
@@ -60,29 +60,29 @@ function Home() {
 					height: "39.5rem",
 				}}
 			></div>
-			<HomeNavBar userDetails={userData} page={"home"} />
+			<HomeNavBar page={"home"} />
 			{/* <h1 style={{fontSize:"2rem", margin:"1rem"}}>Welcome {userData?.name}</h1> */}
-			<Popular user={userData} filmObj={suggestedMovie} />
+			<Popular  filmObj={suggestedMovie} />
 			<div style={{ position: "relative" }}>
 				<div className={styles.title}>Movies</div>
 				<div className={styles.mov}>
 					<VideoDisplay
 						heading={"Our Genre"}
 						single={false}
-						userData={userData}
+						
 						filmArray={movies}
 					/>
 					<VideoDisplay
 						single={true}
 						heading={"Trending Movies"}
-						userData={userData}
+						
 						filmArray={movies}
 					/>
 					<VideoDisplay
 						heading={"Popular Top 10 In Genres"}
 						top10={true}
 						single={false}
-						userData={userData}
+						
 						filmArray={movies}
 						// show={true}
 					/>
@@ -91,7 +91,7 @@ function Home() {
 						heading={"New Releases"}
 						show={true}
 						newRelease={true}
-						userData={userData}
+						
 						filmArray={movies}
 					/>
 				</div>

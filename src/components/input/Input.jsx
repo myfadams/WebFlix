@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./input.module.css"
-function Input({value,setValue,placeHolder, type,name}) {
+function Input({value,setValue,placeHolder, type,name,ref}) {
     const [shouldHide,setShouldHide]=useState(true)
   return (
 		<div className={styles.mainIn}>
@@ -13,6 +13,7 @@ function Input({value,setValue,placeHolder, type,name}) {
 				}}
 				value={value[name]}
 				required
+				ref={ref}
                 // hidden=
 			/>
 			{(name === "password" || name === "confirmPassword") && (

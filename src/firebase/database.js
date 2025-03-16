@@ -1,4 +1,4 @@
-import { ref, set, get, child, update } from "firebase/database";
+import { ref, set, get, child, update} from "firebase/database";
 import { database } from "./config";
 
 const dbRef = ref(database);
@@ -177,4 +177,76 @@ export const incrementViews = async (name,attribute, id="") => {
 		console.error("Error updating attribute:", error);
 	}
 };
+
+export const addUserToDB = async (uid, userData) => {
+	if (!uid || !userData) {
+		console.error("Invalid user data");
+		return;
+	}
+
+	try {
+		const userRef = ref(database, `users/${uid}`); // Reference to the user node
+
+		// Check if user exists
+		const snapshot = await get(userRef);
+
+		if (!snapshot.exists()) {
+			// User does not exist, add them with an empty profiles array
+			await set(userRef, {
+				...userData,
+			});
+			console.log("User added successfully with an empty profiles array!");
+		} else {
+			console.log("User already exists in the database.");
+		}
+	} catch (error) {
+		console.error("Error adding user to Firebase RTDB:", error);
+	}
+};
+
+export const retrieveProfiles = async (uid) => {
+	try {
+		// const db = getDatabase();
+		const userRef = ref(db, `users/${uid}/profiles`); // Path to profiles array
+		const snapshot = await get(userRef);
+		console.log(snapshot.val())
+		if (snapshot.exists()) {
+			return snapshot.val(); // Returns the profiles array
+		} else {
+			console.log("No profiles found!");
+			return [];
+		}
+	} catch (error) {
+		console.error("Error retrieving profiles:", error);
+		return [];
+	}
+};
+
+export const addProfile = async (uid, profile) => {
+	try {
+		const profilesRef = ref(db, `users/${uid}/profiles`);
+
+		// Check if profiles exist
+		const snapshot = await get(profilesRef);
+		console.log(snapshot.exists(), "herere ");
+		if (!snapshot.exists()) {
+			// If profiles path doesn’t exist, create it as an array
+			await set(profilesRef, [profile]);
+			console.log("Created profiles array and added the first profile.");
+		} else {
+			// If profiles exist, add a new profile
+			const existingProfiles = snapshot.val() || [];
+			existingProfiles.push(profile);
+
+			await set(profilesRef, existingProfiles);
+			console.log("Profile added successfully!");
+		}
+
+		return true;
+	} catch (error) {
+		console.error("Error adding profile:", error);
+		return false;
+	}
+};
+
 export default addFilm

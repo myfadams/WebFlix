@@ -1,19 +1,44 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import styles from "./sign-up.module.css";
 import Input from "../components/input/Input";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Context";
+import Loading from "../components/video/Loading";
 
 function SignIn() {
-	useEffect(()=>{
-			window.scroll(0,0)
-		},[])
-  const [userDetails, setUserDetails] = useState({
+	const { user, checkEmailVerification } = useAuth();
+	const [userDetails, setUserDetails] = useState({
 		email: "",
 		password: "",
 	});
 	const [remember, setRemember] = useState(false);
-	const [disable,setDisable]=useState(false)
-	const navigate =useNavigate()
+
+	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(true);
+	const [disable, setDisable] = useState(true);
+	useEffect(() => {
+		if (!user) {
+			setIsLoading(false);
+			setDisable(false);
+			return;
+		}
+		const interval = setInterval(() => {
+			if (user && !user?.emailVerified) {
+				checkEmailVerification();
+			} else {
+				console.log("verified");
+				navigate("/selectProfile");
+				clearInterval(interval);
+				return;
+			}
+		}, 3000);
+
+		return () => clearInterval(interval); // Cleanup interval on unmount
+	}, [user, checkEmailVerification]);
+	useEffect(() => {
+		window.scroll(0, 0);
+	}, []);
+
 	return (
 		<section className={styles.signMain}>
 			<div className={styles.mainOverlay}></div>
@@ -50,11 +75,21 @@ function SignIn() {
 							className={styles.signBtn}
 							onClick={() => {
 								navigate("/selectProfile");
-								setDisable(!disable);
+								// setDisable(!disable);
 							}}
 							disabled={disable}
 						>
-							Sign In
+							{isLoading ? (
+								<Loading
+									styles={{
+										borderLeftColor: "white",
+										width: "20px",
+										height: "20px",
+									}}
+								/>
+							) : (
+								"Sign Up"
+							)}
 						</button>
 						<label className={styles.checkboxContainer}>
 							<input
@@ -67,7 +102,10 @@ function SignIn() {
 						</label>
 						<div className={styles.new}>
 							<p>
-								New to MovieHaven? <NavLink to={"/register"} replace>Sign up.</NavLink>
+								New to MovieHaven?{" "}
+								<NavLink to={"/register"} replace>
+									Sign up.
+								</NavLink>
 							</p>
 							<p>
 								This page is protected by Google reCAPTCHA to ensure you’re not
@@ -103,4 +141,4 @@ function SignIn() {
 	);
 }
 
-export default SignIn
+export default SignIn;

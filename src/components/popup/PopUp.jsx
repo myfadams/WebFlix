@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import styles from "./popup.module.css"
 import Input from  "../input/Input"
 import { Rating } from '@mui/material';
+import { addProfile } from '../../firebase/database';
+import { useAuth } from '../../context/Context';
+import Loading from '../video/Loading';
 
 const prof = [];
 for (let i = 0; i <= 15; i++) {
@@ -13,6 +16,8 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 		profileName: "",
 		profileImg: "",
 	});
+	const [isLoading,setIsLoading]=useState(false)
+	const { user, checkEmailVerification } = useAuth();
 	const [reviewDetails, setReviewDetails] = useState({
 		name: "",
 		from: "",
@@ -22,7 +27,15 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 		likes:0
 	});
 	const [selected,setSelected]=useState("");
-	
+	const handleAddProfile=()=>{
+		setIsLoading(true);
+		addProfile(user?.uid,userProfile).then((res)=>{
+			
+		}).finally(()=>{
+			setDet();
+			setIsLoading(false);
+		})
+	}
 	// console.log(prof)
 	return !type ? (
 		<div className={styles.popupOverlay} onClick={onClose}>
@@ -61,15 +74,25 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 							userProfile.profileName.trim() !== "" &&
 							userProfile.profileImg.trim() !== ""
 						) {
-							setDet({
-								name: userProfile.profileName,
-								profile: userProfile.profileImg,
-							});
+							handleAddProfile()
+							
+
 							onClose();
 						}
 					}}
+					disabled={isLoading}
 				>
-					Add
+					{isLoading ? (
+						<Loading
+							styles={{
+								borderLeftColor: "white",
+								width: "20px",
+								height: "20px",
+							}}
+						/>
+					) : (
+						"Add"
+					)}
 				</button>
 			</div>
 		</div>
@@ -105,7 +128,7 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 				/>
 				<div className={styles.rating}>
 					<span>Rating</span>
-					<span style={{display:"flex",alignItems:"center", gap:"4px"}}>
+					<span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
 						<Rating
 							name="rating"
 							value={reviewDetails.rating}
@@ -134,10 +157,10 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 					onClick={() => {
 						if (
 							reviewDetails.name.trim() !== "" &&
-							reviewDetails.from.trim() !== "" && reviewDetails.review.trim()!==""
+							reviewDetails.from.trim() !== "" &&
+							reviewDetails.review.trim() !== ""
 						) {
 							setDet(reviewDetails);
-							
 							onClose();
 						}
 					}}

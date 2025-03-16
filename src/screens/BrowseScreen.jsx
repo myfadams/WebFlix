@@ -64,7 +64,7 @@ function BrowseScreen() {
 	const mTop10 = temp.slice(0, 10);
 	return (
 		<div style={{ position: "relative" }}>
-			<HomeNavBar userDetails={data?.userData} page={data?.active} />
+			<HomeNavBar page={data?.active} />
 			<h1 className={styles.bHeader}>
 				{data?.top10 ? `Top 10 ${data?.genreName}` : `${data?.genreName}`}
 			</h1>

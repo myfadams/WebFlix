@@ -9,7 +9,6 @@ import PopUp from "../components/popup/PopUp";
 import Episodes from "../components/details/Episodes";
 function Details() {
 	const location = useLocation();
-	const userData = location?.state.userData;
 	const film = location?.state?.filmObj;
 	const seasons = location?.state?.seasons;
 	const typeOfFilm = location?.state?.typeOfFilm;
@@ -77,7 +76,7 @@ function Details() {
 				setDet={setNewRewiew}
 				onClose={() => {
 					setShowReveiw(false);
-					Details;
+					// Details;
 				}}
 				type={"review"}
 			/>
@@ -106,7 +105,7 @@ function Details() {
 						height: "100%",
 					}}
 				></div>
-				<HomeNavBar userDetails={userData} />
+				<HomeNavBar/>
 				<Popular type={"details"} filmObj={film} />
 			</div>
 

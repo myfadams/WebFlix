@@ -3,42 +3,66 @@ import styles from "./selectuser.module.css";
 import commonStyles from "../components/common/commonstyles.module.css"
 import PopUp from "../components/popup/PopUp";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Context";
+import { addProfile, retrieveProfiles } from "../firebase/database";
+import LoadingScreen from "../components/LoadingScreen";
 function SelectUser() {
+	const { user, checkEmailVerification,setProfile } = useAuth();
+	const [isLoading,setLoading]=useState(true)
 	useEffect(()=>{
 			window.scroll(0,0)
 		},[])
-	const [userProfiles, setUserProfiles] = useState([
-		{ name: "Jennifer", profile: "/avatar1.png" },
-		{ name: "Rex", profile: "/avatar2.png" },
-		{ name: "Bill", profile: "/avatar3.png" },
-		// { name: "Arthur", profile: "./avatar4.png" },
-	]);
-	const [newUser, setNewUser] = useState({
-		name: "",
-		profile: "/avatar1.png",
-	});
-	// const [disable,setDisable]=useState(false)
-	const navigate =useNavigate()
+
+	
+	const [userProfiles, setUserProfiles] = useState();
+	const [newUser, setNewUser] = useState();
+	const navigate = useNavigate();
+	const [isOpen, setISOpen] = useState(false);
 	useEffect(()=>{
-		if(newUser.name!=="")
-			setUserProfiles([...userProfiles, newUser]);
-	},[newUser])
-	const [isOpen, setISOpen]=useState(false)
+		setLoading(true)
+		retrieveProfiles(user?.uid).then((res)=>{
+			setUserProfiles(res)
+		}).finally(()=>{
+			window.reload
+			setLoading(false);
+		})
+		
+	},[newUser,isOpen])
+	const fetchProfiles = () => {
+		setLoading(true);
+		retrieveProfiles(user?.uid)
+			.then((res) => {
+				setUserProfiles(res);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	};
+	if(isLoading)
+		return <LoadingScreen title={"Loading..."} />;
 	return (
 		<div className={styles.sectionUser}>
 			<h1>Who's watching?</h1>
-			<PopUp isOpen={isOpen} onClose={() => setISOpen(false)} setDet={setNewUser}/>
+			<PopUp isOpen={isOpen} onClose={() => setISOpen(false)} setDet={fetchProfiles}/>
 			<div className={styles.main}>
 				<ul>
-					{userProfiles.map((user, id) => {
+					{userProfiles?.map((userProf, id) => {
 						return (
-							<li key={id} className={`${commonStyles.touchableOpacity}`} onClick={()=>{
-
-								navigate("/home",{state:{user}})
-								// setDisable(true)
-							}}>
-								<img src={user.profile} alt={`${user.name} profile`} />
-								<p>{user.name}</p>
+							<li
+								key={id}
+								className={`${commonStyles.touchableOpacity}`}
+								onClick={() => {
+									console.log(userProf)
+									setProfile(userProf)
+									navigate("/home");
+									// setDisable(true)
+								}}
+							>
+								<img
+									src={userProf?.profileImg}
+									alt={`${userProf?.profileName} profile`}
+								/>
+								<p>{userProf?.profileName}</p>
 							</li>
 						);
 					})}

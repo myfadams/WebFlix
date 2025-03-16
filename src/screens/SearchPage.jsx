@@ -8,7 +8,7 @@ import Single from "../components/home/Single";
 function SearchPage() {
 	const location = useLocation();
 	const active = location?.state?.active;
-	const uData = location?.state?.userData;
+	
 	const [searchResults, setSearchResults] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
@@ -31,7 +31,7 @@ function SearchPage() {
 	};
 	return (
 		<div>
-			<HomeNavBar isActive={active} userDetails={uData} />
+			<HomeNavBar isActive={active} />
 			<div className={styles.mainSearch}>
 				<div style={{width:"100%"}}>
 					<h1>{s.trim()!==""?`Results for "${s}"`:"Search"}</h1>

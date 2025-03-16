@@ -63,7 +63,7 @@ function Popular({ title, details, type, user, filmObj }) {
 									}}
 									onClick={() => {
 										navigate(`/details/${filmObj?.title||"HomeMovie"}`, {
-											state: { userData: user, filmObj, typeOfFilm:"movie" },
+											state: { filmObj, typeOfFilm:"movie" },
 										});
 									}}
 								>

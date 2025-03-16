@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from "../common/commonstyles.module.css";
 import { useNavigate } from 'react-router-dom';
 import { get4Covers, shuffleArray } from '../../commonJs/common';
-function Genre({genreName,top10,userData,movies,tvShows ,show}) {
+function Genre({genreName,top10,movies,tvShows ,show}) {
      const coversM = shuffleArray(get4Covers(movies, genreName));
 	 const coversS = shuffleArray(get4Covers(tvShows,genreName))
 	//  console.log(covers)
@@ -24,7 +24,7 @@ function Genre({genreName,top10,userData,movies,tvShows ,show}) {
 				setDisable(true);
 				navigate(`/browse/${top10 ? "Top10 " + genreName : genreName}`, {
 					state: {
-						browseDetails: { top10, genreName, userData },
+						browseDetails: { top10, genreName},
 						filmObj: show ? tvShows : movies,
 						show,
 						typeSect: "genre",
@@ -43,7 +43,7 @@ function Genre({genreName,top10,userData,movies,tvShows ,show}) {
 				}}
 			>
 				{!show
-					? coversM?.map((img) => {
+					? coversM?.map((img,id) => {
 							return (
 								<img
 									src={img?.posterLink}
@@ -54,10 +54,11 @@ function Genre({genreName,top10,userData,movies,tvShows ,show}) {
 										objectFit: "cover",
 										borderRadius: "5px",
 									}}
+									key={id}
 								/>
 							);
 					  })
-					: coversS?.map((img) => {
+					: coversS?.map((img,id) => {
 							return (
 								<img
 									src={img?.posterLink}
@@ -68,6 +69,7 @@ function Genre({genreName,top10,userData,movies,tvShows ,show}) {
 										objectFit: "cover",
 										borderRadius: "5px",
 									}}
+									key={id}
 								/>
 							);
 					  })}

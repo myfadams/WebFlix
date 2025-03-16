@@ -12,22 +12,25 @@ import Details from "./screens/Details";
 import Video from "./screens/Video";
 import BrowseScreen from "./screens/BrowseScreen";
 import SearchPage from "./screens/SearchPage";
+import { AuthProvider } from "./context/Context";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
-	<BrowserRouter basename="/">
-		<Routes>
-			<Route index element={<App />} />
-			<Route path="register" element={<SignUp />} />
-			<Route path="login" element={<SignIn />} />
-			<Route path="selectProfile" element={<SelectUser />} />
-			<Route path="home" element={<Home />} />
-			<Route path="upload" element={<Upload />} />
+	<AuthProvider>
+		<BrowserRouter basename="/">
+			<Routes>
+				<Route index element={<App />} />
+				<Route path="register" element={<SignUp />} />
+				<Route path="login" element={<SignIn />} />
+				<Route path="selectProfile" element={<SelectUser />} />
+				<Route path="home" element={<Home />} />
+				<Route path="upload" element={<Upload />} />
 
-			<Route path="details/:movieName" element={<Details />} />
-			<Route path="movie/:movieName" element={<Video />} />
-			<Route path="browse/:category" element={<BrowseScreen />} />
-			<Route path="search" element={<SearchPage/>} />
-		</Routes>
-	</BrowserRouter>
+				<Route path="details/:movieName" element={<Details />} />
+				<Route path="movie/:movieName" element={<Video />} />
+				<Route path="browse/:category" element={<BrowseScreen />} />
+				<Route path="search" element={<SearchPage />} />
+			</Routes>
+		</BrowserRouter>
+	</AuthProvider>
 );

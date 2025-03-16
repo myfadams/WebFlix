@@ -47,10 +47,15 @@
 
 .popBtn{
     background-color: var(--primary-btn);
+    display: flex;
+    justify-content: center;
     width: 100%;
     color: white;
     margin-top: 1rem;
     font-size: 1rem;
+    & > div{
+        position: static;
+    }
 }
 .popBtn:hover{
     background-color: var(--btn-hover);

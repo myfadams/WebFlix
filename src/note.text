@@ -11,3 +11,9 @@
 											detObj={searchEntries}
 											seasons={searchEntries?.numberOfSeasons}
 										/>
+
+
+										() => {
+								navigate("/selectProfile");
+								setDisable(true);
+							}

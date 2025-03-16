@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./homeNavBar.module.css";
 import PopUpMenu from "./PopUpMenu";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/Context";
 
 const useIsVisible = (threshold = 0.1) => {
 	const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +28,7 @@ const useIsVisible = (threshold = 0.1) => {
 	return [elementRef, isVisible];
 };
 
-const PhoneCarousel = ({ page, userDetails, isActive }) => {
+const PhoneCarousel = ({ page,  isActive }) => {
 	const carouselRef = useRef(null);
 
 	const handleTouchStart = (e) => {
@@ -59,9 +60,9 @@ const PhoneCarousel = ({ page, userDetails, isActive }) => {
 					className={`${page === "home" && styles.active}`}
 					to={"/home"}
 					state={{
-						user: userDetails,
+						
 						active: "home",
-						userData: userDetails,
+						
 					}}
 					replace
 				>
@@ -75,7 +76,7 @@ const PhoneCarousel = ({ page, userDetails, isActive }) => {
 						browseDetails: {
 							genreName: "Tv Shows and Series",
 							active: "tv_shows",
-							userData: userDetails,
+							
 						},
 						typeSect: "sections",
 						show: "show",
@@ -91,7 +92,7 @@ const PhoneCarousel = ({ page, userDetails, isActive }) => {
 						browseDetails: {
 							genreName: "All Movies",
 							active: "movies",
-							userData: userDetails,
+							
 						},
 						typeSect: "sections",
 					}}
@@ -106,7 +107,7 @@ const PhoneCarousel = ({ page, userDetails, isActive }) => {
 						browseDetails: {
 							genreName: "New & Popular",
 							active: "new",
-							userData: userDetails,
+							
 						},
 						typeSect: "sections",
 					}}
@@ -121,7 +122,7 @@ const PhoneCarousel = ({ page, userDetails, isActive }) => {
 						browseDetails: {
 							genreName: "My List",
 							active: "my_list",
-							userData: userDetails,
+							
 						},
 						typeSect: "sections",
 					}}
@@ -136,7 +137,7 @@ const PhoneCarousel = ({ page, userDetails, isActive }) => {
 						browseDetails: {
 							genreName: "Browse by Language",
 							active: "languages",
-							userData: userDetails,
+							
 						},
 						typeSect: "sections",
 					}}
@@ -149,10 +150,12 @@ const PhoneCarousel = ({ page, userDetails, isActive }) => {
 	);
 };
 
-function HomeNavBar({ userDetails, page, isActive }) {
+function HomeNavBar({ page, isActive }) {
 	// console.log(page)
 	const [ref, isVisible] = useIsVisible();
 	const [showMenu, setShowMenu] = useState(false);
+	const { profile, setProfile } = useAuth();
+	console.log(profile,"yes")
 	useEffect(() => {
 		setShowMenu(false);
 	}, [isVisible]);
@@ -173,9 +176,9 @@ function HomeNavBar({ userDetails, page, isActive }) {
 								className={`${page === "home" && styles.active}`}
 								to={"/home"}
 								state={{
-									user: userDetails,
+									
 									active: "home",
-									userData: userDetails,
+									
 								}}
 								replace
 							>
@@ -189,7 +192,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 									browseDetails: {
 										genreName: "Tv Shows and Series",
 										active: "tv_shows",
-										userData: userDetails,
+										
 									},
 									typeSect: "sections",
 									show: "show",
@@ -205,7 +208,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 									browseDetails: {
 										genreName: "All Movies",
 										active: "movies",
-										userData: userDetails,
+										
 									},
 									typeSect: "sections",
 								}}
@@ -220,7 +223,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 									browseDetails: {
 										genreName: "New & Popular",
 										active: "new",
-										userData: userDetails,
+										
 									},
 									typeSect: "sections",
 								}}
@@ -235,7 +238,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 									browseDetails: {
 										genreName: "My List",
 										active: "my_list",
-										userData: userDetails,
+										
 									},
 									typeSect: "sections",
 								}}
@@ -250,7 +253,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 									browseDetails: {
 										genreName: "Browse by Language",
 										active: "languages",
-										userData: userDetails,
+										
 									},
 									typeSect: "sections",
 								}}
@@ -264,7 +267,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 						{isActive !== "search" && (
 							<Link
 								to={"/search"}
-								state={{ active: "search", userData: userDetails }}
+								state={{ active: "search" }}
 							>
 								<img
 									src="/Search1.png"
@@ -307,7 +310,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 							}}
 						>
 							<img
-								src={userDetails?.profile}
+								src={profile?.profileImg}
 								alt="profile"
 								style={{ width: "2rem", height: "2rem", borderRadius: "2px" }}
 							/>
@@ -349,7 +352,7 @@ function HomeNavBar({ userDetails, page, isActive }) {
 					{showMenu && <PopUpMenu onClose={setShowMenu} />}
 				</div>
 
-				<PhoneCarousel page={page} userDetails={userDetails} />
+				<PhoneCarousel page={page} />
 			</div>
 			<div ref={ref} style={{ height: "1px" }}></div>
 		</>

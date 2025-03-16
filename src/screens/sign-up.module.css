@@ -85,6 +85,14 @@
     background-color: var(--primary-btn);
     color: white;
     font-size: 1.1rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > div{
+        position: static;
+        display: inline;
+    }
 }
 
 .signBtn:hover{
@@ -186,5 +194,17 @@
         }
     .footerD{
         margin-top: 10%;
+    }
+}
+
+.resend{
+    display: flex;
+    justify-content: space-between;
+
+    & > span{
+        color: var(--primary-btn);
+    }
+     & > span:hover{
+        cursor: pointer;
     }
 }
