@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
-import styles from "./homeNavBar.module.css"
-import PopUpMenu from './PopUpMenu';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./homeNavBar.module.css";
+import PopUpMenu from "./PopUpMenu";
+import { Link } from "react-router-dom";
 
 const useIsVisible = (threshold = 0.1) => {
 	const [isVisible, setIsVisible] = useState(false);
@@ -23,13 +23,13 @@ const useIsVisible = (threshold = 0.1) => {
 			if (elementRef.current) observer.unobserve(elementRef.current);
 		};
 	}, [threshold]);
-	console.log(isVisible)
+	console.log(isVisible);
 	return [elementRef, isVisible];
 };
 
-const PhoneCarousel = ({page,userDetails}) => {
+const PhoneCarousel = ({ page, userDetails, isActive }) => {
 	const carouselRef = useRef(null);
-	
+
 	const handleTouchStart = (e) => {
 		carouselRef.current.startX = e.touches[0].clientX;
 		carouselRef.current.scrollLeftStart = carouselRef.current.scrollLeft;
@@ -45,10 +45,6 @@ const PhoneCarousel = ({page,userDetails}) => {
 	const handleTouchEnd = () => {
 		carouselRef.current.startX = null;
 	};
-
-
-	
-
 
 	return (
 		<>
@@ -153,15 +149,14 @@ const PhoneCarousel = ({page,userDetails}) => {
 	);
 };
 
-
-function HomeNavBar({userDetails, page}) {
+function HomeNavBar({ userDetails, page, isActive }) {
 	// console.log(page)
 	const [ref, isVisible] = useIsVisible();
-	const [showMenu,setShowMenu]=useState(false)
+	const [showMenu, setShowMenu] = useState(false);
 	useEffect(() => {
 		setShowMenu(false);
 	}, [isVisible]);
-  return (
+	return (
 		<>
 			<div className={`${styles.navHB}  ${!isVisible && styles.navHover}`}>
 				<div className={`${styles.homeNav}`}>
@@ -266,20 +261,25 @@ function HomeNavBar({userDetails, page}) {
 						</div>
 					</div>
 					<div className={styles.second}>
-						<Link>
-							<img
-								src="/Search1.png"
-								alt="Search button"
-								className={styles.whLi}
-								style={{ width: "1.3rem" }}
-							/>
-							<img
-								src="/Search.png"
-								alt="Search button"
-								className={styles.pLi}
-								style={{ width: "1.3rem" }}
-							/>
-						</Link>
+						{isActive !== "search" && (
+							<Link
+								to={"/search"}
+								state={{ active: "search", userData: userDetails }}
+							>
+								<img
+									src="/Search1.png"
+									alt="Search button"
+									className={styles.whLi}
+									style={{ width: "1.3rem" }}
+								/>
+								<img
+									src="/Search.png"
+									alt="Search button"
+									className={styles.pLi}
+									style={{ width: "1.3rem" }}
+								/>
+							</Link>
+						)}
 						<Link>
 							<img
 								src="/Notification1.png"
@@ -356,4 +356,4 @@ function HomeNavBar({userDetails, page}) {
 	);
 }
 
-export default HomeNavBar
+export default HomeNavBar;

@@ -69,7 +69,7 @@ function VideoDisplay({
 
 					{single && !tvShow && (
 						<>
-							{moviesData?.map((movie, id) => (
+							{moviesData?.slice(0, 10)?.map((movie, id) => (
 								<Single
 									imgUrl={movie?.posterLink}
 									releaseDate={movie?.releaseDate}
@@ -87,7 +87,7 @@ function VideoDisplay({
 					)}
 					{single && tvShow && !newRelease && (
 						<>
-							{showsData?.map((show, id) => (
+							{showsData?.slice(0, 10)?.map((show, id) => (
 								<Single
 									imgUrl={show?.posterLink}
 									releaseDate={show?.showReleaseDate}
@@ -107,7 +107,7 @@ function VideoDisplay({
 
 					{single && tvShow && newRelease && (
 						<>
-							{showsData?.map((show, id) => (
+							{showsData?.slice(0, 10)?.map((show, id) => (
 								<Single
 									imgUrl={show?.posterLink}
 									releaseDate={show?.showReleaseDate}

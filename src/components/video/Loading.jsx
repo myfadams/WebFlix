@@ -1,9 +1,9 @@
 import React from 'react'
 import "../spinner.css";
-function Loading() {
+function Loading( {styles}) {
   return (
 		<div className="spinner-container">
-			<div className="spinner"></div>
+			<div className="spinner" style={{ ...styles }}></div>
 		</div>
 	);
 }

@@ -1,26 +1,13 @@
-{data?.active === "languages" && (
-						<>
-							{filmsData?.map((langFilm) => (
-								<div style={{margin:"1rem"}}>
-									<h4 style={{fontSize:"1.2rem"}}>{getLanguageName(langFilm?.language)}</h4>
-									<div className={styles.langPage}>
-										{langFilm?.films.map((film,id) => (
-											<Single
-												imgUrl={film?.posterLink}
-												releaseDate={film?.releaseDate || film?.showReleaseDate}
-												watchTime={film?.runtime || film?.totalRuntime}
-												views={film?.views || 0}
-												show={film?.type}
-												key={id}
-												title={film?.title}
-												movieId={film?.id || id}
-												userData={data?.userData}
-												detObj={film}
-												seasons={film?.numberOfSeasons}
-											/>
-										))}
-									</div>
-								</div>
-							))}
-						</>
-					)}
+<Single
+											imgUrl={searchEntries?.posterLink}
+											releaseDate={searchEntries?.releaseDate || searchEntries?.showReleaseDate}
+											watchTime={searchEntries?.runtime || searchEntries?.totalRuntime}
+											views={searchEntries?.views || 0}
+											show={searchEntries?.type}
+											key={id}
+											title={searchEntries?.title}
+											movieId={searchEntries?.id || id}
+											userData={uData}
+											detObj={searchEntries}
+											seasons={searchEntries?.numberOfSeasons}
+										/>
