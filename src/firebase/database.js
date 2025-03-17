@@ -317,4 +317,83 @@ export const retrieveUserList = async (profileID) => {
 		return [];
 	}
 };
+
+
+export const retrieveReviews = async (filmName) => {
+	try {
+		const reviewsRef = ref(db, `reviews/${filmName}/reviews`);
+		const snapshot = await get(reviewsRef);
+
+		if (snapshot.exists()) {
+			const data = snapshot.val();
+
+			const reviewArray = Array.isArray(data) ? data : Object.values(data);
+
+			console.log(reviewArray, "USer List  retrieved");
+			return reviewArray;
+		} else {
+			console.log("No List found!");
+			return [];
+		}
+	} catch (error) {
+		console.error("Error retrieving List:", error);
+		return [];
+	}
+};
+
+export const addReviews = async (filmName,review) => {
+	console.log(review, "movieDetails");
+	try {
+		const reviewsRef = ref(db, `reviews/${filmName}/reviews`);
+		const snapshot = await get(reviewsRef);
+		let reviewList = snapshot.exists() ? snapshot.val() : [];
+		const id =
+			typeof crypto !== "undefined" && crypto.randomUUID
+				? crypto.randomUUID()
+				: Date.now().toString(36) + Math.random().toString(36).substring(2);
+		// Ensure it's an array (in case of push storage)
+		if (!Array.isArray(reviewList)) {
+			reviewList = Object.values(reviewList);
+		}
+		review={...review,id}
+		reviewList.push(review);
+		await set(reviewsRef, reviewList);
+
+		console.log("done")
+	} catch (error) {
+		console.error("Error adding review movie to used list:", error);
+	}
+};
+
+
+export const addLike = async (filmName, userId, reviewId) => {
+	if (!filmName || !userId || !reviewId){
+		 return;
+
+	}
+	const likesRef = ref(db, `reviews/${filmName}/reviews/${reviewId}/likes`);
+
+	try {
+		const snapshot = await get(likesRef);
+		let likesData = snapshot.exists() ? snapshot.val() : [];
+
+		// Ensure likesData is an array
+		if (!Array.isArray(likesData)) {
+			likesData = [];
+		}
+
+		if (likesData.includes(userId)) {
+			// If user already liked, remove their ID
+			likesData = likesData.filter((id) => id !== userId);
+		} else {
+			// If user hasn't liked, add their ID
+			likesData.push(userId);
+		}
+
+		await set(likesRef, likesData);
+	} catch (error) {
+		console.error("Error toggling like:", error);
+	}
+};
+
 export default addFilm

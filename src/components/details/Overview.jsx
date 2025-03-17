@@ -1,11 +1,31 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from "./overview.module.css"
 
 import { Rating } from '@mui/material';
 import { getLanguageName } from '../../commonJs/common';
-function Overview({descprition,releaseDate,cast,genres,director, fType, fCrew, movieGenre, lang, movieRating}) {
+import { retrieveReviews } from '../../firebase/database';
+function Overview({descprition,releaseDate,cast,genres,director, fType, fCrew, movieGenre, lang, movieRating,film}) {
 	// console.log(fCrew)
 	const date = new Date(releaseDate);
+	const [appRatings,setAppRatings]=useState(0)
+	 useEffect(()=>{
+		retrieveReviews(film).then((res)=>{
+			
+			if(res.length<=0){
+				
+				setAppRatings(0);
+				return
+			}
+			const average =
+				res?.reduce((sum, review) => sum + review?.rating, 0) /
+				res?.length;
+			console.log(average, "average");
+			setAppRatings(average)
+		}).finally(()=>{
+			
+		})
+		
+	   },[])
 	
     const movieLanguages = [
 			"English",
@@ -149,7 +169,7 @@ function Overview({descprition,releaseDate,cast,genres,director, fType, fCrew, m
 						<Rating
 							name="rating"
 							// defaultValue={2.5}
-							value={(movieRating / 10) * 5}
+							value={appRatings}
 							precision={0.5}
 							readOnly
 							style={{ color: "var(--primary-btn)" }}

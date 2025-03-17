@@ -108,7 +108,7 @@
     justify-content: space-between;
     margin-bottom: 0.5rem;
     & p {
-        font-size: 1rem;
+        font-size: 1.4rem;
     }
     & p:last-of-type{
         font-size: 0.8rem;
@@ -164,7 +164,11 @@
 .like{
     margin-top: 0.5rem;
     display: flex;
+    width: 4rem;
+    align-items: center;
     gap: 0.5rem;
+    background-color: transparent;
+    color: white;
 }
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from "./popup.module.css"
 import Input from  "../input/Input"
 import { Rating } from '@mui/material';
-import { addProfile } from '../../firebase/database';
+import { addProfile, addReviews } from '../../firebase/database';
 import { useAuth } from '../../context/Context';
 import Loading from '../video/Loading';
 
@@ -10,7 +10,7 @@ const prof = [];
 for (let i = 0; i <= 15; i++) {
 	prof.push(`/avatars/avatar${i != 0 ? i:""}.png`);
 }
-const PopUp = ({ isOpen, onClose, setDet, type }) => {
+const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 	if (!isOpen) return null; // Don't render if popup is closed
 	const [userProfile, setUseProfile] = useState({
 		profileName: "",
@@ -29,14 +29,21 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 	const [selected,setSelected]=useState("");
 	const handleAddProfile=()=>{
 		setIsLoading(true);
-		addProfile(user?.uid,userProfile).then((res)=>{
+		const cachedProfile =
+			JSON.parse(localStorage.getItem("currentProfile")) || {};
+		addProfile(cachedProfile?.id,userProfile).then((res)=>{
 			console.log(res)
 		}).finally(()=>{
 			setDet();
 			setIsLoading(false);
 		})
 	}
-	// console.log(prof)
+	const handleAddReview=()=>{
+		setIsLoading(true);
+		addReviews(filmName,reviewDetails).finally(()=>{
+			setIsLoading(false)
+		})
+	}
 	return !type ? (
 		<div className={styles.popupOverlay} onClick={onClose}>
 			<div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
@@ -160,7 +167,8 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 							reviewDetails.from.trim() !== "" &&
 							reviewDetails.review.trim() !== ""
 						) {
-							setDet(reviewDetails);
+							setDet(!isLoading);
+							handleAddReview()
 							onClose();
 						}
 					}}

@@ -11,51 +11,74 @@ function PopUpMenu({onClose, profiles}) {
 	const [disable,setDisable]=useState(false);
     
   return (
-		<div className={styles.overlay} onClick={()=>{onClose(false)}}>
-		<div className={styles.mainMenu}>
-			<div className={styles.subMen}>
-				{profiles?.map((userP, id) => (
-					<button className={styles.menuBtn} key={id} onClick={()=>{
-						// console.log("heres")
-						localStorage.setItem("currentProfile", JSON.stringify(userP));
-						window.location.reload()
-					}}>
-						<img src={userP?.profileImg} alt="" style={{ width: "1.6rem" }} />{" "}
-						{userP?.profileName}
+		<div
+			className={styles.overlay}
+			onClick={() => {
+				onClose(false);
+			}}
+		>
+			<div className={styles.mainMenu}>
+				<div className={styles.subMen}>
+					{profiles?.map((userP, id) => (
+						<button
+							className={styles.menuBtn}
+							key={id}
+							onClick={() => {
+								// console.log("heres")
+								localStorage.setItem("currentProfile", JSON.stringify(userP));
+								window.location.reload();
+							}}
+						>
+							<img src={userP?.profileImg} alt="" style={{ width: "1.6rem" }} />{" "}
+							{userP?.profileName}
+						</button>
+					))}
+					<button className={styles.menuBtn}>
+						<img src="/edit.png" alt="" style={{ width: "1.6rem" }} /> Manage
+						Profiles
 					</button>
-				))}
-				<button className={styles.menuBtn}>
-					<img src="/edit.png" alt="" style={{ width: "1.6rem" }} /> Manage
-					Profiles
-				</button>
-				<button className={styles.menuBtn}>
-					<img src="/transfer.png" alt="" style={{ width: "1.6rem" }} />
-					Transfer Profiles
-				</button>
-				<button className={styles.menuBtn}>
-					<img src="/QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
-					Manage Profiles
-				</button>
-				<button className={styles.menuBtn} onClick={()=>{
-					setDisable(true)
-					navigate("/upload");
-					setDisable(false)
-				}} disabled={disable}>
-					<img src="/upload.png" alt="" style={{ width: "1.6rem" }} />
-					Upload a Movie
+					<button className={styles.menuBtn}>
+						<img src="/transfer.png" alt="" style={{ width: "1.6rem" }} />
+						Transfer Profiles
+					</button>
+					<button
+						className={styles.menuBtn}
+						onClick={() =>
+							(window.location.href =
+								"mailto:someone@example.com?subject=Job%20Inquiry&body=Hello,%20I'm%20interested%20in%20the%20job.")
+						}
+					>
+						<img src="/QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
+						Need help
+					</button>
+					<button
+						className={styles.menuBtn}
+						onClick={() => {
+							setDisable(true);
+							navigate("/upload");
+							setDisable(false);
+						}}
+						disabled={disable}
+					>
+						<img src="/upload.png" alt="" style={{ width: "1.6rem" }} />
+						Upload a Movie
+					</button>
+				</div>
+
+				<button
+					className={styles.menuBtn}
+					onClick={() => {
+						setDisable(true);
+						logout().finally(() => {
+							window.history.pushState(null, null, "/login");
+							window.history.go(0);
+							setDisable(false);
+						});
+					}}
+				>
+					Sign out of MovieHaven
 				</button>
 			</div>
-
-			<button className={styles.menuBtn} onClick={()=>{
-				setDisable(true)
-				logout().finally(()=>{
-					window.history.pushState(null, null, "/login");
-					window.history.go(0);
-					setDisable(false);
-				})
-
-			}}>Sign out of MovieHaven</button>
-		</div>
 		</div>
 	);
 }

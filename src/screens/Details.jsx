@@ -68,10 +68,7 @@ function Details() {
 	}, []);
 	const [current, setCurrent] = useState("overview");
 	const [newReview, setNewRewiew] = useState(null);
-	useEffect(() => {
-		if (newReview) setReviews([newReview, ...reviews]);
-		console.log(newReview);
-	}, [newReview]);
+	
 	return (
 		<div>
 			<PopUp
@@ -82,6 +79,7 @@ function Details() {
 					// Details;
 				}}
 				type={"review"}
+				filmName={film?.name || film?.title}
 			/>
 			<div className={styles.mainDetails}>
 				<img
@@ -108,7 +106,7 @@ function Details() {
 						height: "100%",
 					}}
 				></div>
-				<HomeNavBar/>
+				<HomeNavBar />
 				<Popular type={"details"} filmObj={film} />
 			</div>
 
@@ -161,14 +159,15 @@ function Details() {
 						movieGenre={film?.genres}
 						lang={[film?.language]}
 						movieRating={film?.rating}
+						film={film?.name || film?.title}
 					/>
 				)}
 				{current === "trailer" && (
 					<TrailerReview
 						setShowReveiw={setShowReveiw}
 						newReview={newReview}
-						dataR={reviews}
 						trailer={film?.trailer}
+						film={film?.name || film?.title}
 					/>
 				)}
 				{current === "episode" && <Episodes seasons={seasons} />}

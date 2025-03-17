@@ -4,7 +4,7 @@ import HomeNavBar from "../components/navBar/HomeNavBar";
 import styles from "./browswe.module.css";
 import Single from "../components/home/Single";
 import { getLanguageName, groupByLanguage, movies } from "../commonJs/common";
-import { getMovies, getShows } from "../firebase/database";
+import { getMovies, getShows, retrieveUserList } from "../firebase/database";
 import LoadingScreen from "../components/LoadingScreen";
 import { useAuth } from "../context/Context";
 function BrowseScreen() {
@@ -15,9 +15,8 @@ function BrowseScreen() {
 	const filmsDetails = location?.state?.filmObj;
 	const typeSect = location?.state?.typeSect === "genre";
 	const [isLoading, setIsLoading] = useState(false);
-	const navigate=useNavigate()
+	const navigate = useNavigate();
 
-	
 	let specificGenre;
 	let top10;
 	if (typeSect) {
@@ -26,13 +25,13 @@ function BrowseScreen() {
 				gen?.toLowerCase().includes(data?.genreName?.toLowerCase())
 			)
 		);
-		top10 = specificGenre?.slice(0, 10)
+		top10 = specificGenre?.slice(0, 10);
 	}
-	useEffect(()=>{
+	useEffect(() => {
 		if (!user) {
 			navigate("/login", { replace: true });
 		}
-	},[])
+	}, []);
 	useEffect(() => {
 		async function fetctDetails() {
 			setIsLoading(true);
@@ -43,22 +42,29 @@ function BrowseScreen() {
 				type: "show",
 			}));
 			if (data?.active === "movies") {
-				
-				setFilmsData(res1)
+				setFilmsData(res1);
 			} else if (data?.active === "tv_shows") {
-				
-				setFilmsData(updated)
-			}else if (data?.active === "new"){
-				
-				setFilmsData([...res1,...updated]);
-			}else if (data?.active === "languages"){
+				setFilmsData(updated);
+			} else if (data?.active === "new") {
+				setFilmsData([...res1, ...updated]);
+			} else if (data?.active === "languages") {
 				const temp = groupByLanguage([...res1, ...updated]);
-				console.log(temp)
-				setFilmsData(temp)
-			}else{
-				setFilmsData([])
+				console.log(temp);
+				setFilmsData(temp);
+			} else {
+				// setFilmsData([])
+				const cachedProfile =
+					JSON.parse(localStorage.getItem("currentProfile")) || {};
+				const films=[...res1,...updated]
+				retrieveUserList(cachedProfile?.id).then((res) => {
+					const matchingMovies = films?.filter((movie) =>
+						res?.includes(movie?.name||movie?.title)
+					);
+					console.log(matchingMovies,"match")
+					setFilmsData(matchingMovies)
+				});
 			}
-				 
+
 			setIsLoading(false);
 		}
 		if (!typeSect) fetctDetails();
