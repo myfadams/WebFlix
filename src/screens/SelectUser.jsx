@@ -19,13 +19,14 @@ function SelectUser() {
 		},[])
 
 	
-	const [userProfiles, setUserProfiles] = useState();
+	const [userProfiles, setUserProfiles] = useState([]);
 	const [newUser, setNewUser] = useState();
 	
 	const [isOpen, setISOpen] = useState(false);
 	useEffect(()=>{
 		setLoading(true)
 		retrieveProfiles(user?.uid).then((res)=>{
+			console.log(userProfiles,"profile")
 			setUserProfiles(res)
 		}).finally(()=>{
 			setLoading(false);

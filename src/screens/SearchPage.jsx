@@ -64,7 +64,7 @@ function SearchPage() {
 								key={id}
 								title={film?.title}
 								movieId={film?.id || id}
-								userData={uData}
+								
 								detObj={film}
 								seasons={film?.numberOfSeasons}
 							/>

@@ -1,4 +1,4 @@
-import { ref, set, get, child, update} from "firebase/database";
+import { ref, set, get, child, update, push} from "firebase/database";
 import { database } from "./config";
 
 const dbRef = ref(database);
@@ -206,12 +206,19 @@ export const addUserToDB = async (uid, userData) => {
 
 export const retrieveProfiles = async (uid) => {
 	try {
-		// const db = getDatabase();
-		const userRef = ref(db, `users/${uid}/profiles`); // Path to profiles array
+		const userRef = ref(db, `users/${uid}/profiles`);
 		const snapshot = await get(userRef);
-		console.log(snapshot.val())
+
 		if (snapshot.exists()) {
-			return snapshot.val(); // Returns the profiles array
+			const data = snapshot.val();
+
+			// Ensure the data is always returned as an array
+			const profilesArray = Array.isArray(data)
+				? data // If it's already an array, return it
+				: Object.values(data); // Convert object to array
+
+			console.log(profilesArray, "Profiles retrieved");
+			return profilesArray;
 		} else {
 			console.log("No profiles found!");
 			return [];
@@ -229,17 +236,23 @@ export const addProfile = async (uid, profile) => {
 		// Check if profiles exist
 		const snapshot = await get(profilesRef);
 		console.log(snapshot.exists(), "herere ");
+
+		// Generate a reliable ID (fallback for `crypto.randomUUID()`)
+		const id =
+			typeof crypto !== "undefined" && crypto.randomUUID
+				? crypto.randomUUID()
+				: Date.now().toString(36) + Math.random().toString(36).substring(2);
+
+		console.log(id)
+		profile.id = id; // Ensure profile has an ID before adding
 		if (!snapshot.exists()) {
-			// If profiles path doesn’t exist, create it as an array
-			const id = crypto.randomUUID();
-			await set(profilesRef, [{...profile,id}]);
+			// If profiles path doesn’t exist, create an array
+			await set(profilesRef, [profile]);
 			console.log("Created profiles array and added the first profile.");
 		} else {
-			// If profiles exist, add a new profile
-			const existingProfiles = snapshot.val() || [];
-			existingProfiles.push(profile);
-
-			await set(profilesRef, existingProfiles);
+			// If profiles exist, add a new profile using push() to avoid overwriting
+			const newProfileRef = push(profilesRef);
+			await set(newProfileRef, profile);
 			console.log("Profile added successfully!");
 		}
 
@@ -250,4 +263,58 @@ export const addProfile = async (uid, profile) => {
 	}
 };
 
+export const addMovieToUsedList = async (profileID, movieName) => {
+	console.log(movieName,"movieDetails")
+	try {
+		const addedListRef = ref(db, `personalList/${profileID}/addedList`); // Reference to usedList
+
+		// Retrieve current used list
+		const snapshot = await get(addedListRef);
+		let addedList = snapshot.exists() ? snapshot.val() : [];
+
+		// Ensure it's an array (in case of push storage)
+		if (!Array.isArray(addedList)) {
+			addedList = Object.values(addedList);
+		}
+
+		// Add new movie to the list
+		if (!addedList.includes(movieName)) {
+			addedList.push(movieName);
+			await set(addedListRef, addedList);
+			console.log(`Movie "${movieName}" added to  list.`);
+		} else {
+			console.log(`Movie "${movieName}" is already in the  list.`);
+		}
+
+		return true;
+	} catch (error) {
+		console.error("Error adding movie to used list:", error);
+		return false;
+	}
+}
+
+export const retrieveUserList = async (profileID) => {
+	try {
+		const personalRef = ref(db, `personalList/${profileID}/addedList`);
+		const snapshot = await get(personalRef);
+
+		if (snapshot.exists()) {
+			const data = snapshot.val();
+
+			
+			const personalArray = Array.isArray(data)
+				? data 
+				: Object.values(data); 
+
+			console.log(personalArray, "USer List  retrieved");
+			return personalArray;
+		} else {
+			console.log("No List found!");
+			return [];
+		}
+	} catch (error) {
+		console.error("Error retrieving List:", error);
+		return [];
+	}
+};
 export default addFilm

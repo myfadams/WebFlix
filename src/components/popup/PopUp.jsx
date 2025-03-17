@@ -30,7 +30,7 @@ const PopUp = ({ isOpen, onClose, setDet, type }) => {
 	const handleAddProfile=()=>{
 		setIsLoading(true);
 		addProfile(user?.uid,userProfile).then((res)=>{
-			
+			console.log(res)
 		}).finally(()=>{
 			setDet();
 			setIsLoading(false);

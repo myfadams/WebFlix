@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HomeNavBar from "../components/navBar/HomeNavBar";
 import styles from "./details.module.css";
 import Popular from "../components/home/Popular";
@@ -7,12 +7,15 @@ import Overview from "../components/details/Overview";
 import TrailerReview from "../components/details/TrailerReview";
 import PopUp from "../components/popup/PopUp";
 import Episodes from "../components/details/Episodes";
+import { useAuth } from "../context/Context";
 function Details() {
 	const location = useLocation();
 	const film = location?.state?.filmObj;
 	const seasons = location?.state?.seasons;
 	const typeOfFilm = location?.state?.typeOfFilm;
 	const [showReview, setShowReveiw] = useState(false);
+	const { user} = useAuth();
+	const navigate=useNavigate()
 
 	const [reviews, setReviews] = useState([
 		{
@@ -59,9 +62,9 @@ function Details() {
 	
 	useEffect(() => {
 		window.scroll(0, 0);
-		// return ()=>{
-		// 	window.scroll(0, 0);
-		// }
+		if(!user){
+			navigate("/login",{replace:true})
+		}
 	}, []);
 	const [current, setCurrent] = useState("overview");
 	const [newReview, setNewRewiew] = useState(null);

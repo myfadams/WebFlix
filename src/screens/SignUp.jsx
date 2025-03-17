@@ -37,7 +37,7 @@ function SignUp() {
 				checkEmailVerification();
 			} else {
 				console.log("verified");
-				addUserToDB(user?.uid, { username:userDetails.username,email:userDetails.email});
+				addUserToDB(user?.uid, { username:user?.displayName,email:user?.email});
 				navigate("/selectProfile", { replace: true });
 				clearInterval(interval);
 				return;
@@ -66,7 +66,7 @@ function SignUp() {
 		if (userDetails.confirmPassword === userDetails.confirmPassword) {
 			const result = await validatePassword(userDetails.password);
 			if (result.isValid) {
-				const res =await registerUser(userDetails.email, userDetails?.password)
+				const res =await registerUser(userDetails.email, userDetails?.password,userDetails.username)
 				console.log(res)
 				if(!res.success){
 					alert(res.error)

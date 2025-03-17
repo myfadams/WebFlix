@@ -1,19 +1,32 @@
-<Single
-											imgUrl={searchEntries?.posterLink}
-											releaseDate={searchEntries?.releaseDate || searchEntries?.showReleaseDate}
-											watchTime={searchEntries?.runtime || searchEntries?.totalRuntime}
-											views={searchEntries?.views || 0}
-											show={searchEntries?.type}
-											key={id}
-											title={searchEntries?.title}
-											movieId={searchEntries?.id || id}
-											userData={uData}
-											detObj={searchEntries}
-											seasons={searchEntries?.numberOfSeasons}
-										/>
+export const addProfile = async (uid, profile) => {
+	try {
+		const profilesRef = ref(db, `users/${uid}/profiles`);
 
+		// Check if profiles exist
+		const snapshot = await get(profilesRef);
+		console.log(snapshot.exists(), "herere ");
 
-										() => {
-								navigate("/selectProfile");
-								setDisable(true);
-							}
+		// Generate a reliable ID (fallback for `crypto.randomUUID()`)
+		const id = typeof crypto !== "undefined" && crypto.randomUUID 
+			? crypto.randomUUID() 
+			: Date.now().toString(36) + Math.random().toString(36).substring(2);
+
+		profile.id = id; // Ensure profile has an ID before adding
+
+		if (!snapshot.exists()) {
+			// If profiles path doesn’t exist, create an array
+			await set(profilesRef, [profile]);
+			console.log("Created profiles array and added the first profile.");
+		} else {
+			// If profiles exist, add a new profile using push() to avoid overwriting
+			const newProfileRef = push(profilesRef);
+			await set(newProfileRef, profile);
+			console.log("Profile added successfully!");
+		}
+
+		return true;
+	} catch (error) {
+		console.error("Error adding profile:", error);
+		return false;
+	}
+};

@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HomeNavBar from "../components/navBar/HomeNavBar";
 import styles from "./browswe.module.css";
 import Single from "../components/home/Single";
 import { getLanguageName, groupByLanguage, movies } from "../commonJs/common";
 import { getMovies, getShows } from "../firebase/database";
 import LoadingScreen from "../components/LoadingScreen";
+import { useAuth } from "../context/Context";
 function BrowseScreen() {
 	const [filmsData, setFilmsData] = useState([]);
 	const location = useLocation();
+	const { user, checkEmailVerification } = useAuth();
 	const data = location?.state?.browseDetails;
 	const filmsDetails = location?.state?.filmObj;
 	const typeSect = location?.state?.typeSect === "genre";
 	const [isLoading, setIsLoading] = useState(false);
+	const navigate=useNavigate()
 
 	
 	let specificGenre;
@@ -25,6 +28,11 @@ function BrowseScreen() {
 		);
 		top10 = specificGenre?.slice(0, 10)
 	}
+	useEffect(()=>{
+		if (!user) {
+			navigate("/login", { replace: true });
+		}
+	},[])
 	useEffect(() => {
 		async function fetctDetails() {
 			setIsLoading(true);

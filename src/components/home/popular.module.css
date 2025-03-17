@@ -1,105 +1,110 @@
-.bodyDiv{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    width: 50%;
-    height: 31.25rem;
+.bodyDiv {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	width: 50%;
+	height: 31.25rem;
 
-    @media (max-width:750px) {
-        width: 100%;
-        align-items: center;
-        height: auto;
-    }
-
+	@media (max-width: 750px) {
+		width: 100%;
+		align-items: center;
+		height: auto;
+	}
 }
-.mainH{
-    display: flex;
-    /* height: 31.25rem; */
-}
-
-.btnMains{
-    box-sizing: border-box;
-    & h1{
-        margin: 0;
-        font-weight:900 ;
-    @media (min-width:1200px) {
-            width: 80%;
-        }
-    }
-    padding: 2rem;
-    @media (max-width:500px){
-        padding: 2rem 1rem;
-    }
-
-    & p{
-        font-size: 1rem;
-        margin-top:1rem ;
-        color: var(--input-text);
-        @media (min-width:1200px) {
-            width: 80%;
-        }
-        text-overflow: ellipsis;
-    }
+.mainH {
+	display: flex;
+	/* height: 31.25rem; */
 }
 
-.buttonsH{
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-    & img{
-        width: 15px;
-        height: 15px;
-    }
-    & button{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 7px;
-       
-        font-weight: 600;
+.btnMains {
+	box-sizing: border-box;
+	& h1 {
+		margin: 0;
+		font-weight: 900;
+		@media (min-width: 1200px) {
+			width: 80%;
+		}
+	}
+	padding: 2rem;
+	@media (max-width: 500px) {
+		padding: 2rem 1rem;
+	}
+
+	& p {
+		font-size: 1rem;
+		margin-top: 1rem;
+		color: var(--input-text);
+		@media (min-width: 1200px) {
+			width: 80%;
+		}
+		text-overflow: ellipsis;
+	}
+}
+
+.buttonsH {
+	display: flex;
+	gap: 2rem;
+	margin-top: 2rem;
+
+	& img {
+		width: 15px;
+		height: 15px;
+	}
+	& button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 7px;
+
+		font-weight: 600;
+
+		padding-left: 1rem;
+		padding-right: 1rem;
         
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    & button:first-of-type{
-       
-        background-color: var(--primary-btn);
-        color: white;
-    }
-    & button:first-of-type:hover{
-        background-color: var(--btn-hover);
-    }
-    & button:last-of-type{
-        /* co */
-        background-color: transparent;
-        border: 1.5px solid var(--input-text);
-        color: var(--input-text);
-    }
-         & button:last-of-type:hover{
-            background-color: white;
-            color: var(--primary-btn);
-            border-color: var(--primary-btn);
-            /* border: none; */
-         }
+		& > div {
+			position: static;
+		}
+	}
+	& button:first-of-type {
+		background-color: var(--primary-btn);
+		color: white;
+	}
+	& button:first-of-type:hover {
+		background-color: var(--btn-hover);
+	}
+	& button:last-of-type {
+		/* co */
+		background-color: transparent;
+		border: 1.5px solid var(--input-text);
+		color: var(--input-text);
+	}
+	& button:last-of-type:hover {
+		background-color: white;
+		color: var(--primary-btn);
+		border-color: var(--primary-btn);
+		/* border: none; */
+	}
 }
 
-.detH{
-    gap: 1rem;
+.detH {
+	gap: 1rem;
 }
-.detBtn{
-    background-color: #2A2A2A !important;
-        border: 1.5px solid var(--input-text);
-        color: var(--input-text);
-        /* border-radius: 50%; */
-        /* padding: ; */
+.detBtn {
+	background-color: #2a2a2a !important;
+	border: 1.5px solid var(--input-text);
+	color: var(--input-text);
+	height: 2.5rem;
+        width: 3rem;
 }
 .detBtn:hover {
-    /* background-color: transparent !important; */
-    /* color: var(--primary-btn); */
-    border-color: var(--primary-btn);
-    /* border: none; */
+	/* background-color: transparent !important; */
+	/* color: var(--primary-btn); */
+	border-color: var(--primary-btn);
+	/* border: none; */
 }
 
 .bodyDType {
-    height: 25rem;
+	height: 25rem;
 }
+
+

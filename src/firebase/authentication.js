@@ -3,6 +3,7 @@ import {
 	validatePassword as firebaseValidatePassword,
 	createUserWithEmailAndPassword,
 	sendEmailVerification,
+	updateProfile,
 } from "firebase/auth";
 import { auth, database } from "./config";
 
@@ -31,7 +32,7 @@ export const validatePassword = async (passwordFromUser) => {
 };
 
 
-export const registerUser = async (email, password) => {
+export const registerUser = async (email, password,username) => {
 	try {
 		// Create user
 		const userCredential = await createUserWithEmailAndPassword(
@@ -40,6 +41,8 @@ export const registerUser = async (email, password) => {
 			password
 		);
 		const user = userCredential.user;
+
+		await updateProfile(user, { displayName: username });
         // setUser(user);
 		// Send verification email
 		await sendEmailVerification(user);
