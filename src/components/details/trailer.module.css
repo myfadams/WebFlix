@@ -18,9 +18,7 @@
     cursor: pointer;
 }
 
-.mainTandR{
-    
-}
+
 .tVid{
     display:flex;
      @media (max-width:500px) {
