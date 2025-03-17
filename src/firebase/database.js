@@ -231,7 +231,8 @@ export const addProfile = async (uid, profile) => {
 		console.log(snapshot.exists(), "herere ");
 		if (!snapshot.exists()) {
 			// If profiles path doesn’t exist, create it as an array
-			await set(profilesRef, [profile]);
+			const id = crypto.randomUUID();
+			await set(profilesRef, [{...profile,id}]);
 			console.log("Created profiles array and added the first profile.");
 		} else {
 			// If profiles exist, add a new profile

@@ -24,7 +24,8 @@ export const validatePassword = async (passwordFromUser) => {
 
 		return { isValid: true };
 	} catch (error) {
-		console.error("Password validation error:", error);
+		// console.error("Password validation error:", error);
+		alert(error.message)
 		return { isValid: false, error: error.message };
 	}
 };

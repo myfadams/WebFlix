@@ -14,6 +14,7 @@ function Input({value,setValue,placeHolder, type,name,ref}) {
 				value={value[name]}
 				required
 				ref={ref}
+				
                 // hidden=
 			/>
 			{(name === "password" || name === "confirmPassword") && (

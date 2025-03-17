@@ -37,7 +37,7 @@ function SignUp() {
 				checkEmailVerification();
 			} else {
 				console.log("verified");
-				addUserToDB(user?.uid, { username:userDetails.username,profiles:[]});
+				addUserToDB(user?.uid, { username:userDetails.username,email:userDetails.email});
 				navigate("/selectProfile", { replace: true });
 				clearInterval(interval);
 				return;
@@ -66,7 +66,13 @@ function SignUp() {
 		if (userDetails.confirmPassword === userDetails.confirmPassword) {
 			const result = await validatePassword(userDetails.password);
 			if (result.isValid) {
-				await registerUser(userDetails.email, userDetails?.password);
+				const res =await registerUser(userDetails.email, userDetails?.password)
+				console.log(res)
+				if(!res.success){
+					alert(res.error)
+					setIsLoading(false)
+					setDisable(false)
+				}
 				setStart("yes");
 			} else {
 				let message = "Invalid password:\n";

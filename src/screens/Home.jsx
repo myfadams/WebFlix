@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { replace, useLocation, useNavigate, } from "react-router-dom";
 import HomeNavBar from "../components/navBar/HomeNavBar";
 import Popular from "../components/home/Popular";
 import styles from "./home.module.css";
@@ -7,18 +7,23 @@ import VideoDisplay from "../components/home/VideoDisplay";
 import { getMovies } from "../firebase/database";
 import LoadingScreen from "../components/LoadingScreen";
 import { shows } from "../commonJs/common";
+import { useAuth } from "../context/Context";
 function Home() {
 	const location = useLocation();
-	
+	const { user, checkEmailVerification } = useAuth();
 	const [movies, setMovies] = useState();
 	const [suggestedMovie, setSuggestedMovie] = useState();
 	const [isLoading, setIsLoading] = useState(false);
+	const navigate = useNavigate()
+
 	// console.log(userData)
 	useEffect(() => {
 		window.scroll(0, 0);
 	}, []);
 	const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)];
 	useEffect(() => {
+		if(!user)
+			navigate("/login",{replace:true})
 		setIsLoading(true);
 		function fetchData() {
 			getMovies("movies")

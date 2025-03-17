@@ -56,7 +56,7 @@ function Details() {
 			likes: 200000,
 		},
 	]);
-	console.log(userData);
+	
 	useEffect(() => {
 		window.scroll(0, 0);
 		// return ()=>{

@@ -4,6 +4,8 @@ import Input from "../components/input/Input";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Context";
 import Loading from "../components/video/Loading";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config";
 
 function SignIn() {
 	const { user, checkEmailVerification } = useAuth();
@@ -15,7 +17,26 @@ function SignIn() {
 
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState("");
 	const [disable, setDisable] = useState(true);
+	const handleLogin = async () => {
+		setError("");
+		setIsLoading(true);
+
+		try {
+			await signInWithEmailAndPassword(
+				auth,
+				userDetails.email,
+				userDetails.password
+			);
+			navigate("/selectProfile");
+		} catch (err) {
+			alert(err.message);
+			setError(err.message);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 	useEffect(() => {
 		if (!user) {
 			setIsLoading(false);
@@ -72,11 +93,9 @@ function SignIn() {
 
 						{/* <img src="./hide.png" alt="" /> */}
 						<button
+							type="button"
 							className={styles.signBtn}
-							onClick={() => {
-								navigate("/selectProfile");
-								// setDisable(!disable);
-							}}
+							onClick={handleLogin}
 							disabled={disable}
 						>
 							{isLoading ? (
@@ -88,7 +107,7 @@ function SignIn() {
 									}}
 								/>
 							) : (
-								"Sign Up"
+								"Login"
 							)}
 						</button>
 						<label className={styles.checkboxContainer}>

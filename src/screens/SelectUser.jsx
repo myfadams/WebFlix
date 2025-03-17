@@ -9,21 +9,25 @@ import LoadingScreen from "../components/LoadingScreen";
 function SelectUser() {
 	const { user, checkEmailVerification,setProfile } = useAuth();
 	const [isLoading,setLoading]=useState(true)
+	const navigate = useNavigate();
 	useEffect(()=>{
 			window.scroll(0,0)
+			if(!user){
+				navigate("/login",{replace:true})
+
+			}
 		},[])
 
 	
 	const [userProfiles, setUserProfiles] = useState();
 	const [newUser, setNewUser] = useState();
-	const navigate = useNavigate();
+	
 	const [isOpen, setISOpen] = useState(false);
 	useEffect(()=>{
 		setLoading(true)
 		retrieveProfiles(user?.uid).then((res)=>{
 			setUserProfiles(res)
 		}).finally(()=>{
-			window.reload
 			setLoading(false);
 		})
 		
@@ -54,7 +58,11 @@ function SelectUser() {
 								onClick={() => {
 									console.log(userProf)
 									setProfile(userProf)
-									navigate("/home");
+									localStorage.setItem(
+										"currentProfile",
+										JSON.stringify(userProf)
+									);
+									navigate("/home",{replace:true});
 									// setDisable(true)
 								}}
 							>

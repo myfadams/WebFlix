@@ -3,6 +3,7 @@ import styles from "./homeNavBar.module.css";
 import PopUpMenu from "./PopUpMenu";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/Context";
+import { retrieveProfiles } from "../../firebase/database";
 
 const useIsVisible = (threshold = 0.1) => {
 	const [isVisible, setIsVisible] = useState(false);
@@ -154,11 +155,27 @@ function HomeNavBar({ page, isActive }) {
 	// console.log(page)
 	const [ref, isVisible] = useIsVisible();
 	const [showMenu, setShowMenu] = useState(false);
-	const { profile, setProfile } = useAuth();
-	console.log(profile,"yes")
+	const { profile, setProfile,user } = useAuth();
+	const [userProfiles, setUserProfiles] = useState();
+	
+		useEffect(()=>{
+				retrieveProfiles(user?.uid).then((res)=>{
+					const cachedProfile = JSON.parse(
+						localStorage.getItem("currentProfile")
+					);
+					const results = res?.filter((item)=>(item?.profileName!==cachedProfile?.profileName))
+					setUserProfiles(results)
+				})
+				
+			},[])
+	// console.log(profile,"yes")
 	useEffect(() => {
 		setShowMenu(false);
 	}, [isVisible]);
+	useEffect(()=>{
+		const cachedProfile = JSON.parse(localStorage.getItem("currentProfile"));
+		setProfile(cachedProfile)
+	},[])
 	return (
 		<>
 			<div className={`${styles.navHB}  ${!isVisible && styles.navHover}`}>
@@ -349,7 +366,7 @@ function HomeNavBar({ page, isActive }) {
 						</button>
 					</div>
 
-					{showMenu && <PopUpMenu onClose={setShowMenu} />}
+					{showMenu && <PopUpMenu onClose={setShowMenu}  profiles={userProfiles}/>}
 				</div>
 
 				<PhoneCarousel page={page} />
