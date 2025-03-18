@@ -183,7 +183,7 @@
     }
 }
 
-@media (max-width:450px) {
+@media (max-width:500px) {
     .signBody form {
         padding: 2rem;
         max-width: 80%;

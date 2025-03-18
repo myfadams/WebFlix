@@ -7,7 +7,7 @@
     margin: 2rem 1rem;
     border: 1px solid var(--primary-btn);
     border-radius: 10px ;
-    @media (max-width:750px) {
+    @media (max-width:630px) {
         margin: 2rem 0;
     }
 }

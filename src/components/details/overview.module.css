@@ -121,7 +121,7 @@
         & div{
             display: flex;
             gap: 1rem;
-            @media (max-width:750px) {
+            @media (max-width:630px) {
                 display: none;
             }
         }

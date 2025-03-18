@@ -5,12 +5,12 @@
 .trailVid{
     height: 20rem;
     width: 100%;
-    @media (max-width:750px) {
+    @media (max-width:630px) {
         height: 15rem;
     }
     background-color: var(--card-bg);
     border-radius: 5px;
-    @media (max-width:750px) {
+    @media (max-width:630px) {
         width: 100%;
     }
 }
@@ -21,7 +21,7 @@
 
 .tVid{
     display:flex;
-     @media (max-width:750px) {
+     @media (max-width:630px) {
      justify-content:center;
      }
 }
@@ -32,7 +32,7 @@
     justify-content: center;
     align-items: center;
     width: 50%;
-    @media (max-width:750px) {
+    @media (max-width:630px) {
         width: 90%;
     }
     height: auto;
@@ -57,7 +57,7 @@
         right: 1rem;
     }
 
-    @media (max-width:750px) {
+    @media (max-width:630px) {
         margin: 1rem;
     }
 }

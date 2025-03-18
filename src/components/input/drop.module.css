@@ -30,7 +30,7 @@
         width: 70%
     }
 }
-@media (max-width:750px) {
+@media (max-width:630px) {
 .select{
         width: 90%;
     }
