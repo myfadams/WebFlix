@@ -13,7 +13,7 @@ function Popular({ title, details, type, user, filmObj }) {
 	const [isAdded,setIsAdded]=useState(true);
 	const [isAdding,setIsAdding]=useState(false)
 	const navigate = useNavigate();
-	const isMobile = useMediaQuery({ maxWidth:600 });
+	const isMobile = useMediaQuery({ maxWidth:630 });
 	let firstEpUrl;
 	let nameEp ;
 	if (filmObj?.seasons && Array.isArray(filmObj.seasons)) {
@@ -68,7 +68,7 @@ function Popular({ title, details, type, user, filmObj }) {
 						<p>
 							{/* {truncateWords(filmObj?.description||"",100)} */}
 							{isMobile
-								? truncateWords(filmObj?.description || "", 100)
+								? truncateWords(filmObj?.description || "", 30)
 								: filmObj?.description}
 						</p>
 					)}
