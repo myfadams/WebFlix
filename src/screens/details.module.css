@@ -13,7 +13,7 @@
     /* padding:1rem  1rem 0 ; */
     display: flex;
     gap: 0.6rem;
-    @media (max-width:500px) {
+    @media (max-width:750px) {
         overflow-x: auto;
     }
     & button{

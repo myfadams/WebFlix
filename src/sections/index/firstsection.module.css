@@ -194,7 +194,7 @@ h4{
     }
 }
 
-@media (max-width:500px) {
+@media (max-width:750px) {
     .main{
         padding-bottom: 4.875rem;
     }
