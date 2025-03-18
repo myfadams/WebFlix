@@ -9,7 +9,7 @@ import { convertToEmbedURL } from "../../commonJs/common";
 import { retrieveReviews } from "../../firebase/database";
 import { useAuth } from "../../context/Context";
 function TrailerReview({ trailer, setShowReveiw,newReview,film }) {
-	console.log(trailer)
+
 	const { user} = useAuth();
     const [reviews, setReviews] = useState([])
 	const [isLoading,setIsLoading]=useState(false);

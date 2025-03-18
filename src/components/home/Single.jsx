@@ -17,7 +17,7 @@ function Single({
 }) {
 	const navigate = useNavigate();
 	const [disable,setDisable]=useState(false)
-	console.log(detObj)
+	
 	return (
 		<button
 			style={{

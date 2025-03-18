@@ -25,7 +25,7 @@ const useIsVisible = (threshold = 0.1) => {
 			if (elementRef.current) observer.unobserve(elementRef.current);
 		};
 	}, [threshold]);
-	console.log(isVisible);
+	
 	return [elementRef, isVisible];
 };
 

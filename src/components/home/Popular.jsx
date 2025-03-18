@@ -3,6 +3,8 @@ import styles from "./popular.module.css";
 import { useNavigate } from "react-router-dom";
 import Loading from "../video/Loading";
 import { addMovieToUsedList, retrieveUserList } from "../../firebase/database";
+import { useMediaQuery } from "react-responsive";
+import { truncateWords } from "../../commonJs/common";
 function Popular({ title, details, type, user, filmObj }) {
 	const [btnHover, setBtnHover] = useState(false);
 	const [btnLHover, setBtnLHover] = useState(false);
@@ -11,7 +13,7 @@ function Popular({ title, details, type, user, filmObj }) {
 	const [isAdded,setIsAdded]=useState(true);
 	const [isAdding,setIsAdding]=useState(false)
 	const navigate = useNavigate();
-
+	const isMobile = useMediaQuery({ maxWidth:600 });
 	let firstEpUrl;
 	let nameEp ;
 	if (filmObj?.seasons && Array.isArray(filmObj.seasons)) {
@@ -37,7 +39,6 @@ function Popular({ title, details, type, user, filmObj }) {
 			const results = res?.some(
 				(movie) => movie === filmObj?.name || movie === filmObj?.title
 			);
-			console.log(results, "new here");
 			setIsAdded(results)
 
 
@@ -62,11 +63,13 @@ function Popular({ title, details, type, user, filmObj }) {
 		<div className={styles.mainH}>
 			<div className={`${styles.bodyDiv} ${type ? styles.bodyDType : ""}`}>
 				<div className={styles.btnMains}>
-					<h1>{filmObj?.title || filmObj?.name || "House of Ninjas"}</h1>
+					<h1>{filmObj?.title || filmObj?.name}</h1>
 					{!type && (
 						<p>
-							{filmObj?.description ||
-								"Years after retiring from their formidable ninja lives, a dysfunctional family must return to shadowy missions to counteract a string of looming threats."}
+							{/* {truncateWords(filmObj?.description||"",100)} */}
+							{isMobile
+								? truncateWords(filmObj?.description || "", 100)
+								: filmObj?.description}
 						</p>
 					)}
 					<div className={`${styles.buttonsH} ${type ? styles.detH : ""}`}>

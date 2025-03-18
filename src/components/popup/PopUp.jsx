@@ -29,9 +29,8 @@ const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 	const [selected,setSelected]=useState("");
 	const handleAddProfile=()=>{
 		setIsLoading(true);
-		const cachedProfile =
-			JSON.parse(localStorage.getItem("currentProfile")) || {};
-		addProfile(cachedProfile?.id,userProfile).then((res)=>{
+
+		addProfile(user?.uid,userProfile).then((res)=>{
 			console.log(res)
 		}).finally(()=>{
 			setDet();
@@ -40,6 +39,8 @@ const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 	}
 	const handleAddReview=()=>{
 		setIsLoading(true);
+		const cachedProfile =
+			JSON.parse(localStorage.getItem("currentProfile")) || {};
 		addReviews(filmName,reviewDetails).finally(()=>{
 			setIsLoading(false)
 		})

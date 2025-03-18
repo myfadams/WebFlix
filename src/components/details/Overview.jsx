@@ -19,7 +19,6 @@ function Overview({descprition,releaseDate,cast,genres,director, fType, fCrew, m
 			const average =
 				res?.reduce((sum, review) => sum + review?.rating, 0) /
 				res?.length;
-			console.log(average, "average");
 			setAppRatings(average)
 		}).finally(()=>{
 			

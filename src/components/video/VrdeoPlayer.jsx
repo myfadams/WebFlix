@@ -76,7 +76,7 @@ function VideoPlayer({urlFilm, title,filmId}) {
 	const handleLoading = async (event) => {
 		setHasLoaded(true);
 		setDuration(event.target.duration);
-		console.log(event.target.duration, "duration");
+		
 		const adT = Math.random() * (event.target.duration*0.65 - 100) + 100;
 		console.log(adT,"add time")
 		setTimeToplayAd(adT)

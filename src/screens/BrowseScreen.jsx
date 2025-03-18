@@ -10,12 +10,21 @@ import { useAuth } from "../context/Context";
 function BrowseScreen() {
 	const [filmsData, setFilmsData] = useState([]);
 	const location = useLocation();
-	const { user, checkEmailVerification } = useAuth();
+	const {
+		user,
+		cachedMovies,
+		setCachedMovies,
+		setCachedShows,
+		cachedShows,
+		cachedUserList,
+		setCachedUserList,
+	} = useAuth();
 	const data = location?.state?.browseDetails;
 	const filmsDetails = location?.state?.filmObj;
 	const typeSect = location?.state?.typeSect === "genre";
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
+	const t10 = data?.top10;
 
 	let specificGenre;
 	let top10;
@@ -26,6 +35,7 @@ function BrowseScreen() {
 			)
 		);
 		top10 = specificGenre?.slice(0, 10);
+		console.log(top10, "top10");
 	}
 	useEffect(() => {
 		if (!user) {
@@ -34,9 +44,27 @@ function BrowseScreen() {
 	}, []);
 	useEffect(() => {
 		async function fetctDetails() {
-			setIsLoading(true);
-			const res1 = await getMovies("movies");
-			const res2 = await getShows();
+			let res1;
+			let res2;
+			if(cachedMovies){
+				res1=cachedMovies;
+			}else{
+				setIsLoading(true);
+				res1 = await getMovies("movies");
+				setCachedMovies(res1)
+			}
+
+			if (cachedShows) {
+				res2 = cachedShows;
+			} else {
+				setIsLoading(true);
+				res2 = await getShows();
+				setCachedShows(res2);
+			}
+			
+			
+			
+			
 			const updated = res2?.map((r) => ({
 				...r,
 				type: "show",
@@ -49,19 +77,25 @@ function BrowseScreen() {
 				setFilmsData([...res1, ...updated]);
 			} else if (data?.active === "languages") {
 				const temp = groupByLanguage([...res1, ...updated]);
-				console.log(temp);
+
 				setFilmsData(temp);
 			} else {
 				// setFilmsData([])
+				// if(cachedUserList){
+				// 	setFilmsData(cachedUserList);
+				// 	return;
+				// }
+				setIsLoading(true)
 				const cachedProfile =
 					JSON.parse(localStorage.getItem("currentProfile")) || {};
-				const films=[...res1,...updated]
+				const films = [...res1, ...updated];
 				retrieveUserList(cachedProfile?.id).then((res) => {
 					const matchingMovies = films?.filter((movie) =>
-						res?.includes(movie?.name||movie?.title)
+						res?.includes(movie?.name || movie?.title)
 					);
-					console.log(matchingMovies,"match")
-					setFilmsData(matchingMovies)
+					setCachedUserList(matchingMovies)
+
+					setFilmsData(matchingMovies);
 				});
 			}
 
@@ -72,10 +106,9 @@ function BrowseScreen() {
 
 	useEffect(() => {
 		window.scroll(0, 0);
-	}, [data]);
+	}, []);
 	// console.log(data);
-	const temp = [...movies, ...movies];
-	const mTop10 = temp.slice(0, 10);
+
 	return (
 		<div style={{ position: "relative" }}>
 			<HomeNavBar page={data?.active} />
@@ -104,7 +137,8 @@ function BrowseScreen() {
 											seasons={film?.numberOfSeasons}
 										/>
 								  ))
-								: specificGenre?.map((film, id) => (
+								: !data?.top10 &&
+								  specificGenre?.map((film, id) => (
 										<Single
 											imgUrl={film?.posterLink}
 											releaseDate={film?.releaseDate || film?.showReleaseDate}
@@ -119,7 +153,8 @@ function BrowseScreen() {
 											seasons={film?.numberOfSeasons}
 										/>
 								  ))}
-							{data?.top10 &&
+							{t10 &&
+								typeSect &&
 								top10?.map((film, id) => (
 									<Single
 										imgUrl={film?.posterLink}
@@ -171,4 +206,4 @@ function BrowseScreen() {
 	);
 }
 
-export default BrowseScreen;
+export default React.memo(BrowseScreen);

@@ -10,7 +10,7 @@ import { sendEmailVerification } from "firebase/auth";
 
 function SignUp() {
 	const { user, checkEmailVerification } = useAuth();
-	console.log(user, "name");
+	
 	const location = useLocation();
 	const email = location.state?.email;
 	const [isLoading, setIsLoading] = useState(true);
@@ -67,7 +67,6 @@ function SignUp() {
 			const result = await validatePassword(userDetails.password);
 			if (result.isValid) {
 				const res =await registerUser(userDetails.email, userDetails?.password,userDetails.username)
-				console.log(res)
 				if(!res.success){
 					alert(res.error)
 					setIsLoading(false)

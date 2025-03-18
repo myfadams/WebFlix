@@ -137,7 +137,7 @@ export const getShows = async () => {
 					);
 				}
 
-				console.log(showEntry);
+				// console.log(showEntry);
 				return {...showEntry };
 			});
 
@@ -217,7 +217,7 @@ export const retrieveProfiles = async (uid) => {
 				? data // If it's already an array, return it
 				: Object.values(data); // Convert object to array
 
-			console.log(profilesArray, "Profiles retrieved");
+			// console.log(profilesArray, "Profiles retrieved");
 			return profilesArray;
 		} else {
 			console.log("No profiles found!");
@@ -235,7 +235,7 @@ export const addProfile = async (uid, profile) => {
 
 		// Check if profiles exist
 		const snapshot = await get(profilesRef);
-		console.log(snapshot.exists(), "herere ");
+		// console.log(snapshot.exists(), "herere ");
 
 		// Generate a reliable ID (fallback for `crypto.randomUUID()`)
 		const id =
@@ -243,7 +243,7 @@ export const addProfile = async (uid, profile) => {
 				? crypto.randomUUID()
 				: Date.now().toString(36) + Math.random().toString(36).substring(2);
 
-		console.log(id)
+		// console.log(id)
 		profile.id = id; // Ensure profile has an ID before adding
 		if (!snapshot.exists()) {
 			// If profiles path doesn’t exist, create an array
@@ -329,7 +329,7 @@ export const retrieveReviews = async (filmName) => {
 
 			const reviewArray = Array.isArray(data) ? data : Object.values(data);
 
-			console.log(reviewArray, "USer List  retrieved");
+			// console.log(reviewArray, "USer List  retrieved");
 			return reviewArray;
 		} else {
 			console.log("No List found!");
@@ -342,7 +342,7 @@ export const retrieveReviews = async (filmName) => {
 };
 
 export const addReviews = async (filmName,review) => {
-	console.log(review, "movieDetails");
+	// console.log(review, "movieDetails");
 	try {
 		const reviewsRef = ref(db, `reviews/${filmName}/reviews`);
 		const snapshot = await get(reviewsRef);

@@ -128,7 +128,7 @@ export async function fetchShowDetails(
 					? `https://image.tmdb.org/t/p/w500${profile_path}`
 					: "https://via.placeholder.com/100", // Default placeholder if no image
 			}));
-			console.log(showDetails.guest_stars);
+			// console.log(showDetails.guest_stars);
 		const videosRes = await fetch(
 			`https://api.themoviedb.org/3/tv/${showId}/videos?api_key=${API_KEY}`
 		);

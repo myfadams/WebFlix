@@ -9,7 +9,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [profile,setProfile]=useState(null)
+	const [profile, setProfile] = useState(null);
+	const [cachedMovies, setCachedMovies] = useState(null);
+	const [cachedShows, setCachedShows] = useState(null);
+	const [cachedPopular, setCachedPopular] = useState(null);
+	const [cachedUserList, setCachedUserList] = useState(null);
+	const [cachedProfiles, setCachedProfiles]=useState(null);
 
 	useEffect(() => {
 		// Listen for auth state changes
@@ -25,10 +30,9 @@ export const AuthProvider = ({ children }) => {
 					setUser(null);
 				}
 			} catch (error) {
-				console.log(error)
-			} finally{
+				console.log(error);
+			} finally {
 				setLoading(false);
-
 			}
 		});
 
@@ -53,7 +57,24 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user, loading, logout, checkEmailVerification,profile,setProfile }}
+			value={{
+				user,
+				loading,
+				logout,
+				checkEmailVerification,
+				profile,
+				setProfile,
+				cachedMovies,
+				cachedShows,
+				setCachedMovies,
+				setCachedShows,
+				cachedPopular,
+				setCachedPopular,
+				cachedUserList,
+				setCachedUserList,
+				cachedProfiles,
+				setCachedProfiles,
+			}}
 		>
 			{!loading && children} {/* Prevent rendering until loading is done */}
 		</AuthContext.Provider>

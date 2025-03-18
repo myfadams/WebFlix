@@ -26,7 +26,7 @@ export const searchEntries = async (searchTerm, collection) => {
 				}
 			}
 		}
-		console.log(results)
+		// console.log(results)
 		return results;
 	} catch (error) {
 		console.error("Error searching entries:", error);

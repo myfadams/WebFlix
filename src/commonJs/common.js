@@ -546,3 +546,12 @@ export function groupByLanguage(array) {
 
   return grouped;
 }
+
+export const truncateWords = (text, wordLimit) => {
+	const words = text?.split(" ");
+	const res= words.length > wordLimit
+		? words.slice(0, wordLimit).join(" ") + "..."
+		: text;
+	// console.log(res,"words")
+	return res
+};

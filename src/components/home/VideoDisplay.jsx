@@ -10,27 +10,38 @@ import {
 	shuffleArray,
 } from "../../commonJs/common";
 import { getMovies, getShows } from "../../firebase/database";
+import { useAuth } from "../../context/Context";
 function VideoDisplay({
 	heading,
 	top10,
 	single,
 	tvShow,
 	newRelease,
-	userData,
 }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [moviesData, setMoviesData] = useState();
 	const [showsData, setShowsData] = useState();
+	const { user, cachedMovies, setCachedMovies, setCachedShows, cachedShows } =
+		useAuth();
 	useEffect(() => {
 		setIsLoading(true);
+		if(cachedMovies||cachedShows){
+			if(cachedMovies)
+				setMoviesData(shuffleArray(cachedMovies));
+			if(cachedShows)
+				setShowsData(shuffleArray(cachedShows));
+			return;
+		}
 		getMovies("movies").then((movies) => {
 			// console.log(movies);
 			setMoviesData(shuffleArray(movies));
+			setCachedMovies(movies)
 		});
 		getShows()
 			.then((shows) => {
 				// console.log(shows);
 				setShowsData(shuffleArray(shows));
+				setCachedShows(shows)
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -58,7 +69,7 @@ function VideoDisplay({
 									genreName={name}
 									key={id}
 									top10={top10}
-									userData={userData}
+									
 									movies={moviesData}
 									tvShows={showsData}
 									show={tvShow}
@@ -79,7 +90,7 @@ function VideoDisplay({
 									key={id}
 									title={movie?.title}
 									movieId={movie?.id}
-									userData={userData}
+									
 									detObj={movie}
 								/>
 							))}
@@ -98,7 +109,7 @@ function VideoDisplay({
 									key={id}
 									title={show?.name}
 									// movieId={movieId}
-									userData={userData}
+									
 									detObj={show}
 								/>
 							))}
@@ -117,7 +128,7 @@ function VideoDisplay({
 									seasons={show?.numberOfSeasons}
 									key={id}
 									title={show?.name}
-									userData={userData}
+									
 									detObj={show}
 								/>
 							))}

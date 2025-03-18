@@ -7,7 +7,7 @@ import { useAuth } from "../context/Context";
 import { addProfile, retrieveProfiles } from "../firebase/database";
 import LoadingScreen from "../components/LoadingScreen";
 function SelectUser() {
-	const { user, checkEmailVerification,setProfile } = useAuth();
+	const { user, cachedProfiles, setCachedProfiles, setProfile } = useAuth();
 	const [isLoading,setLoading]=useState(true)
 	const navigate = useNavigate();
 	useEffect(()=>{
@@ -24,12 +24,19 @@ function SelectUser() {
 	
 	const [isOpen, setISOpen] = useState(false);
 	useEffect(()=>{
+		// console.log("profiles",!newUser&&cachedProfiles)
+		if(!newUser&&cachedProfiles?.lenght>0){
+			setUserProfiles(cachedProfiles);
+			return
+		}
 		setLoading(true)
 		retrieveProfiles(user?.uid).then((res)=>{
-			console.log(userProfiles,"profile")
+			
 			setUserProfiles(res)
+			setCachedProfiles(res)
 		}).finally(()=>{
 			setLoading(false);
+			setNewUser(null)
 		})
 		
 	},[newUser,isOpen])
@@ -57,7 +64,7 @@ function SelectUser() {
 								key={id}
 								className={`${commonStyles.touchableOpacity}`}
 								onClick={() => {
-									console.log(userProf)
+									
 									setProfile(userProf)
 									localStorage.setItem(
 										"currentProfile",

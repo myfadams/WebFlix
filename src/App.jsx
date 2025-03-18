@@ -23,7 +23,6 @@ function App() {
         if (user && !user?.emailVerified) {
           checkEmailVerification();
         } else {
-          console.log("verified");
           navigate("/selectProfile");
            clearInterval(interval);
           return
