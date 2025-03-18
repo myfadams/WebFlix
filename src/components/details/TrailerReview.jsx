@@ -12,22 +12,28 @@ function TrailerReview({ trailer, setShowReveiw,newReview,film }) {
 
 	const { user} = useAuth();
     const [reviews, setReviews] = useState([])
+	const [n,setN]=useState(null)
 	const [isLoading,setIsLoading]=useState(false);
 
-	useEffect(() => {
-		console.log("newReview updated:", newReview);
-	}, [newReview]);
+	// useEffect(() => {
+		
+	// }, [newReview]);
    useEffect(()=>{
+	setN(n);
+	
 	setIsLoading(true)
-	retrieveReviews(film).then((res)=>{
-		setReviews([]);
-		setReviews([...res].reverse())
-	}).finally(()=>{
-		setIsLoading(false)
-		// window.location.reload()
-	})
+	retrieveReviews(film,setReviews)
+	// retrieveReviews(film).then((res)=>{
+	// 	console.log("newReview updated:", res);
+	// 	setReviews([]);
+	// 	setReviews([...res].reverse())
+	// }).finally(()=>{
+	// 	setIsLoading(false)
+	// 	// window.location.reload()
+	// })
     // setReviews(dataR)
-   },[newReview,user])
+	setIsLoading(false)
+   },[newReview])
 	const sliderRef = useRef(null);
 	const scroll = (direction) => {
 		if (sliderRef.current) {

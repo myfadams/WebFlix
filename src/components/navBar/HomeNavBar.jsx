@@ -155,16 +155,25 @@ function HomeNavBar({ page, isActive }) {
 	// console.log(page)
 	const [ref, isVisible] = useIsVisible();
 	const [showMenu, setShowMenu] = useState(false);
-	const { profile, setProfile,user } = useAuth();
+	const { profile, setProfile, user, cachedProfiles, setCachedProfiles } =
+		useAuth();
 	const [userProfiles, setUserProfiles] = useState();
 	
 		useEffect(()=>{
-				retrieveProfiles(user?.uid).then((res)=>{
-					const cachedProfile = JSON.parse(
-						localStorage.getItem("currentProfile")
+			const cachedProfile = JSON.parse(
+				localStorage.getItem("currentProfile")
+			);
+				if(cachedProfiles){
+					const results = cachedProfiles?.filter(
+						(item) => item?.id !== cachedProfile?.id
 					);
-					const results = res?.filter((item)=>(item?.profileName!==cachedProfile?.profileName))
+					setUserProfiles(results);
+					return
+				}
+				retrieveProfiles(user?.uid).then((res)=>{
+					const results = res?.filter((item) => item?.id !== cachedProfile?.id);
 					setUserProfiles(results)
+					setCachedProfiles(results)
 				})
 				
 			},[])

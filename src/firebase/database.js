@@ -1,4 +1,4 @@
-import { ref, set, get, child, update, push} from "firebase/database";
+import { ref, set, get, child, update, push, onValue} from "firebase/database";
 import { database } from "./config";
 
 const dbRef = ref(database);
@@ -319,29 +319,41 @@ export const retrieveUserList = async (profileID) => {
 };
 
 
-export const retrieveReviews = async (filmName) => {
-	try {
-		const reviewsRef = ref(db, `reviews/${filmName}/reviews`);
-		const snapshot = await get(reviewsRef);
+// export const retrieveReviews = async (filmName) => {
+// 	try {
+// 		const reviewsRef = ref(db, `reviews/${filmName}/reviews`);
+// 		const snapshot = await get(reviewsRef);
 
+// 		if (snapshot.exists()) {
+// 			const data = snapshot.val();
+
+// 			const reviewArray = Array.isArray(data) ? data : Object.values(data);
+
+// 			// console.log(reviewArray, "USer List  retrieved");
+// 			return reviewArray;
+// 		} else {
+// 			console.log("No List found!");
+// 			return [];
+// 		}
+// 	} catch (error) {
+// 		console.error("Error retrieving List:", error);
+// 		return [];
+// 	}
+// };
+export const retrieveReviews = (filmName, callback) => {
+	const reviewsRef = ref(db, `reviews/${filmName}/reviews`);
+
+	onValue(reviewsRef, (snapshot) => {
 		if (snapshot.exists()) {
 			const data = snapshot.val();
-
 			const reviewArray = Array.isArray(data) ? data : Object.values(data);
-
-			// console.log(reviewArray, "USer List  retrieved");
-			return reviewArray;
+			callback(reviewArray.reverse()); // Update UI immediately
 		} else {
-			console.log("No List found!");
-			return [];
+			callback([]);
 		}
-	} catch (error) {
-		console.error("Error retrieving List:", error);
-		return [];
-	}
+	});
 };
-
-export const addReviews = async (filmName,review) => {
+export const addReviews = async (filmName,review,reviewerId) => {
 	// console.log(review, "movieDetails");
 	try {
 		const reviewsRef = ref(db, `reviews/${filmName}/reviews`);
@@ -355,7 +367,7 @@ export const addReviews = async (filmName,review) => {
 		if (!Array.isArray(reviewList)) {
 			reviewList = Object.values(reviewList);
 		}
-		review={...review,id}
+		review={...review,id, reviewerId}
 		reviewList.push(review);
 		await set(reviewsRef, reviewList);
 

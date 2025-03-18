@@ -44,7 +44,7 @@ function ReviewBox({review,id,filmName}) {
 		return () => unsubscribe(); // Cleanup listener on unmount
 	}, [id,]);
   return (
-		<div style={{ maxWidth: "25rem" }}>
+		<div style={{ minWidth:"25rem",maxWidth:"25rem" }}>
 			<div className={styles.revHead}>
 				<div>
 					<p>{review.name}</p>

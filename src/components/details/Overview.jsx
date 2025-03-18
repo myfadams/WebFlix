@@ -9,20 +9,29 @@ function Overview({descprition,releaseDate,cast,genres,director, fType, fCrew, m
 	const date = new Date(releaseDate);
 	const [appRatings,setAppRatings]=useState(0)
 	 useEffect(()=>{
-		retrieveReviews(film).then((res)=>{
-			
-			if(res.length<=0){
-				
+		retrieveReviews(film, (res) => {
+			if (res.length <= 0) {
 				setAppRatings(0);
-				return
+				return;
 			}
 			const average =
-				res?.reduce((sum, review) => sum + review?.rating, 0) /
-				res?.length;
-			setAppRatings(average)
-		}).finally(()=>{
+				res?.reduce((sum, review) => sum + review?.rating, 0) / res?.length;
+			setAppRatings(average);
+		});
+		// retrieveReviews(film).then((res)=>{
 			
-		})
+		// 	if(res.length<=0){
+				
+		// 		setAppRatings(0);
+		// 		return
+		// 	}
+		// 	const average =
+		// 		res?.reduce((sum, review) => sum + review?.rating, 0) /
+		// 		res?.length;
+		// 	setAppRatings(average)
+		// }).finally(()=>{
+			
+		// })
 		
 	   },[])
 	

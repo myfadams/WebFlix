@@ -41,7 +41,7 @@ const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 		setIsLoading(true);
 		const cachedProfile =
 			JSON.parse(localStorage.getItem("currentProfile")) || {};
-		addReviews(filmName,reviewDetails).finally(()=>{
+		addReviews(filmName,reviewDetails,cachedProfile?.id).finally(()=>{
 			setIsLoading(false)
 		})
 	}
@@ -82,8 +82,7 @@ const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 							userProfile.profileName.trim() !== "" &&
 							userProfile.profileImg.trim() !== ""
 						) {
-							handleAddProfile()
-							
+							handleAddProfile();
 
 							onClose();
 						}
@@ -117,6 +116,7 @@ const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 					setValue={setReviewDetails}
 					type={"text"}
 					value={reviewDetails}
+					maxChara={20}
 				/>
 				<Input
 					name={"from"}
@@ -124,6 +124,7 @@ const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 					setValue={setReviewDetails}
 					type={"text"}
 					value={reviewDetails}
+					maxChara={20}
 				/>
 				<textarea
 					name="review"
@@ -168,8 +169,8 @@ const PopUp = ({ isOpen, onClose, setDet, type, filmName }) => {
 							reviewDetails.from.trim() !== "" &&
 							reviewDetails.review.trim() !== ""
 						) {
-							setDet(!isLoading);
-							handleAddReview()
+							setDet(reviewDetails);
+							handleAddReview();
 							onClose();
 						}
 					}}

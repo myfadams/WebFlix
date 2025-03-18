@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./input.module.css"
-function Input({value,setValue,placeHolder, type,name,ref}) {
+function Input({value,setValue,placeHolder, type,name,ref,maxChara}) {
     const [shouldHide,setShouldHide]=useState(true)
   return (
 		<div className={styles.mainIn}>
@@ -14,6 +14,7 @@ function Input({value,setValue,placeHolder, type,name,ref}) {
 				value={value[name]}
 				required
 				ref={ref}
+				maxLength={maxChara}
 				
                 // hidden=
 			/>
