@@ -17,6 +17,7 @@ function App() {
       }
        if (user.emailVerified) {
 					navigate("/selectProfile");
+          setIsLoading(false);
 					return;
 				}
       const interval = setInterval(() => {
@@ -25,6 +26,7 @@ function App() {
         } else {
           navigate("/selectProfile");
            clearInterval(interval);
+            setIsLoading(false);
           return
         }
       }, 3000); // 🔄 Runs every 5 seconds
@@ -33,7 +35,7 @@ function App() {
     }, [user, checkEmailVerification]);
 
     if(isLoading)
-      return <LoadingScreen title={"Siging in"} />;
+      return <LoadingScreen title={"Signing in"} />;
 
   return (
     <>
