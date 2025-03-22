@@ -513,17 +513,17 @@ const Upload = () => {
 							type="text"
 							value={
 								selected === "movies"
-									? movieData.director
+									? movieData.director?.name
 									: seriesData.director?.name || ""
 							}
 							onChange={
 								(e) => {
 									if (selected === "movies")
-										setMovieData({ ...movieData, director: e.target.value });
+										setMovieData({ ...movieData, director:{name: e.target.value} });
 									else
 										setSeriesData({
 											...seriesData,
-											director: e.target.value,
+											director: {name:e.target.value},
 										});
 								}
 								// setMovieData({ ...movieData, director: e.target.value })

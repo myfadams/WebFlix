@@ -38,8 +38,8 @@ const fetchMovieDetails = async (
 			genres: detailsData.genres.map((g) => g.name),
 			language: detailsData.original_language,
 			director:
-				detailsData.credits.crew.find((p) => p.job === "Director")?.name ||
-				"Unknown",
+				detailsData.credits.crew.find((p) => p.job === "Director") ||
+				{name:"Unknown"},
 			cast: detailsData.credits.cast.slice(0, 5).map((a) => a),
 			crew: detailsData.credits.crew,
 			rating: detailsData.vote_average,
