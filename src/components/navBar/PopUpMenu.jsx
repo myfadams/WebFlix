@@ -45,7 +45,7 @@ function PopUpMenu({onClose, profiles}) {
 						className={styles.menuBtn}
 						onClick={() =>
 							(window.location.href =
-								"mailto:someone@example.com?subject=Job%20Inquiry&body=Hello,%20I'm%20interested%20in%20the%20job.")
+								"mailto:moviehaven@gmail.com.com?subject=MovieHaven%20Complains")
 						}
 					>
 						<img src="/QuestionMark.png" alt="" style={{ width: "1.6rem" }} />
