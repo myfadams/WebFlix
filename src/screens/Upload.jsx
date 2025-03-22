@@ -96,6 +96,7 @@ const Upload = () => {
 		disable: false,
 		progress: null,
 	});
+	const[cast,setCast]=useState("")
 
 	const uploadToDb = (file, type) => {
 		if (!file) {
@@ -535,27 +536,36 @@ const Upload = () => {
 							type="text"
 							value={
 								selected === "movies"
-									? movieData.cast.map(({ name }) => name)
-									: seriesData.cast.map(({ name }) => name)
+									? [...movieData.cast.map(({ name }) => name),cast]
+									: [seriesData.cast.map(({ name }) => name),cast]
 							}
 							onChange={
 								(e) => {
-									if (selected === "movies")
-										setMovieData({
-											...movieData,
-											cast: e.target.value.split(", "),
-										});
-									else
-										setSeriesData({
-											...seriesData,
-											cast: e.target.value.split(", "),
-										});
+									setCast(e.target.value)
 								}
-								// setMovieData({
-								// 	...movieData,
-								// 	cast: e.target.value.split(", "),
-								// })
+								
 							}
+							onBlur={()=>{
+								if(cast.trim()==="")
+									return;
+								if (selected === "movies")
+									setMovieData({
+										...movieData,
+										cast: [
+											...movieData.cast,
+											cast.target.value
+												.split(/\s*,\s*/)
+												.map((item) => ({ name: item })),
+										],
+									});
+								else
+									setSeriesData({
+										...seriesData,
+										cast: cast.target.value
+											.split(/\s*,\s*/)
+											.map((item) => ({ name: item })),
+									});
+							}}
 							className={styles.upInp}
 							placeholder="Top five cast"
 						/>
