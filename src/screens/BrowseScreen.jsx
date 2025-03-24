@@ -53,12 +53,12 @@ function BrowseScreen() {
 		async function fetctDetails() {
 			let res1;
 			let res2;
-			if(cachedMovies){
-				res1=cachedMovies;
-			}else{
+			if (cachedMovies) {
+				res1 = cachedMovies;
+			} else {
 				setIsLoading(true);
 				res1 = await getMovies("movies");
-				setCachedMovies(res1)
+				setCachedMovies(res1);
 			}
 
 			if (cachedShows) {
@@ -68,10 +68,7 @@ function BrowseScreen() {
 				res2 = await getShows();
 				setCachedShows(res2);
 			}
-			
-			
-			
-			
+
 			const updated = res2?.map((r) => ({
 				...r,
 				type: "show",
@@ -92,7 +89,7 @@ function BrowseScreen() {
 				// 	setFilmsData(cachedUserList);
 				// 	return;
 				// }
-				setIsLoading(true)
+				setIsLoading(true);
 				const cachedProfile =
 					JSON.parse(localStorage.getItem("currentProfile")) || {};
 				const films = [...res1, ...updated];
@@ -100,7 +97,7 @@ function BrowseScreen() {
 					const matchingMovies = films?.filter((movie) =>
 						res?.includes(movie?.name || movie?.title)
 					);
-					setCachedUserList(matchingMovies)
+					setCachedUserList(matchingMovies);
 
 					setFilmsData(matchingMovies);
 				});
@@ -127,25 +124,43 @@ function BrowseScreen() {
 			) : (
 				<>
 					{data?.active !== "languages" && (
-						<div className={styles.moviePage}>
-							{!data?.top10 && !typeSect
-								? filmsData?.map((film, id) => (
-										<Single
-											imgUrl={film?.posterLink}
-											releaseDate={film?.releaseDate || film?.showReleaseDate}
-											watchTime={film?.runtime || film?.totalRuntime}
-											views={film?.views || 0}
-											show={film?.type}
-											key={id}
-											title={film?.title}
-											movieId={film?.id || id}
-											userData={data?.userData}
-											detObj={film}
-											seasons={film?.numberOfSeasons}
-										/>
-								  ))
-								: !data?.top10 &&
-								  specificGenre?.map((film, id) => (
+						<>
+							<div className={styles.moviePage}>
+								{!data?.top10 && !typeSect
+									? filmsData?.map((film, id) => (
+											<Single
+												imgUrl={film?.posterLink}
+												releaseDate={film?.releaseDate || film?.showReleaseDate}
+												watchTime={film?.runtime || film?.totalRuntime}
+												views={film?.views || 0}
+												show={film?.type}
+												key={id}
+												title={film?.title}
+												movieId={film?.id || id}
+												userData={data?.userData}
+												detObj={film}
+												seasons={film?.numberOfSeasons}
+											/>
+									  ))
+									: !data?.top10 &&
+									  specificGenre?.map((film, id) => (
+											<Single
+												imgUrl={film?.posterLink}
+												releaseDate={film?.releaseDate || film?.showReleaseDate}
+												watchTime={film?.runtime || film?.totalRuntime}
+												views={film?.views || 0}
+												show={location?.state?.show}
+												key={id}
+												title={film?.title}
+												movieId={film?.id || id}
+												userData={data?.userData}
+												detObj={film}
+												seasons={film?.numberOfSeasons}
+											/>
+									  ))}
+								{t10 &&
+									typeSect &&
+									top10?.map((film, id) => (
 										<Single
 											imgUrl={film?.posterLink}
 											releaseDate={film?.releaseDate || film?.showReleaseDate}
@@ -159,28 +174,52 @@ function BrowseScreen() {
 											detObj={film}
 											seasons={film?.numberOfSeasons}
 										/>
-								  ))}
-							{t10 &&
-								typeSect &&
-								top10?.map((film, id) => (
-									<Single
-										imgUrl={film?.posterLink}
-										releaseDate={film?.releaseDate || film?.showReleaseDate}
-										watchTime={film?.runtime || film?.totalRuntime}
-										views={film?.views || 0}
-										show={location?.state?.show}
-										key={id}
-										title={film?.title}
-										movieId={film?.id || id}
-										userData={data?.userData}
-										detObj={film}
-										seasons={film?.numberOfSeasons}
-									/>
-								))}
-						</div>
+									))}
+							</div>
+							{!typeSect && !t10 && filmsData?.length == 0 && (
+								<h2
+									style={{
+										width: "100%",
+										textAlign: "center",
+										fontSize: "2.5rem",
+									}}
+								>
+									{data?.active == "my_list"
+										? "Added Movies will appear here"
+										: "We're still adding content. Stay tuned!"}
+								</h2>
+							)}
+							{typeSect && !t10 && specificGenre?.length == 0 && (
+								<h2
+									style={{
+										width: "100%",
+										textAlign: "center",
+										fontSize: "2.5rem",
+									}}
+								>
+									We're still adding content. Stay tuned!
+								</h2>
+							)}
+							{typeSect && t10 && top10?.length == 0 && (
+								<h2
+									style={{
+										width: "100%",
+										textAlign: "center",
+										fontSize: "2.5rem",
+									}}
+								>
+									We're still adding content. Stay tuned!
+								</h2>
+							)}
+						</>
 					)}
 					{data?.active === "languages" && (
 						<>
+							{filmsData?.length == 0 && (
+								<h2 style={{ width: "100%", textAlign: "center" }}>
+									"We're still adding content. Stay tuned!"
+								</h2>
+							)}
 							{filmsData?.map((langFilm) => (
 								<div className={styles.langDiv}>
 									<h4 style={{ fontSize: "1.2rem" }}>
