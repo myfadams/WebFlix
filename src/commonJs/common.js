@@ -506,7 +506,7 @@ export function shuffleArray(array) {
 export function get4Covers(array, genre) {
 	let selected = array
 		?.filter((item) =>
-			item.genres.some((it) => it.toLowerCase().includes(genre.toLowerCase()))
+			item.genres.some((it) => it.toLowerCase().includes(genre.slice(0,4).toLowerCase()))
 		)
 		.slice(0, 4);
 
