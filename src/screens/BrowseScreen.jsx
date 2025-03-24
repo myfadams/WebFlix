@@ -30,8 +30,15 @@ function BrowseScreen() {
 	let top10;
 	if (typeSect) {
 		specificGenre = filmsDetails?.filter((it) =>
-			it?.genres?.some((gen) =>
-				gen?.toLowerCase().includes(data?.genreName?.toLowerCase())
+			it?.genres?.some(
+				(gen) =>
+					gen?.toLowerCase().includes(data?.genreName?.toLowerCase()) ||
+					gen
+						?.toLowerCase()
+						.includes(data?.genreName?.slice(0, 4).toLowerCase()) ||
+					gen
+						?.toLowerCase()
+						.includes(data?.genreName?.slice(0, 3).toLowerCase())
 			)
 		);
 		top10 = specificGenre?.slice(0, 10);

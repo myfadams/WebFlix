@@ -30,8 +30,13 @@ const Upload = () => {
 		"Sci-Fi",
 		"Thriller",
 		"Adventure",
+		"Historical",
+		"Crime",
+		"Western",
+		"Animation",
 		"Fantasy",
 		"Mystery",
+		"Documentary",
 	];
 	const [movieData, setMovieData] = useState({
 		title: "",
